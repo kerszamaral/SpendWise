@@ -2,11 +2,11 @@ package SpendWise.Graphics.Menus;
 
 import javax.swing.*;
 
-import SpendWise.Graphics.PanelScreen;
+import SpendWise.Graphics.Screen;
 
 import java.awt.*;
 
-public class LoginMenu extends PanelScreen {
+public class LoginMenu extends Screen {
 
     private JTextField txtLogin;
     private JTextField txtPassword;
@@ -21,18 +21,14 @@ public class LoginMenu extends PanelScreen {
 
     private JButton btnSignUp;
 
-    private boolean isOpen;
-
     public LoginMenu() {
         this.initialize();
-        this.closeScreen();
     }
 
-    public boolean getIsOpen() {
-        return this.isOpen;
-    }
+    @Override
+    protected void initialize() {
+        super.initialize();
 
-    private void initialize() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JPanel pnlInputs = new JPanel();
         pnlInputs.setLayout(new BoxLayout(pnlInputs, BoxLayout.Y_AXIS));
@@ -59,15 +55,7 @@ public class LoginMenu extends PanelScreen {
         this.add(pnlButtons);
     }
 
-    public boolean openScreen() {
-        this.isOpen = true;
-        this.setVisible(isOpen);
-        return this.isOpen;
-    }
-
-    public boolean closeScreen() {
-        this.isOpen = false;
-        this.setVisible(isOpen);
-        return !(this.isOpen);
+    public boolean authorizeUser() {
+        return true;
     }
 }
