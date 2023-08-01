@@ -1,5 +1,6 @@
 package SpendWise.Graphics.Menus;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
@@ -50,6 +51,7 @@ public class AccountMenu extends PanelScreen {
         fields.add(txtPassword);
 
         this.add(fields);
+        this.setBackground(new Color(0, 177, 216));
         return;
     }
 

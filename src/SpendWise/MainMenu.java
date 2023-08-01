@@ -4,6 +4,8 @@ import SpendWise.Graphics.Menus.*;
 import SpendWise.Graphics.*;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import java.awt.*;
 
 public class MainMenu extends JFrame {
@@ -82,9 +84,10 @@ public class MainMenu extends JFrame {
     public boolean run() {
         Box centerLayout = Box.createVerticalBox();
         centerLayout.setBackground(BackgroundColor);
+        centerLayout.add(Box.createVerticalGlue());
         // ? Login Menu
         LoginMenu login = new LoginMenu();
-        centerLayout.add(login);
+        centerLayout.add(login, BorderLayout.CENTER);
         login.openScreen();
 
         // ! End of Login Process
@@ -98,9 +101,9 @@ public class MainMenu extends JFrame {
         screens[4] = new ExpensesMenu();
 
         for (int i = 0; i < screens.length; i++) {
-            centerLayout.add(screens[i]);
             screens[i].closeScreen();
         }
+        centerLayout.add(Box.createVerticalGlue());
         this.getContentPane().add(centerLayout, BorderLayout.CENTER);
 
         // ? Side Buttons
@@ -121,6 +124,10 @@ public class MainMenu extends JFrame {
                         break;
                     }
                 }
+                centerLayout.removeAll();
+                centerLayout.add(Box.createVerticalGlue());
+                centerLayout.add(screens[this.getCurContext()], BorderLayout.CENTER);
+                centerLayout.add(Box.createVerticalGlue());
                 this.buttons[this.getCurContext()].openMenu();
                 screens[this.getCurContext()].openScreen();
                 this.refresh();
@@ -142,6 +149,9 @@ public class MainMenu extends JFrame {
         login.getBtnLogin().addActionListener(e -> {
             this.setLoggedIn(true);
             login.closeScreen();
+            centerLayout.removeAll();
+            centerLayout.add(Box.createVerticalGlue());
+            centerLayout.add(Box.createVerticalGlue());
             this.openButtons();
             logoutButton.setVisible(true);
             this.refresh();
@@ -151,6 +161,10 @@ public class MainMenu extends JFrame {
             this.setLoggedIn(false);
             login.openScreen();
             this.clearScreen();
+            centerLayout.removeAll();
+            centerLayout.add(Box.createVerticalGlue());
+            centerLayout.add(login, BorderLayout.CENTER);
+            centerLayout.add(Box.createVerticalGlue());
             this.closeButtons();
             logoutButton.setVisible(false);
             this.refresh();

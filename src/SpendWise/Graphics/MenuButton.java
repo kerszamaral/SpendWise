@@ -17,6 +17,7 @@ public class MenuButton extends JButton {
     }
 
     private void initialize() {
+        // Visual settings
         this.setIcon(iconClosed);
         this.setText("");
         this.setSize(50, 50);
@@ -25,6 +26,9 @@ public class MenuButton extends JButton {
         this.setContentAreaFilled(false);
         this.setOpaque(false);
         this.setVisible(false);
+
+        // Aligment settings
+        this.setAlignmentX(JButton.LEFT_ALIGNMENT);
         this.setHorizontalAlignment(JButton.LEFT);
         this.setHorizontalTextPosition(JButton.LEFT);
         this.setVerticalTextPosition(JButton.CENTER);
