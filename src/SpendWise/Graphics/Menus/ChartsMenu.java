@@ -1,6 +1,8 @@
-package SpendWise.Graphics;
+package SpendWise.Graphics.Menus;
 
-public class ChartsMenu implements Screen {
+import SpendWise.Graphics.PanelScreen;
+
+public class ChartsMenu extends PanelScreen {
     public boolean openScreen() {
         return false;
     }

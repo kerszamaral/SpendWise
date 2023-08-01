@@ -1,7 +1,8 @@
-package SpendWise.Graphics;
+package SpendWise.Graphics.Menus;
 
-public class BillCreator implements Screen {
+import SpendWise.Graphics.PanelScreen;
 
+public class ExpensesMenu extends PanelScreen {
     public boolean openScreen() {
         return false;
     }
