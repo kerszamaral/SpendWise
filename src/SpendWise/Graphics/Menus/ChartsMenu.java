@@ -1,13 +1,14 @@
 package SpendWise.Graphics.Menus;
 
-import SpendWise.Graphics.PanelScreen;
+import SpendWise.Graphics.Screen;
 
-public class ChartsMenu extends PanelScreen {
-    public boolean openScreen() {
-        return false;
+public class ChartsMenu extends Screen {
+    public ChartsMenu() {
+        this.initialize();
     }
 
-    public boolean closeScreen() {
-        return false;
+    @Override
+    protected void initialize() {
+        super.initialize();
     }
 }
