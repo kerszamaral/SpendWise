@@ -1,9 +1,18 @@
 package SpendWise.Graphics;
 
+import javax.swing.JPanel;
+import java.awt.Color;
 
-public interface Screen {
+public abstract class Screen extends JPanel {
+    protected final static Color BackgroundColor = new Color(0, 177, 216);
 
-    public boolean openScreen();
+    protected void initialize() {
+        this.setBackground(BackgroundColor);
+    }
 
-    public boolean closeScreen();
+    public void refresh() {
+        this.revalidate();
+        this.repaint();
+        return;
+    }
 }
