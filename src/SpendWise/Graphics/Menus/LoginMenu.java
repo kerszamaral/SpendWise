@@ -5,6 +5,7 @@ import javax.swing.*;
 import SpendWise.Graphics.Screen;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class LoginMenu extends Screen {
 
@@ -12,17 +13,11 @@ public class LoginMenu extends Screen {
     private JTextField txtPassword;
     private JButton btnLogin;
 
-    /**
-     * @return the btnLogin
-     */
-    public JButton getBtnLogin() {
-        return btnLogin;
-    }
-
     private JButton btnSignUp;
 
-    public LoginMenu() {
+    public LoginMenu(ActionListener loginAction) {
         this.initialize();
+        this.btnLogin.addActionListener(loginAction);
     }
 
     @Override

@@ -31,10 +31,6 @@ public class MainMenu extends JFrame {
         this.createMenus();
         this.logout(null);
         this.getContentPane().add(centerLayout, BorderLayout.CENTER);
-
-        LoginMenu login = (LoginMenu) this.screens[Contexts.LOGIN.ordinal()];
-        login.getBtnLogin().addActionListener(e -> login(e));
-
         this.createButtons();
         this.getContentPane().add(sidePanel, BorderLayout.EAST);
         this.refresh();
@@ -68,7 +64,7 @@ public class MainMenu extends JFrame {
         screens[Contexts.CHARTS.ordinal()] = new ChartsMenu();
         screens[Contexts.GROUPS.ordinal()] = new GroupsMenu();
         screens[Contexts.EXPENSES.ordinal()] = new ExpensesMenu();
-        screens[Contexts.LOGIN.ordinal()] = new LoginMenu();
+        screens[Contexts.LOGIN.ordinal()] = new LoginMenu(e -> login(e));
     }
 
     private void createButtons() {
