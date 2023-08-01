@@ -49,7 +49,6 @@ public class Fixed extends Expense {
     public void updateValue(double newValue) {
         this.setValue(newValue);
         this.valueHistory.add(new Pair<LocalDate, Double>(LocalDate.now(), newValue));
-        return;
     }
 
     @Override

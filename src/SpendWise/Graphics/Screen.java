@@ -13,6 +13,5 @@ public abstract class Screen extends JPanel {
     public void refresh() {
         this.revalidate();
         this.repaint();
-        return;
     }
 }
