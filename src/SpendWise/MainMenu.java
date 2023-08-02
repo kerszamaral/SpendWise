@@ -14,6 +14,8 @@ public class MainMenu extends JFrame {
     private final static int ScreenWidth = 1920 / 2;
     private final static int ScreenHeight = 1080 / 2;
     private final static Color BackgroundColor = new Color(0, 177, 216);
+    private final static int buttonMaxWidth = 285;
+    private final static int buttonSpacing = 25;
 
     private final static String[] buttonNames = { "Account", "Bill", "Charts", "Groups", "Expenses", "Logout" };
 
@@ -69,6 +71,7 @@ public class MainMenu extends JFrame {
 
     private void createButtons() {
         sidePanel.add(Box.createVerticalGlue());
+        sidePanel.add(Box.createHorizontalStrut(buttonMaxWidth));
 
         buttons = new JButton[Contexts.values().length];
 
@@ -82,7 +85,7 @@ public class MainMenu extends JFrame {
             buttons[i].addActionListener(e -> updateContext(e));
 
             sidePanel.add(buttons[i]);
-            sidePanel.add(Box.createVerticalStrut(25));
+            sidePanel.add(Box.createVerticalStrut(buttonSpacing));
         }
 
         // Easier manipulation of the logout button
