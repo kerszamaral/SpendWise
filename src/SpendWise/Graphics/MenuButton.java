@@ -7,13 +7,11 @@ import java.awt.Color;
 public class MenuButton extends JButton {
     private String name;
     private ImageIcon icon;
-    // private ImageIcon iconOpen;
     private Color Background;
 
     public MenuButton(String name, Color background) {
         this.name = name.toLowerCase();
         this.Background = background;
-        // iconOpen = new ImageIcon("src\\Images\\" + this.name + "IconHover.png");
         icon = new ImageIcon("src\\Images\\" + this.name + "Icon.png");
         this.initialize();
     }
@@ -48,12 +46,9 @@ public class MenuButton extends JButton {
 
     private void openMenu() {
         this.setText(this.name);
-        // this.setIcon(this.iconOpen);
     }
 
     private void closeMenu() {
         this.setText("");
-        // this.setIcon(this.iconClosed);
     }
-
 }
