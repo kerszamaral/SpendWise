@@ -107,7 +107,6 @@ public class MainMenu extends JFrame {
     private void updateContext(ActionEvent e) {
         // Clears the screen for the new context
         this.centerLayout.removeAll();
-        centerLayout.add(Box.createVerticalGlue());
 
         // Sets the new context
         if (e != null) {
@@ -132,7 +131,6 @@ public class MainMenu extends JFrame {
                 break;
         }
 
-        centerLayout.add(Box.createVerticalGlue());
         this.refresh();
     }
 
