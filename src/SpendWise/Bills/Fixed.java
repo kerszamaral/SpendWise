@@ -3,15 +3,15 @@ package SpendWise.Bills;
 import java.util.ArrayList;
 import java.time.LocalDate;
 
-import SpendWise.Utils.Pair;
+import SpendWise.Utils.Triple;
 
 public class Fixed extends Expense {
-    private ArrayList<Pair<LocalDate, Double>> valueHistory;
+    private ArrayList<Triple<LocalDate, LocalDate, Double>> valueHistory;
 
     public Fixed(double value, boolean isEssential, LocalDate date, String description) {
         super(value, isEssential, date, description);
-        this.valueHistory = new ArrayList<Pair<LocalDate, Double>>();
-        this.valueHistory.add(new Pair<LocalDate, Double>(date, value));
+        this.valueHistory = new ArrayList<Triple<LocalDate, LocalDate, Double>>();
+        this.valueHistory.add(new Triple<LocalDate, LocalDate, Double>(date, LocalDate.MAX.minusDays(1), value));
     }
 
     public double totalValue() {
@@ -24,31 +24,36 @@ public class Fixed extends Expense {
         return sum;
     }
 
+    public double totalValue(LocalDate date) {
+        double sum = 0;
+        long totalMonths = this.getDate().until(date).toTotalMonths();
+        if (totalMonths < 0) {
+            return 0;
+        }
+
+        for (long i = 0; i < totalMonths; i++) {
+            sum += this.valueInMonth(this.getDate().plusMonths(i));
+        }
+        return sum;
+    }
+
     public double valueInMonth(LocalDate date) {
-        long listLength = this.valueHistory.size();
-        if (listLength == 0) {
-            return -1;
-        }
-        // TODO Make this shit work
-
-        for (int i = 0; i < listLength; i++) {
-            if (i == listLength - 1) {
-                return this.valueHistory.get(i).getValue();
-            }
-
-        }
-
-        for (Pair<LocalDate, Double> pair : this.valueHistory) {
-            if (pair.getKey().getMonth() == date.getMonth() && pair.getKey().getYear() == date.getYear()) {
-                return pair.getValue();
+        for (Triple<LocalDate, LocalDate, Double> triple : this.valueHistory) {
+            LocalDate rangeStart = triple.getFirst().minusDays(1);
+            LocalDate rangeEnd = triple.getSecond().plusDays(1);
+            if (rangeStart.isBefore(date) && rangeEnd.isAfter(date)) {
+                return triple.getThird();
             }
         }
-        return -1;
+        return 0; // No value found, dont add anything
     }
 
     public void updateValue(double newValue) {
         this.setValue(newValue);
-        this.valueHistory.add(new Pair<LocalDate, Double>(LocalDate.now(), newValue));
+        LocalDate today = LocalDate.now();
+        Triple<LocalDate, LocalDate, Double> lastUpdate = this.valueHistory.get(this.valueHistory.size() - 1);
+        lastUpdate.setSecond(today);
+        this.valueHistory.add(new Triple<LocalDate, LocalDate, Double>(today, LocalDate.MAX.minusDays(1), newValue));
     }
 
     @Override
