@@ -8,11 +8,10 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class LoginMenu extends Screen {
-
+    // TODO implement LoginMenu (and SignUpMenu) and make them work with users
     private JTextField txtLogin;
     private JTextField txtPassword;
     private JButton btnLogin;
-
     private JButton btnSignUp;
 
     public LoginMenu(ActionListener loginAction) {

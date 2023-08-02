@@ -7,6 +7,7 @@ import javax.swing.*;
 import SpendWise.Graphics.Screen;
 
 public class AccountMenu extends Screen {
+    // TODO implement AccountMenu integration with User class
     private JTextField txtName;
     private JTextField txtUsername;
     private JTextField txtEmail;
