@@ -99,8 +99,8 @@ public class LoginMenu extends Screen {
 
     private void signUp(ActionEvent e) {
         JFrame signUpWindow = new JFrame("Sign Up");
-        final int SIGN_UP_WINDOW_X = 400;
-        final int SIGN_UP_WINDOW_Y = 300;
+        final int SIGN_UP_WINDOW_X = 600;
+        final int SIGN_UP_WINDOW_Y = 400;
         signUpWindow.setSize(SIGN_UP_WINDOW_X, SIGN_UP_WINDOW_Y);
         signUpWindow.getContentPane().setBackground(BackgroundColor);
         signUpWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
