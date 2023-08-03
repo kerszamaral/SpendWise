@@ -7,54 +7,77 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class LoginMenu extends Screen {
+    // TODO make them work with users
     private JButton btnLogin;
     private JButton btnSignUp;
+    private JTextField txtLogin;
+    private JPasswordField txtPassword;
 
     public LoginMenu(ActionListener loginAction) {
-        initializeComponents();
+        this.initialize();
         btnLogin.addActionListener(loginAction);
-        btnSignUp.addActionListener(new SignUpAction());
+        btnSignUp.addActionListener(e -> this.signUp(e));
     }
 
-    private void initializeComponents() {
+    @Override
+    protected void initialize() {
         super.initialize();
-        setBackground(new Color(52, 152, 219));
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        JPanel pnlContent = new JPanel();
-        pnlContent.setLayout(new BoxLayout(pnlContent, BoxLayout.Y_AXIS));
-        pnlContent.setOpaque(false);
+        this.setLayout(null);
 
-        createInputField(pnlContent, "Username:", new JTextField(15));
-        createInputField(pnlContent, "Password:", new JPasswordField(15));
+        final int middleX = 400;
+        final int middleY = 200;
+        final int spacerX = 10;
+        final int spacerY = 5;
+
+        final int startOffset = 100;
+        final int middleOffset = 30;
+        final int textWidth = 100;
+        final int textHeight = 20;
+
+        // Username Fields
+
+        JLabel lblUsername = new JLabel("Username:");
+        lblUsername.setForeground(Color.WHITE);
+        lblUsername.setFont(lblUsername.getFont().deriveFont(Font.BOLD, 14));
+        lblUsername.setBounds(middleX, middleY - startOffset, textWidth, textHeight);
+        this.add(lblUsername);
+
+        txtLogin = new JTextField(15);
+        txtLogin.setBackground(Color.WHITE);
+        txtLogin.setFont(txtLogin.getFont().deriveFont(14));
+        txtLogin.setBounds(middleX, middleY - startOffset + textHeight + spacerY, textWidth, textHeight);
+        this.add(txtLogin);
+
+        // Password Fields
+
+        JLabel lblPassword = new JLabel("Password:");
+        lblPassword.setForeground(Color.WHITE);
+        lblPassword.setFont(lblPassword.getFont().deriveFont(Font.BOLD, 14));
+        lblPassword.setBounds(middleX, middleY - middleOffset, textWidth, textHeight);
+        this.add(lblPassword);
+
+        txtPassword = new JPasswordField(15);
+        txtPassword.setBackground(Color.WHITE);
+        txtPassword.setFont(txtPassword.getFont().deriveFont(14));
+        txtPassword.setBounds(middleX, middleY - middleOffset + textHeight + spacerY, textWidth, textHeight);
+        this.add(txtPassword);
+
+        // Buttons
+        final int buttonWidth = 100;
+        final int buttonHeight = 20;
+        final int buttonStartX = middleX - buttonWidth / 2;
+        final int buttonStartY = middleY + 2 * textHeight + 2 * spacerY;
 
         btnLogin = createButton("Login");
+        btnLogin.setBounds(buttonStartX, buttonStartY, buttonWidth, buttonHeight);
+        this.add(btnLogin);
+
         btnSignUp = createButton("Sign Up!");
+        btnSignUp.setBounds(buttonStartX + buttonWidth + spacerX, buttonStartY, buttonWidth, buttonHeight);
+        this.add(btnSignUp);
 
-        JPanel pnlButtons = new JPanel();
-        pnlButtons.setOpaque(false);
-        pnlButtons.add(btnLogin);
-        pnlButtons.add(btnSignUp);
-
-        pnlContent.add(pnlButtons);
-        pnlContent.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(pnlContent);
-    }
-
-    private void createInputField(JPanel panel, String labelText, JComponent inputField) {
-        JLabel label = new JLabel(labelText);
-        label.setForeground(Color.WHITE);
-        label.setFont(label.getFont().deriveFont(Font.BOLD, 14));
-
-        inputField.setBackground(Color.WHITE);
-        inputField.setFont(inputField.getFont().deriveFont(14));
-
-        JPanel inputPanel = new JPanel();
-        inputPanel.setOpaque(false);
-        inputPanel.add(inputField);
-
-        panel.add(label);
-        panel.add(inputPanel);
+        this.setAlignmentX(Component.CENTER_ALIGNMENT);
     }
 
     private JButton createButton(String text) {
@@ -64,41 +87,37 @@ public class LoginMenu extends Screen {
         return button;
     }
 
-    private class SignUpAction implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            JFrame signUpFrame = new JFrame("Sign Up");
-            signUpFrame.getContentPane().setBackground(new Color(52, 152, 219));
-            signUpFrame.setSize(400, 300);
-            signUpFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            
-         
-            signUpFrame.setLocationRelativeTo(null);
+    private void signUp(ActionEvent e) {
+        JFrame signUpWindow = new JFrame("Sign Up");
+        final int signUpWindowX = 400;
+        final int signUpWindowY = 300;
+        signUpWindow.setSize(signUpWindowX, signUpWindowY);
+        signUpWindow.getContentPane().setBackground(BackgroundColor);
+        signUpWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        signUpWindow.setLocationRelativeTo(this);
 
-            JPanel signUpPanel = new JPanel(new GridLayout(6, 2));
-            signUpPanel.setBackground(new Color(52, 152, 219));
+        JPanel signUpPanel = new JPanel(new GridLayout(6, 2));
+        signUpPanel.setBackground(BackgroundColor);
 
-            String[] labels = { "Name:", "Username:", "Email:", "Password:", "Repeat Password:" };
-            for (String labelText : labels) {
-                signUpPanel.add(new JLabel(labelText));
-                signUpPanel.add(new JTextField(15));
-            }
+        final String[] labels = { "Name:", "Username:", "Email:", "Password:", "Repeat Password:" };
+        for (String labelText : labels) {
+            signUpPanel.add(new JLabel(labelText));
 
-            JButton signUpButton = new JButton("Save");
-            signUpButton.addActionListener(actionEvent -> {
-                // Registration logic
-                // ...
-                signUpFrame.dispose(); // Close the window after registration
-            });
-
-            signUpPanel.add(signUpButton);
-            signUpFrame.add(signUpPanel);
-
-            
-            signUpPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-            signUpFrame.setVisible(true);
+            signUpPanel.add(labelText.equals("Password:") || labelText.equals("Repeat Password:")
+                    ? new JPasswordField(15)
+                    : new JTextField(15));
         }
+
+        JButton signUpButton = new JButton("Save");
+        signUpButton.addActionListener(actionEvent -> {
+            // TODO save user to database
+            signUpWindow.dispose();
+        });
+
+        signUpPanel.add(signUpButton);
+        signUpPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        signUpWindow.add(signUpPanel);
+        signUpWindow.setVisible(true);
     }
 
     public boolean authorizeUser() {
