@@ -44,6 +44,7 @@ public class MainMenu extends JFrame {
         this.setTitle(AppName);
         this.setSize(ScreenWidth, ScreenHeight);
         this.getContentPane().setBackground(BackgroundColor);
+        this.setLocationRelativeTo(null);
 
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,6 +53,7 @@ public class MainMenu extends JFrame {
         this.currentContext = Contexts.LOGIN;
         this.centerLayout = Box.createVerticalBox();
         this.sidePanel = Box.createVerticalBox();
+    
     }
 
     private void refresh() {
