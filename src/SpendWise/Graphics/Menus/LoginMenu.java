@@ -25,59 +25,69 @@ public class LoginMenu extends Screen {
 
         this.setLayout(null);
 
-        final int middleX = 400;
-        final int middleY = 200;
-        final int spacerX = 10;
-        final int spacerY = 5;
+        final int MIDDLE_X = 400;
+        final int MIDDLE_Y = 200;
+        final int SPACER_X = 10;
+        final int SPACER_Y = 5;
 
-        final int startOffset = 100;
-        final int middleOffset = 30;
-        final int textWidth = 100;
-        final int textHeight = 20;
+        final int START_OFFSET = 100;
+        final int MIDDLE_OFFSET = 30;
+        final int TEXT_WIDTH = 200;
+        final int TEXT_HEIGHT = 30;
 
         // Username Fields
 
         JLabel lblUsername = new JLabel("Username:");
-        lblUsername.setForeground(Color.WHITE);
+        lblUsername.setForeground(Color.BLACK);
         lblUsername.setFont(lblUsername.getFont().deriveFont(Font.BOLD, 14));
-        lblUsername.setBounds(middleX, middleY - startOffset, textWidth, textHeight);
+        lblUsername.setBounds(MIDDLE_X-50, MIDDLE_Y - START_OFFSET, TEXT_WIDTH, TEXT_HEIGHT);
         this.add(lblUsername);
 
         txtLogin = new JTextField(15);
         txtLogin.setBackground(Color.WHITE);
         txtLogin.setFont(txtLogin.getFont().deriveFont(14));
-        txtLogin.setBounds(middleX, middleY - startOffset + textHeight + spacerY, textWidth, textHeight);
+        txtLogin.setBounds(MIDDLE_X-50, MIDDLE_Y - START_OFFSET + TEXT_HEIGHT, TEXT_WIDTH, TEXT_HEIGHT);
         this.add(txtLogin);
 
         // Password Fields
 
         JLabel lblPassword = new JLabel("Password:");
-        lblPassword.setForeground(Color.WHITE);
+        lblPassword.setForeground(Color.BLACK);
         lblPassword.setFont(lblPassword.getFont().deriveFont(Font.BOLD, 14));
-        lblPassword.setBounds(middleX, middleY - middleOffset, textWidth, textHeight);
+        lblPassword.setBounds(MIDDLE_X-50, MIDDLE_Y - MIDDLE_OFFSET, TEXT_WIDTH, TEXT_HEIGHT);
         this.add(lblPassword);
 
         txtPassword = new JPasswordField(15);
         txtPassword.setBackground(Color.WHITE);
         txtPassword.setFont(txtPassword.getFont().deriveFont(14));
-        txtPassword.setBounds(middleX, middleY - middleOffset + textHeight + spacerY, textWidth, textHeight);
+        txtPassword.setBounds(MIDDLE_X-50, MIDDLE_Y - MIDDLE_OFFSET + TEXT_HEIGHT, TEXT_WIDTH, TEXT_HEIGHT);
         this.add(txtPassword);
 
         // Buttons
-        final int buttonWidth = 100;
-        final int buttonHeight = 20;
-        final int buttonStartX = middleX - buttonWidth / 2;
-        final int buttonStartY = middleY + 2 * textHeight + 2 * spacerY;
+        final int BUTTON_WIDTH = 95;
+        final int BUTTON_HEIGHT = 30;
+        final int BUTTON_START_X = MIDDLE_X - BUTTON_WIDTH / 2;
+        final int BUTTON_START_Y = MIDDLE_Y + 2 * TEXT_HEIGHT + 2 * SPACER_Y;
 
         btnLogin = createButton("Login");
-        btnLogin.setBounds(buttonStartX, buttonStartY, buttonWidth, buttonHeight);
+        btnLogin.setBounds(BUTTON_START_X, BUTTON_START_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
         this.add(btnLogin);
 
         btnSignUp = createButton("Sign Up!");
-        btnSignUp.setBounds(buttonStartX + buttonWidth + spacerX, buttonStartY, buttonWidth, buttonHeight);
+        btnSignUp.setBounds(BUTTON_START_X + BUTTON_WIDTH + SPACER_X, BUTTON_START_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
         this.add(btnSignUp);
 
+        JPanel whiteBox = createWhiteBox();
+        this.add(whiteBox);
+
         this.setAlignmentX(Component.CENTER_ALIGNMENT);
+    }
+
+    private JPanel createWhiteBox() {
+        JPanel whiteBox = new JPanel();
+        whiteBox.setBackground(Color.WHITE);
+        whiteBox.setBounds(250, 50, 400, 300);
+        return whiteBox;
     }
 
     private JButton createButton(String text) {
@@ -89,9 +99,9 @@ public class LoginMenu extends Screen {
 
     private void signUp(ActionEvent e) {
         JFrame signUpWindow = new JFrame("Sign Up");
-        final int signUpWindowX = 400;
-        final int signUpWindowY = 300;
-        signUpWindow.setSize(signUpWindowX, signUpWindowY);
+        final int SIGN_UP_WINDOW_X = 400;
+        final int SIGN_UP_WINDOW_Y = 300;
+        signUpWindow.setSize(SIGN_UP_WINDOW_X, SIGN_UP_WINDOW_Y);
         signUpWindow.getContentPane().setBackground(BackgroundColor);
         signUpWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         signUpWindow.setLocationRelativeTo(this);
@@ -101,7 +111,10 @@ public class LoginMenu extends Screen {
 
         final String[] labels = { "Name:", "Username:", "Email:", "Password:", "Repeat Password:" };
         for (String labelText : labels) {
-            signUpPanel.add(new JLabel(labelText));
+            JLabel txtInfo = new JLabel(labelText);
+            txtInfo.setForeground(Color.WHITE);
+            txtInfo.setFont(txtPassword.getFont().deriveFont(Font.BOLD,14));
+            signUpPanel.add(txtInfo);
 
             signUpPanel.add(labelText.equals("Password:") || labelText.equals("Repeat Password:")
                     ? new JPasswordField(15)
