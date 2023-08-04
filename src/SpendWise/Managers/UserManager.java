@@ -10,13 +10,12 @@ public class UserManager {
         this.users = new Hashtable<String, User>();
     }
 
-    public boolean createUser(String username, String name, String email, String password, double income,
-            double monthlyLimit) {
-        if (this.users.containsKey(username)) {
+    public boolean createUser(User user){
+
+        if (this.users.containsKey(user.getUsername())) {
             return false;
         }
-        User user = new User(username, name, email, password, income, monthlyLimit);
-        this.users.put(username, user);
+        this.users.put(user.getUsername(), user);
         return true;
     }
 
@@ -28,4 +27,8 @@ public class UserManager {
         return user.checkPassword(password);
     }
 
+    public boolean checkUsername(String username) {
+        return this.users.containsKey(username);
+    }
+    
 }
