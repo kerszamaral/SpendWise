@@ -17,8 +17,8 @@ public class AccountMenu extends Screen {
     private User loggedUser;
     
     public AccountMenu(User loggedUser) {
-        this.initialize();
         this.loggedUser = loggedUser;
+        this.initialize();
     }
     
     @Override
@@ -30,7 +30,7 @@ public class AccountMenu extends Screen {
 
         JLabel lblName = new JLabel("Name: ");
         lblName.setBounds(10, 10, 80, 25);
-        txtName = new JTextField("Default Name", 20);
+        txtName = new JTextField(loggedUser.getName(), 20);
         txtName.setBounds(100, 10, 160, 25);
         this.add(lblName);
         this.add(txtName);
