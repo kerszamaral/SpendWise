@@ -17,7 +17,7 @@ public class MainMenu extends JFrame {
     private final static Color BACKGROUND_COLOR = Screen.getBackgroundColor();
     private final static int BUTTON_MAX_WIDTH = 285;
     private final static int BUTTON_SPACING = 25;
-    private final static String[] buttonNames = { "Account", "Bill", "Charts", "Groups", "Expenses", "Logout" };
+    private final static String[] BUTTON_NAMES = { "Account", "Bill", "Charts", "Groups", "Expenses", "Logout" };
     private Contexts currentContext;
     private Screen[] screens;
     private JButton[] buttons;
@@ -31,7 +31,7 @@ public class MainMenu extends JFrame {
 
     public boolean run() {
         this.userManager = new UserManager();
-        this.createMenus();
+        this.createLogin();
         this.logout(null);
         this.getContentPane().add(centerLayout, BorderLayout.CENTER);
         this.createButtons();
@@ -42,6 +42,7 @@ public class MainMenu extends JFrame {
     }
 
     private void initialize() {
+        screens = new Screen[Contexts.values().length];
         this.setTitle(APP_NAME);
         this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         this.getContentPane().setBackground(BACKGROUND_COLOR);
@@ -64,14 +65,16 @@ public class MainMenu extends JFrame {
         this.repaint();
     }
 
-    private void createMenus() {
-        screens = new Screen[Contexts.values().length];
-        screens[Contexts.ACCOUNT.ordinal()] = new AccountMenu();
+    private void createLogin(){
+        screens[Contexts.LOGIN.ordinal()] = new LoginMenu(e -> login(e), userManager);
+    }
+
+    private void createMenus(User loggedUser) {
+        screens[Contexts.ACCOUNT.ordinal()] = new AccountMenu(loggedUser);
         screens[Contexts.BILL.ordinal()] = new BillCreator();
         screens[Contexts.CHARTS.ordinal()] = new ChartsMenu();
         screens[Contexts.GROUPS.ordinal()] = new GroupsMenu();
         screens[Contexts.EXPENSES.ordinal()] = new ExpensesMenu();
-        screens[Contexts.LOGIN.ordinal()] = new LoginMenu(e -> login(e), userManager);
     }
 
     private void createButtons() {
@@ -85,7 +88,7 @@ public class MainMenu extends JFrame {
             if (i == Contexts.LOGIN.ordinal())
                 continue;
 
-            buttons[i] = new MenuButton(buttonNames[i], Color.WHITE);
+            buttons[i] = new MenuButton(BUTTON_NAMES[i], Color.WHITE);
 
             buttons[i].addActionListener(e -> updateContext(e));
 
@@ -94,7 +97,7 @@ public class MainMenu extends JFrame {
         }
 
         // Easier manipulation of the logout button
-        buttons[Contexts.LOGIN.ordinal()] = new JButton(buttonNames[Contexts.LOGIN.ordinal()]);
+        buttons[Contexts.LOGIN.ordinal()] = new JButton(BUTTON_NAMES[Contexts.LOGIN.ordinal()]);
         JButton logoutButton = buttons[Contexts.LOGIN.ordinal()];
 
         logoutButton.setBackground(Color.WHITE);
@@ -143,6 +146,7 @@ public class MainMenu extends JFrame {
         LoginMenu login = (LoginMenu) this.screens[Contexts.LOGIN.ordinal()];
 
         if (login.authorizeUser()) {
+            createMenus(userManager.getLoggedUser());         
             this.currentContext = Contexts.ACCOUNT;
             this.buttons[Contexts.ACCOUNT.ordinal()].setSelected(true);
         } else {

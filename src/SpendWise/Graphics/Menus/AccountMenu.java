@@ -6,17 +6,21 @@ import javax.swing.*;
 
 import SpendWise.Graphics.Screen;
 
+import SpendWise.User;
+
 public class AccountMenu extends Screen {
     // TODO implement AccountMenu integration with User class
     private JTextField txtName;
     private JTextField txtUsername;
     private JTextField txtEmail;
     private JTextField txtPassword;
-
-    public AccountMenu() {
+    private User loggedUser;
+    
+    public AccountMenu(User loggedUser) {
         this.initialize();
+        this.loggedUser = loggedUser;
     }
-
+    
     @Override
     protected void initialize() {
         super.initialize();
