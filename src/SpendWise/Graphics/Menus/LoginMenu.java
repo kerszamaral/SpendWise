@@ -132,7 +132,7 @@ public class LoginMenu extends Screen {
             signUpPanel.add(signUpFields[i]);
         }
 
-        JButton saveButton = new JButton("Save");
+        JButton saveButton = new JButton("Create Account");
 
         saveButton.setBackground(Color.BLACK);
         saveButton.setForeground(BACKGROUND_COLOR);
@@ -172,7 +172,7 @@ public class LoginMenu extends Screen {
         }
 
         if(user.getPassword().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Password is empty!.");
+            JOptionPane.showMessageDialog(this, "Password is empty!");
             return false;
         }
         
