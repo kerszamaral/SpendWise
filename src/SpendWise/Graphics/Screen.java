@@ -4,10 +4,14 @@ import javax.swing.JPanel;
 import java.awt.Color;
 
 public abstract class Screen extends JPanel {
-    protected final static Color BackgroundColor = new Color(0, 177, 216);
+    protected final static Color BACKGROUND_COLOR = new Color(98, 210, 162);
 
     protected void initialize() {
-        this.setBackground(BackgroundColor);
+        this.setBackground(BACKGROUND_COLOR);
+    }
+
+    public static Color getBackgroundColor(){
+        return BACKGROUND_COLOR;
     }
 
     public void refresh() {
