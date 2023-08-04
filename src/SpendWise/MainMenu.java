@@ -8,28 +8,29 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import SpendWise.Managers.UserManager;
 
 public class MainMenu extends JFrame {
-    private final static String AppName = "SpendWise";
-    private final static int ScreenWidth = 1920 / 2;
-    private final static int ScreenHeight = 1080 / 2;
-    private final static Color BackgroundColor = new Color(0, 177, 216);
-    private final static int buttonMaxWidth = 285;
-    private final static int buttonSpacing = 25;
-
+    private final static String APP_NAME = "SpendWise";
+    private final static int SCREEN_WIDTH = 1920 / 2;
+    private final static int SCREEN_HEIGHT = 1080 / 2;
+    private final static Color BACKGROUND_COLOR = Screen.getBackgroundColor();
+    private final static int BUTTON_MAX_WIDTH = 285;
+    private final static int BUTTON_SPACING = 25;
     private final static String[] buttonNames = { "Account", "Bill", "Charts", "Groups", "Expenses", "Logout" };
-
     private Contexts currentContext;
     private Screen[] screens;
     private JButton[] buttons;
     private Box centerLayout;
     private Box sidePanel;
+    private UserManager userManager;
 
     public MainMenu() {
         this.initialize();
     }
 
     public boolean run() {
+        this.userManager = new UserManager();
         this.createMenus();
         this.logout(null);
         this.getContentPane().add(centerLayout, BorderLayout.CENTER);
@@ -41,14 +42,16 @@ public class MainMenu extends JFrame {
     }
 
     private void initialize() {
-        this.setTitle(AppName);
-        this.setSize(ScreenWidth, ScreenHeight);
-        this.getContentPane().setBackground(BackgroundColor);
+        this.setTitle(APP_NAME);
+        this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+        this.getContentPane().setBackground(BACKGROUND_COLOR);
         this.setLocationRelativeTo(null);
 
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setLayout(new BorderLayout());
+        ImageIcon icon = new ImageIcon("bin/Images/logo.png");
+        this.setIconImage(icon.getImage());
 
         this.currentContext = Contexts.LOGIN;
         this.centerLayout = Box.createVerticalBox();
@@ -68,12 +71,12 @@ public class MainMenu extends JFrame {
         screens[Contexts.CHARTS.ordinal()] = new ChartsMenu();
         screens[Contexts.GROUPS.ordinal()] = new GroupsMenu();
         screens[Contexts.EXPENSES.ordinal()] = new ExpensesMenu();
-        screens[Contexts.LOGIN.ordinal()] = new LoginMenu(e -> login(e));
+        screens[Contexts.LOGIN.ordinal()] = new LoginMenu(e -> login(e), userManager);
     }
 
     private void createButtons() {
         sidePanel.add(Box.createVerticalGlue());
-        sidePanel.add(Box.createHorizontalStrut(buttonMaxWidth));
+        sidePanel.add(Box.createHorizontalStrut(BUTTON_MAX_WIDTH));
 
         buttons = new JButton[Contexts.values().length];
 
@@ -82,19 +85,19 @@ public class MainMenu extends JFrame {
             if (i == Contexts.LOGIN.ordinal())
                 continue;
 
-            buttons[i] = new MenuButton(buttonNames[i], new Color(255, 255, 255));
+            buttons[i] = new MenuButton(buttonNames[i], Color.WHITE);
 
             buttons[i].addActionListener(e -> updateContext(e));
 
             sidePanel.add(buttons[i]);
-            sidePanel.add(Box.createVerticalStrut(buttonSpacing));
+            sidePanel.add(Box.createVerticalStrut(BUTTON_SPACING));
         }
 
         // Easier manipulation of the logout button
         buttons[Contexts.LOGIN.ordinal()] = new JButton(buttonNames[Contexts.LOGIN.ordinal()]);
         JButton logoutButton = buttons[Contexts.LOGIN.ordinal()];
 
-        logoutButton.setBackground(new Color(235, 235, 235));
+        logoutButton.setBackground(Color.WHITE);
         logoutButton.setFont(new Font("Arial", Font.BOLD, 13));
         logoutButton.setSize(50, 50);
         logoutButton.setVisible(true);
