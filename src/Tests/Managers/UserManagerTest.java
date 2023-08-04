@@ -3,6 +3,7 @@ package Tests.Managers;
 import org.junit.jupiter.api.*;
 import static org.junit.Assert.*;
 import SpendWise.Managers.UserManager;
+import SpendWise.User;
 
 public class UserManagerTest {
     private UserManager userManager;
@@ -19,24 +20,27 @@ public class UserManagerTest {
 
     @Test
     public void testcreateUser() {
-        assertTrue(userManager.createUser("username", "name", "email", "password", 1000, 500));
+        User user = new User("username", "name", "email", "password", 1000, 500);
+        assertTrue(userManager.createUser(user));
     }
 
     @Test
     public void testcreateUserFalse() {
-        userManager.createUser("username", "name", "email", "password", 1000, 500);
-        assertFalse(userManager.createUser("username", "name", "email", "password", 1000, 500));
+        User user = new User("username", "name", "email", "password", 1000, 500);
+        assertFalse(userManager.createUser(user));
     }
 
     @Test
     public void testvalidateLogin() {
-        userManager.createUser("username", "name", "email", "password", 1000, 500);
+        User user = new User("username", "name", "email", "password", 1000, 500);
+        userManager.createUser(user);
         assertTrue(userManager.validateLogin("username", "password"));
     }
 
     @Test
     public void testvalidateLoginFalse() {
-        userManager.createUser("username", "name", "email", "password", 1000, 500);
+        User user = new User("username", "name", "email", "password", 1000, 500);
+        userManager.createUser(user);
         assertFalse(userManager.validateLogin("username", "password1"));
     }
 }
