@@ -53,6 +53,14 @@ public class User {
     }
 
     private String password;
+
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
     private double income;
 
     /**
