@@ -1,6 +1,7 @@
 package SpendWise.Graphics.Menus;
 
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -12,11 +13,12 @@ import SpendWise.Graphics.Screen;
 import SpendWise.User;
 
 public class AccountMenu extends Screen {
-    // TODO implement AccountMenu integration with User class
+    private JPanel pnlUserData;
     private User loggedUser;
     
     public AccountMenu(User loggedUser) {
         this.loggedUser = loggedUser;
+        pnlUserData = new JPanel();
         this.initialize();
     }
     
@@ -24,36 +26,39 @@ public class AccountMenu extends Screen {
     protected void initialize() {
         super.initialize();
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new BorderLayout());
         this.setBackground(BACKGROUND_COLOR);
+        pnlUserData.setLayout(new BoxLayout(pnlUserData, BoxLayout.Y_AXIS));
+        pnlUserData.setBackground(BACKGROUND_COLOR);
 
         addTextField("Name: ", loggedUser.getName(), 100);
         addTextField("Username: ", loggedUser.getUsername(), 100);
         addTextField("E-mail: ", loggedUser.getEmail(), 100);
         addPasswordField("Password: ", loggedUser.getPassword(), 100);
+        this.add(pnlUserData, BorderLayout.CENTER);
+    
         addEditButton();
     }
 
-    private void addTextField(String label, String initialValue, int width) {
+    private void addTextField(String label, String userValue, int width) {
 
         JLabel lbl = new JLabel(label);
-        this.add(lbl);
+        pnlUserData.add(lbl);
 
-        JTextField textField = new JTextField(initialValue, 20);
+        JTextField textField = new JTextField(userValue, 20);
         textField.setEditable(false);
         textField.setPreferredSize(new Dimension(width, textField.getPreferredSize().height));
-        this.add(textField);
+        pnlUserData.add(textField);
 
     }
 
-    private void addPasswordField(String label, String initialValue, int width) {
+    private void addPasswordField(String label, String userValue, int width) {
         JLabel lbl = new JLabel(label);
-        this.add(lbl);
-        JPasswordField passwordField = new JPasswordField(initialValue, 20);
+        pnlUserData.add(lbl);
+        JPasswordField passwordField = new JPasswordField(userValue, 20);
         passwordField.setEditable(false);
         passwordField.setPreferredSize(new Dimension(width, passwordField.getPreferredSize().height));
-        this.add(passwordField);
-
+        pnlUserData.add(passwordField);
     }
 
     private void addEditButton() {
@@ -61,7 +66,13 @@ public class AccountMenu extends Screen {
         btnEdit.setBackground(Color.BLACK);
         btnEdit.setForeground(BACKGROUND_COLOR);
         btnEdit.addActionListener(e -> this.edit(e));
-        this.add(btnEdit);
+
+        JPanel pnlEdit = new JPanel();
+        pnlEdit.setLayout(new BorderLayout());
+        pnlEdit.add(btnEdit, BorderLayout.EAST);
+        pnlEdit.setBackground(BACKGROUND_COLOR);
+
+        this.add(pnlEdit, BorderLayout.SOUTH);
     }
 
     private void edit(ActionEvent e) {
