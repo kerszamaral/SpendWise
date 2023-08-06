@@ -10,6 +10,9 @@ public class UserManager {
     public UserManager() {
         this.users = new Hashtable<String, User>();
         this.loggedUser = new User();
+
+        // Just to skip all the sign in process
+        createUser(new User("admin", "admin", "admin", "admin" ,0, 0));
     }
     
     public User getLoggedUser() {
