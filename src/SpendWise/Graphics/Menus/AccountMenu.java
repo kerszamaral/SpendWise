@@ -37,13 +37,19 @@ public class AccountMenu extends Screen {
         addPasswordField("Password: ", loggedUser.getPassword(), 100);
         this.add(pnlUserData, BorderLayout.CENTER);
 
+        /*
+         * All those panels are just to make the user data to be in the center, but
+         * with some small borders around it.
+         */
         JPanel blankPanelNorth = new JPanel();
-        initializeBlankPanel(blankPanelNorth, 100, 100);
+        initializeBlankPanel(blankPanelNorth, 100, 50);
         this.add(blankPanelNorth, BorderLayout.NORTH);
-
         JPanel blankPanelWest = new JPanel();
         initializeBlankPanel(blankPanelWest, 100, 100);
         this.add(blankPanelWest, BorderLayout.WEST);
+        JPanel blankPanelEast = new JPanel();
+        initializeBlankPanel(blankPanelEast, 25, 100);
+        this.add(blankPanelEast, BorderLayout.EAST);
     
         addEditButton();
     }
@@ -79,23 +85,24 @@ public class AccountMenu extends Screen {
         // Creates the panel that is going to the south of the screen
         JPanel pnlSouth = new JPanel();
         pnlSouth.setLayout(new BorderLayout());
-        pnlSouth.setPreferredSize(new Dimension(100, 100));
-        pnlSouth.setBackground(BACKGROUND_COLOR);
+        initializeBlankPanel(pnlSouth, 100, 100);
         
         // Creates the panel that is going to the east of the south panel
         JPanel pnlSouthEast = new JPanel();
-        pnlSouthEast.setPreferredSize(new Dimension(100, 100));
-        pnlSouthEast.setBackground(BACKGROUND_COLOR);
+        initializeBlankPanel(pnlSouthEast, 100, 100);
         
-        // Creates the panels that are going to the north and south of the east panel
+        // Creates the panels that are going to the north,south and east of the east panel
         JPanel pnlSouthEastNorth = new JPanel();
         initializeBlankPanel(pnlSouthEastNorth, 20, 20);
         JPanel pnlSouthEastSouth = new JPanel();
         initializeBlankPanel(pnlSouthEastSouth, 20, 20);
+        JPanel pnlSouthEastEast = new JPanel();
+        initializeBlankPanel(pnlSouthEastEast, 5, 20);
 
         // Adds them to the east panel
         pnlSouthEast.add(pnlSouthEastNorth, BorderLayout.NORTH);
         pnlSouthEast.add(pnlSouthEastSouth, BorderLayout.SOUTH);
+        pnlSouthEast.add(pnlSouthEastEast, BorderLayout.EAST);
         
         // Creates the button itself and adds it to the east panel
         JButton btnEdit = new JButton("Edit");
