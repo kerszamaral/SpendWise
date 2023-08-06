@@ -53,7 +53,7 @@ public class MainMenu extends JFrame {
         /*
          * The following line can be removed later on, if we
          * wish to make the JFrames of the application occupy
-         * a fixed amount of space in the screen, even when the it is resized.
+         * a fixed amount of space in the screen, even when it is resized.
          * 
          * But, for now, it is useful to keep it.
          */
