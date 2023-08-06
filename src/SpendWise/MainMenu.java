@@ -49,6 +49,16 @@ public class MainMenu extends JFrame {
         this.setLocationRelativeTo(null);
 
         this.setVisible(true);
+
+        /*
+         * The following line can be removed later on, if we
+         * wish to make the JFrames of the application occupy
+         * a fixed amount of space in the screen, even when the it is resized.
+         * 
+         * But, for now, it is useful to keep it.
+         */
+        this.setResizable(false);
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setLayout(new BorderLayout());
         ImageIcon icon = new ImageIcon("bin/Images/logo.png");
