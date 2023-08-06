@@ -107,17 +107,11 @@ public class LoginMenu extends Screen {
 
     private void signUp(ActionEvent e) {
 
-        // Initializes the pop-up sign up window
-        JFrame signUpWindow = new PopUp(this, "Sign Up");
-
-
-
+        PopUp signUpWindow = new PopUp(this, "Sign Up");
 
         JPanel signUpPanel = new JPanel(new GridLayout(6, 2));
         signUpPanel.setBackground(BACKGROUND_COLOR);
-
-        signUpFields = new JTextField[labels.length];
-        
+        signUpFields = new JTextField[labels.length];      
         for (int i = 0; i < labels.length; i++) {
             JLabel txtInfo = new JLabel(labels[i]);
             txtInfo.setForeground(Color.WHITE);
@@ -129,18 +123,31 @@ public class LoginMenu extends Screen {
                     : new JTextField(15);
             signUpPanel.add(signUpFields[i]);
         }
+        signUpWindow.setCentralPanel(signUpPanel);
+        
+        JPanel pnlSouth = new JPanel();
+        Screen.initializeBlankPanel(pnlSouth, 100, 50);
+        pnlSouth.setLayout(new BorderLayout());
 
-        JButton saveButton = new JButton("Create Account");
-        saveButton.setBackground(Color.BLACK);
-        saveButton.setForeground(BACKGROUND_COLOR);
-        saveButton.addActionListener(actionEvent -> {
+        JPanel pnlSouthEast= new JPanel();
+        Screen.initializeBlankPanel(pnlSouthEast, 200, 50);
+        JPanel pnlSouthWest = new JPanel();
+        Screen.initializeBlankPanel(pnlSouthWest, 200, 50);
+        pnlSouth.add(pnlSouthEast, BorderLayout.EAST);
+        pnlSouth.add(pnlSouthWest, BorderLayout.WEST);
+
+        JButton btnCreateAccount = new JButton("Create Account");
+        btnCreateAccount.setBackground(Color.BLACK);
+        btnCreateAccount.setForeground(BACKGROUND_COLOR);
+        btnCreateAccount.addActionListener(actionEvent -> {
             if(createUser(e) == true)
                 signUpWindow.dispose();
         });
+        pnlSouth.add(btnCreateAccount, BorderLayout.CENTER);
+        
 
-        signUpPanel.add(saveButton);
-        signUpPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        signUpWindow.add(signUpPanel);
+        signUpWindow.add(pnlSouth, BorderLayout.SOUTH);
+
         signUpWindow.setVisible(true);
     }
 
@@ -148,8 +155,13 @@ public class LoginMenu extends Screen {
         JPasswordField repeatPasswordField = (JPasswordField)signUpFields[LoginLabels.REPEAT_PASSWORD.ordinal()];
         String repeatPassword = new String(repeatPasswordField.getPassword());
         
+        if(user.getName().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Name space is empty!");
+            return false;
+        }
+
         if(user.getUsername().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Username is empty!");
+            JOptionPane.showMessageDialog(this, "Username space is empty!");
             return false;
         }
 

@@ -1,11 +1,12 @@
 package SpendWise.Graphics;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-//import javax.swing.JPanel;
+import javax.swing.JPanel;
 
 
 public class PopUp extends JFrame {
@@ -23,6 +24,7 @@ public class PopUp extends JFrame {
     }
 
     protected void initialize() {
+        this.setLayout(new BorderLayout());
         this.setTitle(title);
         this.setSize(WIDTH, HEIGHT);
         this.getContentPane().setBackground(BACKGROUND_COLOR);
@@ -30,7 +32,25 @@ public class PopUp extends JFrame {
         this.setLocationRelativeTo(originalWindow);
         ImageIcon icon = new ImageIcon("bin/Images/logo.png");
         this.setIconImage(icon.getImage());
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+    }
+
+    public void setCentralPanel(JPanel pnlCentral) {
+        JPanel pnlBlankNorth = new JPanel();
+        Screen.initializeBlankPanel(pnlBlankNorth, 100, 50);
+        JPanel pnlBlankEast= new JPanel();
+        Screen.initializeBlankPanel(pnlBlankEast, 100, 50);
+        JPanel pnlBlankWest= new JPanel();
+        Screen.initializeBlankPanel(pnlBlankWest, 100, 50);
+
+        JPanel pnlMain = new JPanel();
+        pnlMain.setLayout(new BorderLayout());
+        pnlMain.add(pnlCentral, BorderLayout.CENTER);
+        pnlMain.add(pnlBlankNorth, BorderLayout.NORTH);
+        pnlMain.add(pnlBlankEast, BorderLayout.EAST);
+        pnlMain.add(pnlBlankWest, BorderLayout.WEST);
+
+        this.add(pnlMain);
     }
     
 }
