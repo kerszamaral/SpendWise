@@ -170,7 +170,7 @@ public class LoginMenu extends Screen {
             return false;
         }
         
-        if(!user.getEmail().contains("@")) {
+        if(!user.getEmail().contains("@") || !user.getEmail().endsWith(".com")) {
             JOptionPane.showMessageDialog(this, "Invalid e-mail!");
             return false;
         }
