@@ -55,7 +55,8 @@ public class MainMenu extends JFrame {
          * wish to make the JFrames of the application occupy
          * a fixed amount of space in the screen, even when it is resized.
          * 
-         * But, for now, it is useful to keep it.
+         * Note that we are now hardcoding the size of the JFrames,
+         * what is a bad practice.
          */
         this.setResizable(false);
 
