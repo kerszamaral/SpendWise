@@ -1,14 +1,15 @@
 package SpendWise.Graphics.Menus;
 
 import javax.swing.*;
-
-import SpendWise.User;
-import SpendWise.Graphics.Screen;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import SpendWise.User;
+import SpendWise.Graphics.Screen;
 import SpendWise.Managers.UserManager;
 import SpendWise.Utils.LoginLabels;
+import SpendWise.Graphics.PopUp;
 
 public class LoginMenu extends Screen {
     private JButton btnLogin;
@@ -43,7 +44,6 @@ public class LoginMenu extends Screen {
         final int TEXT_HEIGHT = 30;
 
         // Username Fields
-
         JLabel lblUsername = new JLabel("Username:");
         lblUsername.setForeground(Color.BLACK);
         lblUsername.setFont(lblUsername.getFont().deriveFont(Font.BOLD, 14));
@@ -57,7 +57,6 @@ public class LoginMenu extends Screen {
         this.add(txtLogin);
 
         // Password Fields
-
         JLabel lblPassword = new JLabel("Password:");
         lblPassword.setForeground(Color.BLACK);
         lblPassword.setFont(lblPassword.getFont().deriveFont(Font.BOLD, 14));
@@ -107,13 +106,12 @@ public class LoginMenu extends Screen {
     }
 
     private void signUp(ActionEvent e) {
-        JFrame signUpWindow = new JFrame("Sign Up");
-        final int SIGN_UP_WINDOW_X = 600;
-        final int SIGN_UP_WINDOW_Y = 400;
-        signUpWindow.setSize(SIGN_UP_WINDOW_X, SIGN_UP_WINDOW_Y);
-        signUpWindow.getContentPane().setBackground(BACKGROUND_COLOR);
-        signUpWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        signUpWindow.setLocationRelativeTo(this);
+
+        // Initializes the pop-up sign up window
+        JFrame signUpWindow = new PopUp(this, "Sign Up");
+
+
+
 
         JPanel signUpPanel = new JPanel(new GridLayout(6, 2));
         signUpPanel.setBackground(BACKGROUND_COLOR);
@@ -133,7 +131,6 @@ public class LoginMenu extends Screen {
         }
 
         JButton saveButton = new JButton("Create Account");
-
         saveButton.setBackground(Color.BLACK);
         saveButton.setForeground(BACKGROUND_COLOR);
         saveButton.addActionListener(actionEvent -> {
