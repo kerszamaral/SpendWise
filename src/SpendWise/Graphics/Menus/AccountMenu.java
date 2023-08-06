@@ -54,11 +54,6 @@ public class AccountMenu extends Screen {
         addEditButton();
     }
 
-    private void initializeBlankPanel(JPanel blankPanel, int width, int height) {
-        blankPanel.setBackground(BACKGROUND_COLOR);
-        blankPanel.setPreferredSize(new Dimension(width, height));
-    }
-
     private void addTextField(String label, String userValue, int width) {
 
         JLabel lbl = new JLabel(label);
