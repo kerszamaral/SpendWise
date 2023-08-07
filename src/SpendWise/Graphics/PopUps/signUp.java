@@ -15,7 +15,7 @@ import SpendWise.Utils.PanelOrder;
 
 public class signUp extends PopUp {
     private JTextField[] signUpFields;
-    private final String[] signUpLabels = { "Name:", "Username:", "Email:", "Password:", "Repeat Password:" };
+    private final String[] signUpLabels = { "Name: ", "Username: ", "Email: ", "Password: ", "Repeat Password: " };
     private UserManager userManager;
 
     public signUp(Screen parent, String title, UserManager userManager) {
@@ -33,6 +33,7 @@ public class signUp extends PopUp {
             JLabel txtInfo = new JLabel(signUpLabels[i]);
             txtInfo.setForeground(Color.WHITE);
             txtInfo.setFont(txtInfo.getFont().deriveFont(Font.BOLD, 14));
+            txtInfo.setHorizontalAlignment(JLabel.RIGHT);
             signUpPanel.add(txtInfo);
 
             boolean isPassword = signUpLabels[i].contains("Password");
