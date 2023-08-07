@@ -11,6 +11,7 @@ import SpendWise.User;
 import SpendWise.Graphics.Screen;
 import SpendWise.Managers.UserManager;
 import SpendWise.Utils.LoginLabels;
+import SpendWise.Utils.PanelOrder;
 import SpendWise.Graphics.PopUp;
 
 public class LoginMenu extends Screen {
@@ -238,7 +239,7 @@ public class LoginMenu extends Screen {
     }
 
     private void errorString(String error) {
-        JPanel northPanel = signUpWindow.getPnlNorth();
+        JPanel northPanel = signUpWindow.getBlankPanel(PanelOrder.NORTH);
         northPanel.removeAll();
         JLabel errorLabel = new JLabel(error);
         errorLabel.setForeground(Color.RED);

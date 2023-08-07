@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 import SpendWise.Graphics.Screen;
-
+import SpendWise.Utils.PanelOrder;
 import SpendWise.User;
 
 public class AccountMenu extends Screen {
@@ -26,31 +26,15 @@ public class AccountMenu extends Screen {
     protected void initialize() {
         super.initialize();
 
-        this.setLayout(new BorderLayout());
-        this.setBackground(BACKGROUND_COLOR);
-        pnlUserData.setLayout(new BoxLayout(pnlUserData, BoxLayout.Y_AXIS));
+        pnlUserData = super.getBlankPanel(PanelOrder.CENTRAL);
         pnlUserData.setBackground(BACKGROUND_COLOR);
+        pnlUserData.setLayout(new BoxLayout(pnlUserData, BoxLayout.Y_AXIS));
 
         addTextField("Name: ", loggedUser.getName(), 100);
         addTextField("Username: ", loggedUser.getUsername(), 100);
         addTextField("E-mail: ", loggedUser.getEmail(), 100);
         addPasswordField("Password: ", "ABACATINHO", 100);
-        this.add(pnlUserData, BorderLayout.CENTER);
 
-        /*
-         * All those panels are just to make the user data to be in the center, but
-         * with some small borders around it.
-         */
-        JPanel blankPanelNorth = new JPanel();
-        initializeBlankPanel(blankPanelNorth, 100, 50);
-        this.add(blankPanelNorth, BorderLayout.NORTH);
-        JPanel blankPanelWest = new JPanel();
-        initializeBlankPanel(blankPanelWest, 100, 100);
-        this.add(blankPanelWest, BorderLayout.WEST);
-        JPanel blankPanelEast = new JPanel();
-        initializeBlankPanel(blankPanelEast, 25, 100);
-        this.add(blankPanelEast, BorderLayout.EAST);
-    
         addEditButton();
     }
 
