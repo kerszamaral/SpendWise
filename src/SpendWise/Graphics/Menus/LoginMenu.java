@@ -84,14 +84,14 @@ public class LoginMenu extends Screen {
     private JLabel createLabel(String text) {
         JLabel label = new JLabel(text);
         label.setForeground(Color.BLACK);
-        label.setFont(label.getFont().deriveFont(Font.BOLD, 14));
+        label.setFont(STD_FONT_BOLD);
         return label;
     }
 
     private JTextField createTextField(Boolean isPassword) {
         JTextField textField = isPassword ? new JPasswordField(15) : new JTextField(15);
         textField.setBackground(Color.WHITE);
-        textField.setFont(textField.getFont().deriveFont(14));
+        textField.setFont(STD_FONT);
         return textField;
     }
 
@@ -99,7 +99,7 @@ public class LoginMenu extends Screen {
         JButton button = new JButton(text);
         button.setBackground(background);
         button.setForeground(foreground);
-        button.setFont(button.getFont().deriveFont(Font.BOLD, 14));
+        button.setFont(STD_FONT_BOLD);
         return button;
     }
 
