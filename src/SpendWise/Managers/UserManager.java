@@ -42,8 +42,4 @@ public class UserManager {
         
         return isValid;
     }
-    
-    public boolean checkUsername(String username) {
-        return this.users.containsKey(username);
-    }    
 }
