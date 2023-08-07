@@ -1,16 +1,22 @@
 package SpendWise.Graphics;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ActionListener;
 
 import SpendWise.Utils.PanelOrder;
 
 public abstract class Screen extends JPanel {
     public final static Color BACKGROUND_COLOR = new Color(98, 210, 162);
+    public final static Font STD_FONT = new Font("Arial", Font.PLAIN, 14);
+    public final static Font STD_FONT_BOLD = new Font("Arial", Font.BOLD, 14);
+
     protected JPanel[] blankPanels;
 
     protected void initialize() {
