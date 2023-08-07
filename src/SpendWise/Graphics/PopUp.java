@@ -3,6 +3,7 @@ package SpendWise.Graphics;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.FlowLayout;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -16,6 +17,14 @@ public class PopUp extends JFrame {
     private final int WIDTH = 600;
     private final int HEIGHT = 400;
     private final static Color BACKGROUND_COLOR = Screen.getBackgroundColor();
+    private JPanel pnlNorth;
+
+    /**
+     * @return the pnlNorth
+     */
+    public JPanel getPnlNorth() {
+        return pnlNorth;
+    }
 
     public PopUp(Component originalWindow, String title) {
         this.originalWindow = originalWindow;
@@ -36,8 +45,9 @@ public class PopUp extends JFrame {
     }
 
     public void setCentralPanel(JPanel pnlCentral) {
-        JPanel pnlBlankNorth = new JPanel();
-        Screen.initializeBlankPanel(pnlBlankNorth, 100, 50);
+        pnlNorth = new JPanel();
+        Screen.initializeBlankPanel(pnlNorth, 100, 50);
+        pnlNorth.setLayout(new FlowLayout(FlowLayout.CENTER));
         JPanel pnlBlankEast= new JPanel();
         Screen.initializeBlankPanel(pnlBlankEast, 100, 50);
         JPanel pnlBlankWest= new JPanel();
@@ -46,7 +56,7 @@ public class PopUp extends JFrame {
         JPanel pnlMain = new JPanel();
         pnlMain.setLayout(new BorderLayout());
         pnlMain.add(pnlCentral, BorderLayout.CENTER);
-        pnlMain.add(pnlBlankNorth, BorderLayout.NORTH);
+        pnlMain.add(pnlNorth, BorderLayout.NORTH);
         pnlMain.add(pnlBlankEast, BorderLayout.EAST);
         pnlMain.add(pnlBlankWest, BorderLayout.WEST);
 

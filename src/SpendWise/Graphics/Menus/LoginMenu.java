@@ -1,6 +1,8 @@
 package SpendWise.Graphics.Menus;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -151,58 +153,98 @@ public class LoginMenu extends Screen {
     }
 
     private void createUser(ActionEvent e) {
+        this.errorString("");
+
+        if (this.singUpFieldsEmpty()) {
+            this.errorString("One or more fields are empty!");
+            return;
+        }
+
+        if (!this.isEmailValid()) {
+            this.errorString("Invalid e-mail!");
+            return;
+        }
+
+        if (!this.isPasswordTheSame()) {
+            this.errorString("Passwords do not match!");
+            return;
+        }
+
+        JTextField txtUsername = signUpFields[LoginLabels.USERNAME.ordinal()];
+        String username = txtUsername.getText();
         String name = signUpFields[LoginLabels.NAME.ordinal()].getText();
-        String username = signUpFields[LoginLabels.USERNAME.ordinal()].getText();
         String email = signUpFields[LoginLabels.EMAIL.ordinal()].getText();
-        JPasswordField passwordField = (JPasswordField) signUpFields[LoginLabels.PASSWORD.ordinal()];
-        String password = new String(passwordField.getPassword());
-        JPasswordField repeatPasswordField = (JPasswordField) signUpFields[LoginLabels.REPEAT_PASSWORD.ordinal()];
-        String repeatPassword = new String(repeatPasswordField.getPassword());
+        String password = new String(((JPasswordField) signUpFields[LoginLabels.PASSWORD.ordinal()]).getPassword());
 
         User user = new User(username, name, email, password, 0, 0);
 
-        if (validateSignUp(user, repeatPassword)) {
-            if (userManager.createUser(user)) {
-                JOptionPane.showMessageDialog(this, "User created successfully!");
-                signUpWindow.dispose();
-            } else {
-                JOptionPane.showMessageDialog(this, "Username already taken.");
-            }
+        this.errorBorder(txtUsername, false);
+        if (userManager.createUser(user)) {
+            JOptionPane.showMessageDialog(this, "User created successfully!");
+            signUpWindow.dispose();
+        } else {
+            this.errorString("Username already taken!");
+            this.errorBorder(txtUsername, true);
         }
     }
 
-    private boolean validateSignUp(User user, String repeatPassword) {
-        if (user.getName().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Name space is empty!");
+    private boolean singUpFieldsEmpty() {
+        boolean isAnyFieldEmpty = false;
+        for (JTextField field : signUpFields) {
+            this.errorBorder(field, false);
+            if (field.getText().isEmpty()) {
+                isAnyFieldEmpty = true;
+                this.errorBorder(field, true);
+            }
+        }
+        return isAnyFieldEmpty;
+    }
+
+    private boolean isEmailValid() {
+        final String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+        JTextField emailField = signUpFields[LoginLabels.EMAIL.ordinal()];
+        this.errorBorder(emailField, false);
+        String email = emailField.getText();
+        if (email.matches(emailRegex)) {
+            return true;
+        } else {
+            this.errorBorder(emailField, true);
             return false;
         }
+    }
 
-        if (user.getUsername().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Username space is empty!");
+    private boolean isPasswordTheSame() {
+        JPasswordField passwordField = (JPasswordField) signUpFields[LoginLabels.PASSWORD.ordinal()];
+        JPasswordField repeatPasswordField = (JPasswordField) signUpFields[LoginLabels.REPEAT_PASSWORD.ordinal()];
+
+        this.errorBorder(passwordField, false);
+        this.errorBorder(repeatPasswordField, false);
+
+        String password = new String(passwordField.getPassword());
+        String repeatPassword = new String(repeatPasswordField.getPassword());
+        if (password.equals(repeatPassword)) {
+            return true;
+        } else {
+            this.errorBorder(passwordField, true);
+            this.errorBorder(repeatPasswordField, true);
             return false;
         }
+    }
 
-        if (userManager.checkUsername(user.getUsername())) {
-            JOptionPane.showMessageDialog(this, "Username already taken!");
-            return false;
-        }
+    private void errorBorder(JTextField field, Boolean isError) {
+        final Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
+        final Border redBorder = BorderFactory.createLineBorder(Color.RED);
+        field.setBorder(isError ? redBorder : blackBorder);
+    }
 
-        if (!user.getEmail().contains("@") || !user.getEmail().endsWith(".com")) {
-            JOptionPane.showMessageDialog(this, "Invalid e-mail!");
-            return false;
-        }
-
-        if (!user.checkPassword(repeatPassword)) {
-            JOptionPane.showMessageDialog(this, "Passwords do not match!");
-            return false;
-        }
-
-        if (user.checkPassword("")) {
-            JOptionPane.showMessageDialog(this, "Password is empty!");
-            return false;
-        }
-
-        return true;
+    private void errorString(String error) {
+        JPanel northPanel = signUpWindow.getPnlNorth();
+        northPanel.removeAll();
+        JLabel errorLabel = new JLabel(error);
+        errorLabel.setForeground(Color.RED);
+        northPanel.add(errorLabel);
+        northPanel.revalidate();
+        northPanel.repaint();
     }
 
     public boolean authorizeUser() {
