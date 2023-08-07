@@ -1,7 +1,17 @@
 package SpendWise.Utils;
 
 public enum ExpenseType {
-    FIXED,
-    ONETIME,
-    RECURRING
+    FIXED("Fixed"),
+    ONETIME("One-time"),
+    RECURRING("Recurring");
+
+    private final String type;
+
+    ExpenseType(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
 }

@@ -1,10 +1,20 @@
 package SpendWise.Utils;
 
 public enum Contexts {
-    ACCOUNT,
-    BILL,
-    CHARTS,
-    GROUPS,
-    EXPENSES,
-    LOGIN
+    ACCOUNT("Account"),
+    BILL("Bill"),
+    CHARTS("Charts"),
+    GROUPS("Groups"),
+    EXPENSES("Expenses"),
+    LOGIN("Logout");
+
+    private final String contextName;
+
+    Contexts(String contextName) {
+        this.contextName = contextName;
+    }
+
+    public String getContextName() {
+        return contextName;
+    }
 }
