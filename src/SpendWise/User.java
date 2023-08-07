@@ -5,87 +5,11 @@ import SpendWise.Managers.ExpensesManager;
 public class User {
     // Atributos
     private String username;
-
-    /**
-     * @return the username
-     */
-    public String getUsername() {
-        return username;
-    }
-
-    /**
-     * @param username the username to set
-     */
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     private String name;
-
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
     private String email;
-
-    /**
-     * @return the email
-     */
-    public String getEmail() {
-        return email;
-    }
-
-    /**
-     * @param email the email to set
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     private String password;
-
     private double income;
-
-    /**
-     * @return the income
-     */
-    public double getIncome() {
-        return income;
-    }
-
-    /**
-     * @param income the income to set
-     */
-    public void setIncome(double income) {
-        this.income = income;
-    }
-
     private double monthlyLimit;
-
-    /**
-     * @return the monthlyLimit
-     */
-    public double getMonthlyLimit() {
-        return monthlyLimit;
-    }
-
-    /**
-     * @param monthlyLimit the monthlyLimit to set
-     */
-    public void setMonthlyLimit(double monthlyLimit) {
-        this.monthlyLimit = monthlyLimit;
-    }
-
     protected ExpensesManager expensesManager;
 
     /**
@@ -127,6 +51,76 @@ public class User {
         }
         this.password = newPassword;
         return true;
+    }
+
+    /**
+     * @return the username
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * @param username the username to set
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * @return the income
+     */
+    public double getIncome() {
+        return income;
+    }
+
+    /**
+     * @param income the income to set
+     */
+    public void setIncome(double income) {
+        this.income = income;
+    }
+
+    /**
+     * @return the monthlyLimit
+     */
+    public double getMonthlyLimit() {
+        return monthlyLimit;
+    }
+
+    /**
+     * @param monthlyLimit the monthlyLimit to set
+     */
+    public void setMonthlyLimit(double monthlyLimit) {
+        this.monthlyLimit = monthlyLimit;
     }
 
 }
