@@ -10,12 +10,11 @@ import SpendWise.User;
 import SpendWise.Graphics.PopUp;
 import SpendWise.Graphics.Screen;
 import SpendWise.Managers.UserManager;
-import SpendWise.Utils.LoginLabels;
+import SpendWise.Utils.SignUpLabels;
 import SpendWise.Utils.PanelOrder;
 
 public class signUp extends PopUp {
     private JTextField[] signUpFields;
-    private final String[] signUpLabels = { "Name: ", "Username: ", "Email: ", "Password: ", "Repeat Password: " };
     private UserManager userManager;
 
     public signUp(Screen parent, String title, UserManager userManager) {
@@ -28,17 +27,17 @@ public class signUp extends PopUp {
         // Creating the sign up panel and it's fields
         JPanel signUpPanel = new JPanel(new GridLayout(12, 2));
         signUpPanel.setBackground(BACKGROUND_COLOR);
-        signUpFields = new JTextField[signUpLabels.length];
-        for (int i = 0; i < signUpLabels.length; i++) {
-            JLabel txtInfo = new JLabel(signUpLabels[i]);
+        signUpFields = new JTextField[SignUpLabels.values().length];
+        for (SignUpLabels label : SignUpLabels.values()) {
+            JLabel txtInfo = new JLabel(label.getLabelName());
             txtInfo.setForeground(Color.WHITE);
             txtInfo.setFont(txtInfo.getFont().deriveFont(Font.BOLD, 14));
             txtInfo.setHorizontalAlignment(JLabel.RIGHT);
             signUpPanel.add(txtInfo);
 
-            boolean isPassword = signUpLabels[i].contains("Password");
-            signUpFields[i] = isPassword ? new JPasswordField(15) : new JTextField(15);
-            signUpPanel.add(signUpFields[i]);
+            boolean isPassword = label.getLabelName().contains("Password");
+            signUpFields[label.ordinal()] = isPassword ? new JPasswordField(15) : new JTextField(15);
+            signUpPanel.add(signUpFields[label.ordinal()]);
 
             // Creating the spacers for the layout to look nice
             signUpPanel.add(new JLabel(""));
@@ -89,11 +88,11 @@ public class signUp extends PopUp {
             return;
         }
 
-        JTextField txtUsername = signUpFields[LoginLabels.USERNAME.ordinal()];
+        JTextField txtUsername = signUpFields[SignUpLabels.USERNAME.ordinal()];
         String username = txtUsername.getText();
-        String name = signUpFields[LoginLabels.NAME.ordinal()].getText();
-        String email = signUpFields[LoginLabels.EMAIL.ordinal()].getText();
-        String password = new String(((JPasswordField) signUpFields[LoginLabels.PASSWORD.ordinal()]).getPassword());
+        String name = signUpFields[SignUpLabels.NAME.ordinal()].getText();
+        String email = signUpFields[SignUpLabels.EMAIL.ordinal()].getText();
+        String password = new String(((JPasswordField) signUpFields[SignUpLabels.PASSWORD.ordinal()]).getPassword());
 
         User user = new User(username, name, email, password, 0, 0);
 
@@ -121,7 +120,7 @@ public class signUp extends PopUp {
 
     private boolean isEmailValid() {
         final String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
-        JTextField emailField = signUpFields[LoginLabels.EMAIL.ordinal()];
+        JTextField emailField = signUpFields[SignUpLabels.EMAIL.ordinal()];
         this.errorBorder(emailField, false);
         String email = emailField.getText();
         if (email.matches(emailRegex)) {
@@ -133,8 +132,8 @@ public class signUp extends PopUp {
     }
 
     private boolean isPasswordTheSame() {
-        JPasswordField passwordField = (JPasswordField) signUpFields[LoginLabels.PASSWORD.ordinal()];
-        JPasswordField repeatPasswordField = (JPasswordField) signUpFields[LoginLabels.REPEAT_PASSWORD.ordinal()];
+        JPasswordField passwordField = (JPasswordField) signUpFields[SignUpLabels.PASSWORD.ordinal()];
+        JPasswordField repeatPasswordField = (JPasswordField) signUpFields[SignUpLabels.REPEAT_PASSWORD.ordinal()];
 
         this.errorBorder(passwordField, false);
         this.errorBorder(repeatPasswordField, false);
