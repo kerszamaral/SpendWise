@@ -180,8 +180,8 @@ public class LoginMenu extends Screen {
 
         this.errorBorder(txtUsername, false);
         if (userManager.createUser(user)) {
-            JOptionPane.showMessageDialog(this, "User created successfully!");
             signUpWindow.dispose();
+            JOptionPane.showMessageDialog(this, "User created successfully!");
         } else {
             this.errorString("Username already taken!");
             this.errorBorder(txtUsername, true);
