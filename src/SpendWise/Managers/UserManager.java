@@ -13,6 +13,7 @@ public class UserManager {
 
         // Just to skip all the sign in process
         createUser(new User("admin", "admin", "admin@admin.com", "admin", 0, 0));
+        createUser(new User("a", "a", "admin@admin.com", "a", 0, 0));
     }
 
     public User getLoggedUser() {
