@@ -10,7 +10,7 @@ import java.awt.Dimension;
 import SpendWise.Utils.PanelOrder;
 
 public abstract class Screen extends JPanel {
-    protected final static Color BACKGROUND_COLOR = new Color(98, 210, 162);
+    public final static Color BACKGROUND_COLOR = new Color(98, 210, 162);
     protected JPanel[] blankPanels;
 
     protected void initialize() {
@@ -45,7 +45,7 @@ public abstract class Screen extends JPanel {
         return BACKGROUND_COLOR;
     }
 
-    protected static void initializeBlankPanel(JPanel blankPanel, int width, int height) {
+    public static void initializeBlankPanel(JPanel blankPanel, int width, int height) {
         blankPanel.setBackground(BACKGROUND_COLOR);
         blankPanel.setPreferredSize(new Dimension(width, height));
     }

@@ -11,13 +11,12 @@ import javax.swing.JPanel;
 
 import SpendWise.Utils.PanelOrder;
 
-public class PopUp extends JFrame {
-
-    private Component originalWindow;
-    private String title;
+public abstract class PopUp extends JFrame {
+    protected final static Color BACKGROUND_COLOR = Screen.getBackgroundColor();
     private final int WIDTH = 600;
     private final int HEIGHT = 400;
-    private final static Color BACKGROUND_COLOR = Screen.getBackgroundColor();
+    private Component originalWindow;
+    private String title;
     private JPanel[] blankPanels;
 
     public PopUp(Component originalWindow, String title) {
@@ -26,6 +25,8 @@ public class PopUp extends JFrame {
         this.blankPanels = new JPanel[PanelOrder.values().length];
         this.initialize();
     }
+
+    public abstract void run();
 
     protected void initialize() {
         this.setLayout(new BorderLayout());
