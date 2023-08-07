@@ -34,7 +34,7 @@ public class AccountMenu extends Screen {
         addTextField("Name: ", loggedUser.getName(), 100);
         addTextField("Username: ", loggedUser.getUsername(), 100);
         addTextField("E-mail: ", loggedUser.getEmail(), 100);
-        addPasswordField("Password: ", loggedUser.getPassword(), 100);
+        addPasswordField("Password: ", "ABACATINHO", 100);
         this.add(pnlUserData, BorderLayout.CENTER);
 
         /*
