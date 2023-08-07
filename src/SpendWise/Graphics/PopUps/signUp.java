@@ -23,9 +23,10 @@ public class signUp extends PopUp {
         this.userManager = userManager;
     }
 
+    @Override
     public void run() {
         // Creating the sign up panel and it's fields
-        JPanel signUpPanel = new JPanel(new GridLayout(6, 2));
+        JPanel signUpPanel = new JPanel(new GridLayout(12, 2));
         signUpPanel.setBackground(BACKGROUND_COLOR);
         signUpFields = new JTextField[signUpLabels.length];
         for (int i = 0; i < signUpLabels.length; i++) {
@@ -37,6 +38,10 @@ public class signUp extends PopUp {
             boolean isPassword = signUpLabels[i].contains("Password");
             signUpFields[i] = isPassword ? new JPasswordField(15) : new JTextField(15);
             signUpPanel.add(signUpFields[i]);
+
+            // Creating the spacers for the layout to look nice
+            signUpPanel.add(new JLabel(""));
+            signUpPanel.add(new JLabel(""));
         }
         this.setCentralPanel(signUpPanel);
 
