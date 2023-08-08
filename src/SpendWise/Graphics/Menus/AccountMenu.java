@@ -1,5 +1,7 @@
 package SpendWise.Graphics.Menus;
 
+import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 
 import javax.swing.*;
@@ -31,12 +33,13 @@ public class AccountMenu extends Screen {
 
     @Override
     protected void initialize() {
-        Offsets offsets = new Offsets(100, 100, 100, 100);
+        Offsets offsets = new Offsets(50, 50, 50, 50);
         blankPanels = GraphicsUtils.createPanelWithCenter(this, offsets, ACCENT_COLOR);
 
         pnlUserData = getBlankPanel(PanelOrder.CENTRAL);
-        pnlUserData.setBackground(BACKGROUND_COLOR);
-        pnlUserData.setLayout(new BoxLayout(pnlUserData, BoxLayout.Y_AXIS));
+        pnlUserData.setLayout(new GridLayout(AccountFields.values().length * 3, 1));
+        pnlUserData.setBackground(ACCENT_COLOR);
+        pnlUserData.setAlignmentY(CENTER_ALIGNMENT);
 
         txtFields = new JTextField[AccountFields.values().length];
         this.updateAccountFields();
@@ -49,6 +52,7 @@ public class AccountMenu extends Screen {
 
         final int textFieldSize = 300;
         final boolean startingEditState = false;
+        final int verticalGap = 10;
 
         for (AccountFields field : AccountFields.values()) {
             String label = field.getValue() + ": ";
@@ -58,6 +62,9 @@ public class AccountMenu extends Screen {
             txtFields[field.ordinal()] = GraphicsUtils.addTextField(pnlUserData, label, userValue, textFieldSize,
                     isPassword,
                     startingEditState);
+
+            JPanel pnlGap = GraphicsUtils.createBlankPanel(0, verticalGap);
+            pnlUserData.add(pnlGap);
         }
 
         GraphicsUtils.refresh(pnlUserData);
