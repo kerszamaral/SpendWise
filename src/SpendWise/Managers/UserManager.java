@@ -16,6 +16,22 @@ public class UserManager {
         createUser(new User("a", "a", "admin@admin.com", "a", 0, 0));
     }
 
+    public void removeUser(User user) {
+        this.users.remove(user.getUsername());
+    }
+
+    public void removeUser(String username) {
+        this.users.remove(username);
+    }
+
+    public void addUser(User user) {
+        this.users.put(user.getUsername(), user);
+    }
+
+    public void addUser(String username, User user) {
+        this.users.put(username, user);
+    }
+
     public User getLoggedUser() {
         return this.loggedUser;
     }
