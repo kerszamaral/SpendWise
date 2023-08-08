@@ -1,6 +1,7 @@
 package SpendWise;
 
 import SpendWise.Managers.ExpensesManager;
+import SpendWise.Utils.Enums.AccountFields;
 
 public class User {
     // Atributos
@@ -51,6 +52,21 @@ public class User {
         }
         this.password = newPassword;
         return true;
+    }
+
+    public String getField(AccountFields field) {
+        switch (field) {
+            case NAME:
+                return this.name;
+            case USERNAME:
+                return this.username;
+            case EMAIL:
+                return this.email;
+            case PASSWORD:
+                return this.password;
+            default:
+                return "*".repeat(this.getPasswordSize());
+        }
     }
 
     /**
