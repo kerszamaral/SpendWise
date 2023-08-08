@@ -1,6 +1,5 @@
 package SpendWise.Graphics.Menus;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 
 import javax.swing.*;
@@ -10,6 +9,7 @@ import SpendWise.Graphics.Screen;
 import SpendWise.Graphics.PopUps.changePassword;
 import SpendWise.Managers.UserManager;
 import SpendWise.Utils.GraphicsUtils;
+import SpendWise.Utils.Enums.AccountFields;
 import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.User;
 
@@ -32,39 +32,45 @@ public class AccountMenu extends Screen {
     protected void initialize() {
         super.initialize();
 
-        pnlUserData = super.getBlankPanel(PanelOrder.CENTRAL);
+        JPanel[] panels = GraphicsUtils.createOffsets(super.getBlankPanel(PanelOrder.CENTRAL), 100, 300, 100, 100,
+                ACCENT_COLOR);
+
+        pnlUserData = panels[PanelOrder.CENTRAL.ordinal()];
         pnlUserData.setBackground(BACKGROUND_COLOR);
         pnlUserData.setLayout(new BoxLayout(pnlUserData, BoxLayout.Y_AXIS));
 
-        txtFields = new JTextField[4];
-
-        txtFields[0] = addTextField("Name: ", loggedUser.getName(), 100, false);
-        txtFields[1] = addTextField("Username: ", loggedUser.getUsername(), 100, false);
-        txtFields[2] = addTextField("E-mail: ", loggedUser.getEmail(), 100, false);
-        txtFields[3] = addTextField("Password: ", "*".repeat(loggedUser.getPasswordSize()), 100, true);
+        txtFields = new JTextField[AccountFields.values().length];
+        this.updateAccountFields();
 
         btnEditAccount = GraphicsUtils.createButton(this.getBlankPanel(PanelOrder.SOUTH), "Edit Account", e -> edit(e));
     }
 
-    private JTextField addTextField(String label, String userValue, int width, boolean isPassword) {
-        JLabel lbl = new JLabel(label);
-        pnlUserData.add(lbl);
+    private void updateAccountFields() {
+        pnlUserData.removeAll();
 
-        JTextField textField = isPassword ? new JPasswordField(userValue, 20) : new JTextField(userValue, 20);
-        textField.setEditable(false);
-        textField.setPreferredSize(new Dimension(width, textField.getPreferredSize().height));
-        pnlUserData.add(textField);
+        final int textFieldSize = 300;
+        final boolean startingEditState = false;
 
-        return textField;
+        for (AccountFields field : AccountFields.values()) {
+            String label = field.getValue() + ": ";
+            Boolean isPassword = field.getValue().toLowerCase().contains("password");
+            String userValue = loggedUser.getField(field);
+
+            txtFields[field.ordinal()] = GraphicsUtils.addTextField(pnlUserData, label, userValue, textFieldSize,
+                    isPassword,
+                    startingEditState);
+        }
+
+        GraphicsUtils.refresh(pnlUserData);
     }
 
     private void edit(ActionEvent e) {
         boolean nextState = !isEditing;
 
-        JTextField txtName = txtFields[0];
-        JTextField txtUsername = txtFields[1];
-        JTextField txtEmail = txtFields[2];
-        JPasswordField txtPassword = (JPasswordField) txtFields[3];
+        JTextField txtName = txtFields[AccountFields.NAME.ordinal()];
+        JTextField txtUsername = txtFields[AccountFields.USERNAME.ordinal()];
+        JTextField txtEmail = txtFields[AccountFields.EMAIL.ordinal()];
+        JPasswordField txtPassword = (JPasswordField) txtFields[AccountFields.PASSWORD.ordinal()];
 
         GraphicsUtils.clearErrorMessage(super.getBlankPanel(PanelOrder.NORTH));
         if (!nextState) {
@@ -103,12 +109,13 @@ public class AccountMenu extends Screen {
 
             if (!newPassword.isEmpty()) {
                 if (!loggedUser.checkPassword(newPassword)) {
-                    PopUp changePassword = new changePassword(this, "Change Password", loggedUser, newPassword);
+                    PopUp changePassword = new changePassword(this, "Change Password", loggedUser, newPassword,
+                            this::updateAccountFields);
                     changePassword.run();
                 }
             }
 
-            txtPassword.setText("*".repeat(loggedUser.getPasswordSize()));
+            txtPassword.setText(loggedUser.getField(AccountFields.PASSWORD));
         }
 
         btnEditAccount.setText(nextState ? "Apply Changes" : "Edit Account");
