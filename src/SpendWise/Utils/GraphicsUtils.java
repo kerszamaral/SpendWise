@@ -226,7 +226,7 @@ public abstract class GraphicsUtils {
         initializeOffsets(panel, offsets, color);
 
         // Creates the button itself and adds it to the east panel
-        JButton btnEdit = initializeButton(mainPanel, offsets, text, color, actionListener);
+        JButton btnEdit = createButton(text, Color.BLACK, BACKGROUND_COLOR, null, actionListener);
         panel.add(btnEdit, BorderLayout.CENTER);
 
         // And, finnaly, add the south panel to the screen

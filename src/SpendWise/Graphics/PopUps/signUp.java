@@ -18,7 +18,6 @@ import SpendWise.Utils.Enums.SignUpLabels;
 public class signUp extends PopUp {
     private JTextField[] signUpFields;
     private UserManager userManager;
-    private JPanel pnlTop;
     private ActionListener singUpAction;
 
     public signUp(Screen parent, String title, UserManager userManager, ActionListener singUpAction) {
@@ -30,38 +29,32 @@ public class signUp extends PopUp {
     @Override
     public void run() {
         // Creating the sign up panel and it's fields
-        JPanel signUpPanel = new JPanel(new GridLayout(12, 2));
-        signUpPanel.setBackground(BACKGROUND_COLOR);
+        this.setLayout(new BorderLayout());
+        Offsets offsets = new Offsets(50, 0, 100, 100);
+        blankPanels = GraphicsUtils.initializeOffsets((JPanel) this.getContentPane(), offsets);
+
+        JPanel signUpPanel = new JPanel(new GridLayout(SignUpLabels.values().length * 2, 1));
+        signUpPanel.setBackground(ACCENT_COLOR);
+
+        final int TEXT_WIDTH = 200;
+
         signUpFields = new JTextField[SignUpLabels.values().length];
         for (SignUpLabels label : SignUpLabels.values()) {
-            JLabel txtInfo = new JLabel(label.getLabelName());
-            txtInfo.setForeground(Color.WHITE);
-            txtInfo.setFont(txtInfo.getFont().deriveFont(Font.BOLD, 14));
-            txtInfo.setHorizontalAlignment(JLabel.RIGHT);
-            signUpPanel.add(txtInfo);
-
             boolean isPassword = label.getLabelName().toLowerCase().contains("password");
-            signUpFields[label.ordinal()] = isPassword ? new JPasswordField(15) : new JTextField(15);
-            signUpPanel.add(signUpFields[label.ordinal()]);
 
-            // Creating the spacers for the layout to look nice
-            signUpPanel.add(new JLabel(""));
-            signUpPanel.add(new JLabel(""));
+            signUpFields[label.ordinal()] = GraphicsUtils.addTextFieldCenter(signUpPanel, label.getLabelName(),
+                    "", TEXT_WIDTH, isPassword, true);
         }
-
-        this.setLayout(new BorderLayout());
-
-        Offsets offsets = new Offsets(50, 0, 100, 100);
-        JPanel[] blankPanels = GraphicsUtils.initializeOffsets((JPanel) this.getContentPane(), offsets);
-        pnlTop = blankPanels[PanelOrder.NORTH.ordinal()];
 
         this.add(signUpPanel, BorderLayout.CENTER);
 
-        // Creating the spacers for the layout to look nice
+        // Creating the south panel
         JPanel pnlSouth = new JPanel(new BorderLayout());
         pnlSouth.setBackground(BACKGROUND_COLOR);
 
         Offsets southOffsets = new Offsets(5, 20, 200, 200);
+        // GraphicsUtils.initializeButton(pnlSouth, southOffsets, "Create Account",
+        // ACCENT_COLOR, singUpAction)
         GraphicsUtils.initializeOffsets(pnlSouth, southOffsets);
 
         // Creating the create account button
@@ -77,20 +70,20 @@ public class signUp extends PopUp {
     }
 
     private void createUser(ActionEvent e) {
-        GraphicsUtils.showErrorMessage(pnlTop, "");
+        GraphicsUtils.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "");
 
         if (this.singUpFieldsEmpty()) {
-            GraphicsUtils.showErrorMessage(pnlTop, "One or more fields are empty!");
+            GraphicsUtils.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "One or more fields are empty!");
             return;
         }
 
         if (!this.isEmailValid()) {
-            GraphicsUtils.showErrorMessage(pnlTop, "Invalid e-mail!");
+            GraphicsUtils.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Invalid e-mail!");
             return;
         }
 
         if (!this.isPasswordTheSame()) {
-            GraphicsUtils.showErrorMessage(pnlTop, "Passwords do not match!");
+            GraphicsUtils.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Passwords do not match!");
             return;
         }
 
@@ -107,7 +100,7 @@ public class signUp extends PopUp {
             this.dispose();
             singUpAction.actionPerformed(e);
         } else {
-            GraphicsUtils.showErrorMessage(pnlTop, "Username already taken!");
+            GraphicsUtils.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Username already taken!");
             GraphicsUtils.setErrorBorder(txtUsername, true);
         }
 

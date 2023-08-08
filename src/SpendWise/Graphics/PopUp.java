@@ -20,7 +20,7 @@ public abstract class PopUp extends JFrame implements BlankPanels {
     private final int HEIGHT = 400;
     private Component originalWindow;
     private String title;
-    private JPanel[] blankPanels;
+    protected JPanel[] blankPanels;
 
     public PopUp(Component originalWindow, String title) {
         this.originalWindow = originalWindow;
@@ -32,7 +32,6 @@ public abstract class PopUp extends JFrame implements BlankPanels {
     public abstract void run();
 
     protected void initialize() {
-        this.setLayout(new BorderLayout());
         this.setTitle(title);
         this.setSize(WIDTH, HEIGHT);
         this.getContentPane().setBackground(BACKGROUND_COLOR);
