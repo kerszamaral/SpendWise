@@ -29,6 +29,12 @@ public abstract class GraphicsUtils {
         return blankPanel;
     }
 
+    public static JPanel createBlankPanel(int width, int height, Color color) {
+        JPanel blankPanel = new JPanel();
+        initializeBlankPanel(blankPanel, width, height, color);
+        return blankPanel;
+    }
+
     public static JPanel[] createOffsets(Offsets offsets) {
         JPanel[] blankPanels = new JPanel[PanelOrder.values().length];
 

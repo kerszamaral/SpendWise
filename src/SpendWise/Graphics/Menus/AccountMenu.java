@@ -1,6 +1,5 @@
 package SpendWise.Graphics.Menus;
 
-import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 
@@ -63,8 +62,7 @@ public class AccountMenu extends Screen {
                     isPassword,
                     startingEditState);
 
-            JPanel pnlGap = GraphicsUtils.createBlankPanel(0, verticalGap);
-            pnlUserData.add(pnlGap);
+            pnlUserData.add(Box.createVerticalStrut(verticalGap));
         }
 
         GraphicsUtils.refresh(pnlUserData);
