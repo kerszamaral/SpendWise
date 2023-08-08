@@ -9,6 +9,7 @@ import SpendWise.Graphics.Screen;
 import SpendWise.Graphics.PopUps.changePassword;
 import SpendWise.Managers.UserManager;
 import SpendWise.Utils.GraphicsUtils;
+import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.AccountFields;
 import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.User;
@@ -32,8 +33,8 @@ public class AccountMenu extends Screen {
     protected void initialize() {
         super.initialize();
 
-        JPanel[] panels = GraphicsUtils.createOffsets(super.getBlankPanel(PanelOrder.CENTRAL), 100, 300, 100, 100,
-                ACCENT_COLOR);
+        Offsets offsets = new Offsets(100, 100, 100, 100);
+        JPanel[] panels = GraphicsUtils.createOffsets(super.getBlankPanel(PanelOrder.CENTRAL), offsets, ACCENT_COLOR);
 
         pnlUserData = panels[PanelOrder.CENTRAL.ordinal()];
         pnlUserData.setBackground(BACKGROUND_COLOR);

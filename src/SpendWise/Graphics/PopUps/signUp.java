@@ -11,6 +11,7 @@ import SpendWise.Graphics.PopUp;
 import SpendWise.Graphics.Screen;
 import SpendWise.Managers.UserManager;
 import SpendWise.Utils.GraphicsUtils;
+import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.Utils.Enums.SignUpLabels;
 
@@ -50,7 +51,8 @@ public class signUp extends PopUp {
 
         this.setLayout(new BorderLayout());
 
-        JPanel[] blankPanels = GraphicsUtils.createOffsets((JPanel) this.getContentPane(), 50, 0, 100, 100);
+        Offsets offsets = new Offsets(50, 0, 100, 100);
+        JPanel[] blankPanels = GraphicsUtils.createOffsets((JPanel) this.getContentPane(), offsets);
         pnlTop = blankPanels[PanelOrder.NORTH.ordinal()];
 
         this.add(signUpPanel, BorderLayout.CENTER);
@@ -59,7 +61,8 @@ public class signUp extends PopUp {
         JPanel pnlSouth = new JPanel(new BorderLayout());
         pnlSouth.setBackground(BACKGROUND_COLOR);
 
-        GraphicsUtils.createOffsets(pnlSouth, 5, 20, 200, 200);
+        Offsets southOffsets = new Offsets(5, 20, 200, 200);
+        GraphicsUtils.createOffsets(pnlSouth, southOffsets);
 
         // Creating the create account button
         JButton btnCreateAccount = new JButton("Create Account");

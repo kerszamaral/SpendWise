@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Font;
 
 import SpendWise.Utils.GraphicsUtils;
+import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.PanelOrder;
 
 public abstract class Screen extends JPanel implements BlankPanels {
@@ -22,7 +23,8 @@ public abstract class Screen extends JPanel implements BlankPanels {
         this.setLayout(new BorderLayout());
         this.setBackground(BACKGROUND_COLOR);
 
-        blankPanels = GraphicsUtils.createOffsets(this, 50, 50, 100, 0);
+        Offsets offsets = new Offsets(50, 50, 100, 0);
+        blankPanels = GraphicsUtils.createOffsets(this, offsets);
 
         blankPanels[PanelOrder.CENTRAL.ordinal()] = new JPanel();
         JPanel pnlMiddle = blankPanels[PanelOrder.CENTRAL.ordinal()];

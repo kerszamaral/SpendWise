@@ -10,6 +10,7 @@ import SpendWise.Graphics.Screen;
 import SpendWise.Graphics.PopUps.signUp;
 import SpendWise.Managers.UserManager;
 import SpendWise.Utils.GraphicsUtils;
+import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.Graphics.PopUp;
 
@@ -32,9 +33,10 @@ public class LoginMenu extends Screen {
     protected void initialize() {
         super.initialize();
 
-        this.setLayout(new BorderLayout()); // We will use absolute positioning
+        this.setLayout(new BorderLayout());
 
-        GraphicsUtils.createOffsets(this, 100, 100, 270, 270);
+        Offsets offsets = new Offsets(100, 100, 270, 270);
+        GraphicsUtils.createOffsets(this, offsets);
         final int TEXT_WIDTH = 200;
         final int TEXT_HEIGHT = 30;
 
@@ -42,7 +44,8 @@ public class LoginMenu extends Screen {
         pnlMiddle.setBackground(Color.WHITE);
         pnlMiddle.setLayout(new BorderLayout());
 
-        JPanel[] blankPanels = GraphicsUtils.createOffsets(pnlMiddle, 50, 50, 100, 100, Color.WHITE);
+        Offsets middleOffsets = new Offsets(50, 50, 100, 100);
+        JPanel[] blankPanels = GraphicsUtils.createOffsets(pnlMiddle, middleOffsets, Color.WHITE);
         pnlTop = blankPanels[PanelOrder.NORTH.ordinal()];
 
         JPanel pnlLogin = new JPanel();

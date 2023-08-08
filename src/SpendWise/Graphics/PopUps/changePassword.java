@@ -11,6 +11,7 @@ import SpendWise.User;
 import SpendWise.Graphics.PopUp;
 import SpendWise.Graphics.Screen;
 import SpendWise.Utils.GraphicsUtils;
+import SpendWise.Utils.Offsets;
 
 public class changePassword extends PopUp {
     private User loggedUser;
@@ -47,7 +48,8 @@ public class changePassword extends PopUp {
         editPanel.add(fieldOldPassword);
 
         this.setLayout(new BorderLayout());
-        GraphicsUtils.createOffsets((JPanel) this.getContentPane(), 50, 0, 100, 100);
+        Offsets offsets = new Offsets(50, 0, 100, 100);
+        GraphicsUtils.createOffsets((JPanel) this.getContentPane(), offsets);
         this.add(editPanel, BorderLayout.CENTER);
 
         JPanel pnlSouth = new JPanel();
