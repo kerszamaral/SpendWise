@@ -1,6 +1,5 @@
 package SpendWise.Graphics.Menus;
 
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.text.NumberFormat;
