@@ -4,14 +4,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import SpendWise.User;
 import SpendWise.Graphics.PopUp;
 import SpendWise.Graphics.Screen;
 import SpendWise.Managers.UserManager;
 import SpendWise.Utils.SignUpLabels;
-import SpendWise.Utils.PanelOrder;
 
 public class signUp extends PopUp {
     private JTextField[] signUpFields;
@@ -67,20 +65,20 @@ public class signUp extends PopUp {
     }
 
     private void createUser(ActionEvent e) {
-        this.errorString("");
+        Screen.errorString(this, "");
 
         if (this.singUpFieldsEmpty()) {
-            this.errorString("One or more fields are empty!");
+            Screen.errorString(this, "One or more fields are empty!");
             return;
         }
 
         if (!this.isEmailValid()) {
-            this.errorString("Invalid e-mail!");
+            Screen.errorString(this, "Invalid e-mail!");
             return;
         }
 
         if (!this.isPasswordTheSame()) {
-            this.errorString("Passwords do not match!");
+            Screen.errorString(this, "Passwords do not match!");
             return;
         }
 
@@ -92,23 +90,23 @@ public class signUp extends PopUp {
 
         User user = new User(username, name, email, password, 0, 0);
 
-        this.errorBorder(txtUsername, false);
+        Screen.errorBorder(txtUsername, false);
         if (userManager.createUser(user)) {
             this.dispose();
             JOptionPane.showMessageDialog(this, "User created successfully!");
         } else {
-            this.errorString("Username already taken!");
-            this.errorBorder(txtUsername, true);
+            Screen.errorString(this, "Username already taken!");
+            Screen.errorBorder(txtUsername, true);
         }
     }
 
     private boolean singUpFieldsEmpty() {
         boolean isAnyFieldEmpty = false;
         for (JTextField field : signUpFields) {
-            this.errorBorder(field, false);
+            Screen.errorBorder(field, false);
             if (field.getText().isEmpty()) {
                 isAnyFieldEmpty = true;
-                this.errorBorder(field, true);
+                Screen.errorBorder(field, true);
             }
         }
         return isAnyFieldEmpty;
@@ -117,12 +115,12 @@ public class signUp extends PopUp {
     private boolean isEmailValid() {
         final String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
         JTextField emailField = signUpFields[SignUpLabels.EMAIL.ordinal()];
-        this.errorBorder(emailField, false);
+        Screen.errorBorder(emailField, false);
         String email = emailField.getText();
         if (email.matches(emailRegex)) {
             return true;
         } else {
-            this.errorBorder(emailField, true);
+            Screen.errorBorder(emailField, true);
             return false;
         }
     }
@@ -131,33 +129,17 @@ public class signUp extends PopUp {
         JPasswordField passwordField = (JPasswordField) signUpFields[SignUpLabels.PASSWORD.ordinal()];
         JPasswordField repeatPasswordField = (JPasswordField) signUpFields[SignUpLabels.REPEAT_PASSWORD.ordinal()];
 
-        this.errorBorder(passwordField, false);
-        this.errorBorder(repeatPasswordField, false);
+        Screen.errorBorder(passwordField, false);
+        Screen.errorBorder(repeatPasswordField, false);
 
         String password = new String(passwordField.getPassword());
         String repeatPassword = new String(repeatPasswordField.getPassword());
         if (password.equals(repeatPassword)) {
             return true;
         } else {
-            this.errorBorder(passwordField, true);
-            this.errorBorder(repeatPasswordField, true);
+            Screen.errorBorder(passwordField, true);
+            Screen.errorBorder(repeatPasswordField, true);
             return false;
         }
-    }
-
-    private void errorBorder(JTextField field, Boolean isError) {
-        final Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
-        final Border redBorder = BorderFactory.createLineBorder(Color.RED);
-        field.setBorder(isError ? redBorder : blackBorder);
-    }
-
-    private void errorString(String error) {
-        JPanel northPanel = this.getBlankPanel(PanelOrder.NORTH);
-        northPanel.removeAll();
-        JLabel errorLabel = new JLabel(error);
-        errorLabel.setForeground(Color.RED);
-        northPanel.add(errorLabel);
-        northPanel.revalidate();
-        northPanel.repaint();
     }
 }

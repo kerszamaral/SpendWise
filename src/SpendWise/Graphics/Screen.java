@@ -1,8 +1,12 @@
 package SpendWise.Graphics;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -13,7 +17,7 @@ import java.awt.event.ActionListener;
 
 import SpendWise.Utils.PanelOrder;
 
-public abstract class Screen extends JPanel {
+public abstract class Screen extends JPanel implements BlankPanels {
     public final static Color BACKGROUND_COLOR = new Color(98, 210, 162);
     public final static Font STD_FONT = new Font("Arial", Font.PLAIN, 14);
     public final static Font STD_FONT_BOLD = new Font("Arial", Font.BOLD, 14);
@@ -81,6 +85,22 @@ public abstract class Screen extends JPanel {
 
         // And, finnaly, add the south panel to the screen
         panel.add(pnlSouth, BorderLayout.SOUTH);
+    }
+
+    public static void errorBorder(JTextField field, Boolean isError) {
+        final Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
+        final Border redBorder = BorderFactory.createLineBorder(Color.RED);
+        field.setBorder(isError ? redBorder : blackBorder);
+    }
+
+    public static void errorString(BlankPanels panel, String error) {
+        JPanel northPanel = panel.getBlankPanel(PanelOrder.NORTH);
+        northPanel.removeAll();
+        JLabel errorLabel = new JLabel(error);
+        errorLabel.setForeground(Color.RED);
+        northPanel.add(errorLabel);
+        northPanel.revalidate();
+        northPanel.repaint();
     }
 
     public void refresh() {
