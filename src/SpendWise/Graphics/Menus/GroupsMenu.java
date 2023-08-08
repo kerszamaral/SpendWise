@@ -4,6 +4,7 @@ import SpendWise.Utils.GraphicsUtils;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.Graphics.Screen;
+import SpendWise.Utils.Enums.GroupFields;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -17,16 +18,12 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JComponent;
 
 public class GroupsMenu extends Screen {
     private JPanel pnlGroupManagement;
     private String imagePath = "bin/Images/groupsImage.png";
-    private ImageIcon resizedImageIcon = resizeImage(imagePath, 150, 150);
-    private JLabel lblImage = new JLabel(resizedImageIcon);
-
-    //Placeholder lists
-    private final String[] groups = {"","Group A", "Group B", "Group C"};
-    private final String[] members = {"","Member X", "Member Y", "Member Z"};
+    private JComponent[] fields;
 
     public GroupsMenu() {
         pnlGroupManagement = new JPanel();
@@ -39,47 +36,106 @@ public class GroupsMenu extends Screen {
         
         JPanel centerPanel = getBlankPanel(PanelOrder.CENTRAL);
         JPanel[] innerPanels = GraphicsUtils.initializeOffsets(centerPanel, new Offsets(0, 0, 0, 150), ACCENT_COLOR);
-        innerPanels[PanelOrder.EAST.ordinal()].add(lblImage);
+
+        JLabel groupTitle = new JLabel("MANAGE GROUPS");
+        groupTitle.setFont(STD_FONT_BOLD);
+        getBlankPanel(PanelOrder.NORTH).add(groupTitle);
+
+        addImage(innerPanels[PanelOrder.EAST.ordinal()]);
+
         pnlGroupManagement.setLayout(new GridLayout(3, 2));
-        
-        addInputGroup("Select Group: ", groups);
-        addInputGroup("Add Member:   ");
-        addInputGroup("Remove Member:", members);
-        innerPanels[PanelOrder.CENTRAL.ordinal()] = pnlGroupManagement;
-        
-        centerPanel.add(pnlGroupManagement, BorderLayout.CENTER);
-        GraphicsUtils.initializeButton(this.getBlankPanel(PanelOrder.SOUTH), new Offsets(10, 10, 400, 20), "Save", ACCENT_COLOR,
-        this::saveButton);
-    }
 
-    private void addInputGroup(String label, String... options) {
-        JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.X_AXIS));
-    
-        JLabel lbl = new JLabel(label);
-        lbl.setBackground(ACCENT_COLOR); // n entendi pq n ficou branco o fundo dos textos, mas isso ainda vai ser modificado entao azaar
-        inputPanel.add(lbl);
+        fields = new JComponent[GroupFields.values().length];
 
-    
-        if (options.length > 0) {
-            JComboBox<String> comboBox = new JComboBox<>(options);
-            comboBox.setPreferredSize(new Dimension(20, comboBox.getPreferredSize().height));
-            comboBox.setBackground(ACCENT_COLOR);
-            inputPanel.add(comboBox);
-        } else {
-            JTextField textField = new JTextField();
-            textField.setPreferredSize(new Dimension(20, textField.getPreferredSize().height));
-            textField.setBackground(ACCENT_COLOR);
-            inputPanel.add(textField);
+        JComponent fieldType = null;
+        for (GroupFields field : GroupFields.values()) {
+            String label = field.getLabel() + ": ";
+            JLabel lbl = new JLabel(label);
+
+            switch (field) {
+                case SELECT:
+                    break;
+                case ADD:
+                    JTextField addUserField = new JTextField();
+                    fieldType = addUserField;
+                    break;
+                case REMOVE:
+                    JTextField removeUserField = new JTextField();
+                    fieldType = removeUserField;
+                    break;
+            }
+
+            GraphicsUtils.defineSize(fieldType, DEFAULT_FIELD_SIZE);
+
+            fieldType.setEnabled(true);
+            fieldType.setBackground(ACCENT_COLOR);
+
+            fields[field.ordinal()] = fieldType;
+            pnlGroupManagement.add(fieldType);
+            // pnlCentral.add(lbl);
+
+            // JComponent fieldType = null;
+            // switch (field) {
+
+            // }
         }
-    
-        pnlGroupManagement.add(inputPanel);
+
+        /*
+         * addInputGroup("Select Group: ", groups);
+         * addInputGroup("Add Member: ");
+         * addInputGroup("Remove Member: ", members);
+         * innerPanels[PanelOrder.CENTRAL.ordinal()] = pnlGroupManagement;
+         */
+
+        centerPanel.add(pnlGroupManagement, BorderLayout.CENTER);
+        GraphicsUtils.initializeButton(this.getBlankPanel(PanelOrder.SOUTH), new Offsets(10, 10, 400, 20), "Save",
+                ACCENT_COLOR,
+                this::saveButton);
     }
+
+    /*
+     * private void addInputGroup(String label, String... options) {
+     * JPanel inputPanel = new JPanel();
+     * inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.X_AXIS));
+     * 
+     * JLabel lbl = new JLabel(label);
+     * lbl.setBackground(ACCENT_COLOR); // n entendi pq n ficou branco o fundo dos
+     * textos, mas isso ainda vai ser modificado entao azaar
+     * inputPanel.add(lbl);
+     * 
+     * 
+     * if (options.length > 0) {
+     * JComboBox<String> comboBox = new JComboBox<>(options);
+     * comboBox.setPreferredSize(new Dimension(20,
+     * comboBox.getPreferredSize().height));
+     * comboBox.setBackground(ACCENT_COLOR);
+     * inputPanel.add(comboBox);
+     * } else {
+     * JTextField textField = new JTextField();
+     * textField.setPreferredSize(new Dimension(20,
+     * textField.getPreferredSize().height));
+     * textField.setBackground(ACCENT_COLOR);
+     * inputPanel.add(textField);
+     * }
+     * 
+     * pnlGroupManagement.add(inputPanel);
+     * }
+     */
 
     private ImageIcon resizeImage(String path, int width, int height){
         Image originalImage = new ImageIcon(path).getImage();
         ImageIcon resizedImageIcon = new ImageIcon(originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH));
         return resizedImageIcon;
+    }
+
+    private void centralizeImage(JPanel panel, JLabel lblImage) {
+        JPanel[] imageOffsets = GraphicsUtils.initializeOffsets(panel, new Offsets(90, 90, 25, 0), ACCENT_COLOR);
+        imageOffsets[PanelOrder.CENTRAL.ordinal()].add(lblImage);
+    }
+
+    private void addImage(JPanel panel) {
+        ImageIcon resizedImageIcon = resizeImage(imagePath, 100, 100);
+        centralizeImage(panel, new JLabel(resizedImageIcon));
     }
 
     private void saveButton(ActionEvent e) {
