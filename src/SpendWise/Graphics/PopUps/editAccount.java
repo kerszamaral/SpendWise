@@ -64,7 +64,9 @@ public class editAccount extends PopUp {
         JTextField fieldPassword = new JTextField("", 15);
         editPanel.add(fieldPassword);
 
-        this.setCentralPanel(editPanel);
+        this.setLayout(new BorderLayout());
+        Screen.createOffsets((JPanel) this.getContentPane(), 50, 0, 100, 100);
+        this.add(editPanel, BorderLayout.CENTER);
 
         JPanel pnlSouth = new JPanel();
         Screen.initializeBlankPanel(pnlSouth, 100, 50);

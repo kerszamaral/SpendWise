@@ -43,20 +43,16 @@ public class signUp extends PopUp {
             signUpPanel.add(new JLabel(""));
             signUpPanel.add(new JLabel(""));
         }
-        this.setCentralPanel(signUpPanel);
+
+        this.setLayout(new BorderLayout());
+        Screen.createOffsets((JPanel) this.getContentPane(), 50, 0, 100, 100);
+        this.add(signUpPanel, BorderLayout.CENTER);
 
         // Creating the spacers for the layout to look nice
-        JPanel pnlSouth = new JPanel();
-        Screen.initializeBlankPanel(pnlSouth, 100, 50);
-        pnlSouth.setLayout(new BorderLayout());
+        JPanel pnlSouth = new JPanel(new BorderLayout());
+        pnlSouth.setBackground(BACKGROUND_COLOR);
 
-        JPanel pnlSouthEast = new JPanel();
-        Screen.initializeBlankPanel(pnlSouthEast, 200, 50);
-        pnlSouth.add(pnlSouthEast, BorderLayout.EAST);
-
-        JPanel pnlSouthWest = new JPanel();
-        Screen.initializeBlankPanel(pnlSouthWest, 200, 50);
-        pnlSouth.add(pnlSouthWest, BorderLayout.WEST);
+        Screen.createOffsets(pnlSouth, 5, 20, 200, 200);
 
         // Creating the create account button
         JButton btnCreateAccount = new JButton("Create Account");
