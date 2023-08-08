@@ -93,6 +93,15 @@ public abstract class GraphicsUtils {
         return blankPanels;
     }
 
+    public static JPanel[] createPanelWithCenter(JPanel mainPanel, Offsets innerOffsets, Offsets outerOffsets,
+            Color innerColor) {
+        JPanel[] outerBlankPanels = initializeOffsets(mainPanel, outerOffsets, BACKGROUND_COLOR);
+
+        JPanel[] innerBlankPanels = initializeOffsets(outerBlankPanels[PanelOrder.CENTRAL.ordinal()], innerOffsets,
+                innerColor);
+        return innerBlankPanels;
+    }
+
     public static JPanel[] createPanelWithCenter(JPanel mainPanel, Offsets innerOffsets, Color innerColor) {
         final int OUTER_LEFT = 100;
         final int OUTER_RIGHT = 0;
@@ -157,6 +166,19 @@ public abstract class GraphicsUtils {
             Boolean isEditable) {
         Pair<JLabel, JTextField> pair = createTextField(label, userValue, width, isPassword, isEditable);
         panel.add(pair.getKey());
+        panel.add(pair.getValue());
+        return pair.getValue();
+    }
+
+    public static JTextField addTextFieldCenter(JPanel panel, String label, String userValue, int width,
+            Boolean isPassword,
+            Boolean isEditable) {
+        Pair<JLabel, JTextField> pair = createTextField(label, userValue, width, isPassword, isEditable);
+        JPanel innerPanel = new JPanel();
+        innerPanel.setLayout(new BoxLayout(innerPanel, BoxLayout.X_AXIS));
+        innerPanel.setOpaque(false);
+        innerPanel.add(pair.getKey());
+        panel.add(innerPanel);
         panel.add(pair.getValue());
         return pair.getValue();
     }
