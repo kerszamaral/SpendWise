@@ -17,7 +17,6 @@ public class MainMenu extends JFrame {
     private final static Color BACKGROUND_COLOR = Screen.getBackgroundColor();
     private final static int BUTTON_MAX_WIDTH = 285;
     private final static int BUTTON_SPACING = 25;
-    private final static String[] BUTTON_NAMES = { "Account", "Bill", "Charts", "Groups", "Expenses", "Logout" };
     private Contexts currentContext;
     private Screen[] screens;
     private JButton[] buttons;
@@ -95,20 +94,20 @@ public class MainMenu extends JFrame {
         buttons = new JButton[Contexts.values().length];
 
         // Creates the buttons for each context except for the logout button
-        for (int i = 0; i < Contexts.values().length; i++) {
-            if (i == Contexts.LOGIN.ordinal())
+        for (Contexts ctx : Contexts.values()) {
+            if (ctx == Contexts.LOGIN)
                 continue;
 
-            buttons[i] = new MenuButton(BUTTON_NAMES[i], Color.WHITE);
+            buttons[ctx.ordinal()] = new MenuButton(ctx.getContextName(), Color.WHITE);
 
-            buttons[i].addActionListener(e -> updateContext(e));
+            buttons[ctx.ordinal()].addActionListener(e -> updateContext(e));
 
-            sidePanel.add(buttons[i]);
+            sidePanel.add(buttons[ctx.ordinal()]);
             sidePanel.add(Box.createVerticalStrut(BUTTON_SPACING));
         }
 
         // Easier manipulation of the logout button
-        buttons[Contexts.LOGIN.ordinal()] = new JButton(BUTTON_NAMES[Contexts.LOGIN.ordinal()]);
+        buttons[Contexts.LOGIN.ordinal()] = new JButton(Contexts.LOGIN.getContextName());
         JButton logoutButton = buttons[Contexts.LOGIN.ordinal()];
 
         logoutButton.setBackground(Color.WHITE);

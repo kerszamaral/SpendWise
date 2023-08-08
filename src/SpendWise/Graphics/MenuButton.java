@@ -10,9 +10,9 @@ public class MenuButton extends JButton {
     private Color Background;
 
     public MenuButton(String name, Color background) {
-        this.name = name.toLowerCase();
+        this.name = name;
         this.Background = background;
-        icon = new ImageIcon("src\\Images\\" + this.name + "Icon.png");
+        icon = new ImageIcon("src\\Images\\" + this.name.toLowerCase() + "Icon.png");
         this.initialize();
     }
 
