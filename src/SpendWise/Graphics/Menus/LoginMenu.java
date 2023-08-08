@@ -36,7 +36,6 @@ public class LoginMenu extends Screen {
         Offsets offsets = new Offsets(100, 100, 270, 270);
         GraphicsUtils.initializeOffsets(this, offsets);
         final int TEXT_WIDTH = 200;
-        final int TEXT_HEIGHT = 30;
 
         JPanel pnlMiddle = new JPanel();
         pnlMiddle.setBackground(Color.WHITE);
@@ -52,33 +51,22 @@ public class LoginMenu extends Screen {
         pnlLogin.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         // Username Fields
-        JPanel lblUsername = this.createPanel("Username");
-        pnlLogin.add(lblUsername);
-
-        txtLogin = this.createTextField(false, TEXT_WIDTH, TEXT_HEIGHT);
-        pnlLogin.add(txtLogin);
-
+        txtLogin = GraphicsUtils.addTextField(pnlLogin, "Username", "", TEXT_WIDTH, false, true);
         pnlLogin.add(Box.createRigidArea(new Dimension(0, 20)));
 
         // Password Fields
-        JPanel lblPassword = this.createPanel("Password");
-        pnlLogin.add(lblPassword);
-
-        txtPassword = (JPasswordField) this.createTextField(true, TEXT_WIDTH, TEXT_HEIGHT);
-        pnlLogin.add(txtPassword);
-
+        txtPassword = (JPasswordField) GraphicsUtils.addTextField(pnlLogin, "Password", "", TEXT_WIDTH, true, true);
         pnlLogin.add(Box.createRigidArea(new Dimension(0, 50)));
 
         // Buttons
-        final int BUTTON_WIDTH = 95;
-        final int BUTTON_HEIGHT = 30;
+        final Dimension BUTTON_SIZE = new Dimension(95, 30);
         JPanel pnlButtons = new JPanel();
         pnlButtons.setBackground(Color.WHITE);
 
-        btnLogin = createButton("Login", Color.WHITE, Color.BLACK, BUTTON_WIDTH, BUTTON_HEIGHT);
+        btnLogin = GraphicsUtils.createButton("Login", Color.WHITE, Color.BLACK, BUTTON_SIZE);
         pnlButtons.add(btnLogin);
 
-        btnSignUp = createButton("Sign Up!", Color.BLACK, BACKGROUND_COLOR, BUTTON_WIDTH, BUTTON_HEIGHT);
+        btnSignUp = GraphicsUtils.createButton("Sign Up!", Color.BLACK, BACKGROUND_COLOR, BUTTON_SIZE);
         pnlButtons.add(btnSignUp);
 
         pnlButtons.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -86,41 +74,6 @@ public class LoginMenu extends Screen {
 
         pnlMiddle.add(pnlLogin, BorderLayout.CENTER);
         this.add(pnlMiddle, BorderLayout.CENTER);
-    }
-
-    private JPanel createPanel(String text) {
-        JPanel panel = new JPanel();
-        panel.setBackground(Color.WHITE);
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-        JLabel label = new JLabel(text);
-        label.setForeground(Color.BLACK);
-        label.setBackground(Color.RED);
-        label.setFont(STD_FONT_BOLD);
-        panel.add(label);
-        return panel;
-    }
-
-    private JTextField createTextField(Boolean isPassword, int width, int height) {
-        JTextField textField = isPassword ? new JPasswordField(1) : new JTextField(2);
-        textField.setBackground(Color.WHITE);
-        textField.setFont(STD_FONT);
-
-        Dimension size = new Dimension(width, height);
-        GraphicsUtils.defineSize(textField, size);
-
-        return textField;
-    }
-
-    private JButton createButton(String text, Color background, Color foreground, int width, int height) {
-        JButton button = new JButton(text);
-        button.setBackground(background);
-        button.setForeground(foreground);
-        button.setFont(STD_FONT_BOLD);
-
-        Dimension size = new Dimension(width, height);
-        GraphicsUtils.defineSize(button, size);
-
-        return button;
     }
 
     private void singUpSuccess(ActionEvent e) {

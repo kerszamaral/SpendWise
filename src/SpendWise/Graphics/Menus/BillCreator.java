@@ -110,7 +110,7 @@ public class BillCreator extends Screen {
         pnlCentral.add(pnlTypeSpecific);
 
         Offsets offsetsBtn = new Offsets(10, 10, 400, 20);
-        GraphicsUtils.createButton(this.getBlankPanel(PanelOrder.SOUTH), offsetsBtn,
+        GraphicsUtils.initializeButton(this.getBlankPanel(PanelOrder.SOUTH), offsetsBtn,
                 "Submit", ACCENT_COLOR,
                 e -> submit(e));
     }

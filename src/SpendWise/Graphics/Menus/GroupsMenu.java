@@ -48,7 +48,7 @@ public class GroupsMenu extends Screen {
         innerPanels[PanelOrder.CENTRAL.ordinal()] = pnlGroupManagement;
         
         centerPanel.add(pnlGroupManagement, BorderLayout.CENTER);
-        GraphicsUtils.createButton(this.getBlankPanel(PanelOrder.SOUTH), new Offsets(10, 10, 400, 20), "Save", ACCENT_COLOR,
+        GraphicsUtils.initializeButton(this.getBlankPanel(PanelOrder.SOUTH), new Offsets(10, 10, 400, 20), "Save", ACCENT_COLOR,
         this::saveButton);
     }
 
