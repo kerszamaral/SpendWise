@@ -10,15 +10,18 @@ import javax.swing.*;
 import SpendWise.User;
 import SpendWise.Graphics.PopUp;
 import SpendWise.Graphics.Screen;
+import SpendWise.Managers.UserManager;
 
 public class editAccount extends PopUp {
     private User loggedUser;
     private JPanel pnlUserData;
+    private UserManager userManager;
 
-    public editAccount(Screen parent, String title, User loggedUser, JPanel pnlUserData) {
+    public editAccount(Screen parent, String title, User loggedUser, JPanel pnlUserData, UserManager userManager) {
         super(parent, title);
         this.loggedUser = loggedUser;
         this.pnlUserData = pnlUserData;
+        this.userManager = userManager;
     }
 
     @Override
@@ -47,19 +50,19 @@ public class editAccount extends PopUp {
         JTextField fieldEmail = new JTextField(loggedUser.getEmail(), 15);
         editPanel.add(fieldEmail);
 
-        JLabel txtPassword = new JLabel("New password: ");
-        txtPassword.setForeground(Color.WHITE);
-        txtPassword.setFont(STD_FONT);
-        editPanel.add(txtPassword);
-        JTextField fieldPassword = new JTextField("", 15);
-        editPanel.add(fieldPassword);
-
         JLabel txtOldPassword = new JLabel("Old password: ");
         txtOldPassword.setForeground(Color.WHITE);
         txtOldPassword.setFont(STD_FONT);
         editPanel.add(txtOldPassword);
         JTextField fieldOldPassword = new JTextField("", 15);
         editPanel.add(fieldOldPassword);
+
+        JLabel txtPassword = new JLabel("New password: ");
+        txtPassword.setForeground(Color.WHITE);
+        txtPassword.setFont(STD_FONT);
+        editPanel.add(txtPassword);
+        JTextField fieldPassword = new JTextField("", 15);
+        editPanel.add(fieldPassword);
 
         this.setCentralPanel(editPanel);
 
@@ -78,10 +81,14 @@ public class editAccount extends PopUp {
         btnApplyChanges.setBackground(Color.BLACK);
         btnApplyChanges.setForeground(BACKGROUND_COLOR);
         btnApplyChanges.addActionListener(actionEvent -> {
+            userManager.removeUser(loggedUser);
             loggedUser.setName(fieldName.getText());
             loggedUser.setUsername(fieldUsername.getText());
             loggedUser.setEmail(fieldEmail.getText());
-            loggedUser.changePassword(txtOldPassword.getText(), txtPassword.getText());
+            String oldPassword = fieldOldPassword.getText();
+            String newPassword = fieldPassword.getText();
+            loggedUser.changePassword(oldPassword, newPassword);
+            userManager.addUser(loggedUser);
             this.updateAccountFields();
             this.dispose();
         });
@@ -116,7 +123,7 @@ public class editAccount extends PopUp {
         addTextField("Name: ", loggedUser.getName(), 100);
         addTextField("Username: ", loggedUser.getUsername(), 100);
         addTextField("E-mail: ", loggedUser.getEmail(), 100);
-        addPasswordField("Password: ", "", 100);
+        addPasswordField("Password: ", "*".repeat(loggedUser.getPasswordSize()), 100);
         pnlUserData.revalidate();
         pnlUserData.repaint();
     }

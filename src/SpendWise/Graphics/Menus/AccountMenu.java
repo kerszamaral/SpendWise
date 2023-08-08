@@ -8,15 +8,18 @@ import javax.swing.*;
 import SpendWise.Graphics.PopUp;
 import SpendWise.Graphics.Screen;
 import SpendWise.Graphics.PopUps.editAccount;
+import SpendWise.Managers.UserManager;
 import SpendWise.Utils.PanelOrder;
 import SpendWise.User;
 
 public class AccountMenu extends Screen {
     private JPanel pnlUserData;
     private User loggedUser;
+    private UserManager userManager;
 
-    public AccountMenu(User loggedUser) {
-        this.loggedUser = loggedUser;
+    public AccountMenu(UserManager userManager) {
+        this.userManager = userManager;
+        this.loggedUser = userManager.getLoggedUser();
         pnlUserData = new JPanel();
         this.initialize();
     }
@@ -57,7 +60,7 @@ public class AccountMenu extends Screen {
     }
 
     private void edit(ActionEvent e) {
-        PopUp editAccount = new editAccount(this, "Edit Account", loggedUser, pnlUserData);
+        PopUp editAccount = new editAccount(this, "Edit Account", loggedUser, pnlUserData, userManager);
         editAccount.run();
     }
 }

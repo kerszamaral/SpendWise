@@ -80,7 +80,7 @@ public class MainMenu extends JFrame {
     }
 
     private void createMenus(User loggedUser) {
-        screens[Contexts.ACCOUNT.ordinal()] = new AccountMenu(loggedUser);
+        screens[Contexts.ACCOUNT.ordinal()] = new AccountMenu(userManager);
         screens[Contexts.BILL.ordinal()] = new BillCreator(loggedUser.getExpensesManager());
         screens[Contexts.CHARTS.ordinal()] = new ChartsMenu();
         screens[Contexts.GROUPS.ordinal()] = new GroupsMenu();
