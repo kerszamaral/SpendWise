@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -25,31 +26,20 @@ public abstract class Screen extends JPanel {
 
         blankPanels = new JPanel[PanelOrder.values().length];
 
+        createOffsets(this, 50, 50, 100, 0);
+        int i = 0;
+        for (Component component : this.getComponents()) {
+            if (component instanceof JPanel) {
+                blankPanels[i] = (JPanel) component;
+                i++;
+            }
+        }
+
         blankPanels[PanelOrder.CENTRAL.ordinal()] = new JPanel();
         JPanel pnlMiddle = blankPanels[PanelOrder.CENTRAL.ordinal()];
         pnlMiddle.setLayout(new BoxLayout(pnlMiddle, BoxLayout.Y_AXIS));
         pnlMiddle.setBackground(Color.WHITE);
         this.add(pnlMiddle, BorderLayout.CENTER);
-
-        blankPanels[PanelOrder.NORTH.ordinal()] = new JPanel();
-        JPanel blankPanelNorth = blankPanels[PanelOrder.NORTH.ordinal()];
-        initializeBlankPanel(blankPanelNorth, 100, 50);
-        this.add(blankPanelNorth, BorderLayout.NORTH);
-
-        blankPanels[PanelOrder.WEST.ordinal()] = new JPanel();
-        JPanel blankPanelWest = blankPanels[PanelOrder.WEST.ordinal()];
-        initializeBlankPanel(blankPanelWest, 100, 100);
-        this.add(blankPanelWest, BorderLayout.WEST);
-
-        blankPanels[PanelOrder.EAST.ordinal()] = new JPanel();
-        JPanel blankPanelEast = blankPanels[PanelOrder.EAST.ordinal()];
-        initializeBlankPanel(blankPanelEast, 0, 100);
-        this.add(blankPanelEast, BorderLayout.EAST);
-
-        blankPanels[PanelOrder.SOUTH.ordinal()] = new JPanel();
-        JPanel blankPanelSouth = blankPanels[PanelOrder.SOUTH.ordinal()];
-        initializeBlankPanel(blankPanelSouth, 100, 50);
-        this.add(blankPanelSouth, BorderLayout.SOUTH);
     }
 
     public static void initializeBlankPanel(JPanel blankPanel, int width, int height) {
