@@ -3,10 +3,11 @@ package Tests.Managers;
 import org.junit.jupiter.api.*;
 import static org.junit.Assert.*;
 import java.time.LocalDate;
-import SpendWise.Utils.ExpenseType;
+
 import SpendWise.Bills.Expense;
 import SpendWise.Bills.Fixed;
 import SpendWise.Managers.ExpensesManager;
+import SpendWise.Utils.Enums.ExpenseType;
 
 public class ExpensesManagerTest {
     private ExpensesManager expensesManager;

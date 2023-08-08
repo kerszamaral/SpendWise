@@ -2,13 +2,13 @@ package SpendWise;
 
 import SpendWise.Graphics.Menus.*;
 import SpendWise.Graphics.*;
-import SpendWise.Utils.Contexts;
 
 import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import SpendWise.Managers.UserManager;
+import SpendWise.Utils.Enums.Contexts;
 
 public class MainMenu extends JFrame {
     private final static String APP_NAME = "SpendWise";

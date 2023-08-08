@@ -11,8 +11,8 @@ import SpendWise.Graphics.PopUp;
 import SpendWise.Graphics.Screen;
 import SpendWise.Managers.UserManager;
 import SpendWise.Utils.GraphicsUtils;
-import SpendWise.Utils.PanelOrder;
-import SpendWise.Utils.SignUpLabels;
+import SpendWise.Utils.Enums.PanelOrder;
+import SpendWise.Utils.Enums.SignUpLabels;
 
 public class signUp extends PopUp {
     private JTextField[] signUpFields;

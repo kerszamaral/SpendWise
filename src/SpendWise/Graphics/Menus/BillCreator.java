@@ -20,9 +20,9 @@ import SpendWise.Bills.Expense;
 import SpendWise.Bills.OneTime;
 import SpendWise.Graphics.Screen;
 import SpendWise.Managers.ExpensesManager;
-import SpendWise.Utils.ExpenseType;
 import SpendWise.Utils.GraphicsUtils;
-import SpendWise.Utils.PanelOrder;
+import SpendWise.Utils.Enums.ExpenseType;
+import SpendWise.Utils.Enums.PanelOrder;
 
 public class BillCreator extends Screen {
     private ExpensesManager expensesManager;

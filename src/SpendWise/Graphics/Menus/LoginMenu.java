@@ -10,7 +10,7 @@ import SpendWise.Graphics.Screen;
 import SpendWise.Graphics.PopUps.signUp;
 import SpendWise.Managers.UserManager;
 import SpendWise.Utils.GraphicsUtils;
-import SpendWise.Utils.PanelOrder;
+import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.Graphics.PopUp;
 
 public class LoginMenu extends Screen {

@@ -8,7 +8,7 @@ import java.awt.Color;
 import java.awt.Font;
 
 import SpendWise.Utils.GraphicsUtils;
-import SpendWise.Utils.PanelOrder;
+import SpendWise.Utils.Enums.PanelOrder;
 
 public abstract class Screen extends JPanel implements BlankPanels {
     protected final static Color BACKGROUND_COLOR = GraphicsUtils.BACKGROUND_COLOR;

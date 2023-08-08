@@ -3,7 +3,7 @@ package SpendWise.Managers;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import SpendWise.Bills.*;
-import SpendWise.Utils.ExpenseType;
+import SpendWise.Utils.Enums.ExpenseType;
 
 public class ExpensesManager {
     private ArrayList<Expense> expenses;

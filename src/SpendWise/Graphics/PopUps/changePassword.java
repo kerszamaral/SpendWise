@@ -12,7 +12,7 @@ import SpendWise.User;
 import SpendWise.Graphics.PopUp;
 import SpendWise.Graphics.Screen;
 import SpendWise.Utils.GraphicsUtils;
-import SpendWise.Utils.PanelOrder;
+import SpendWise.Utils.Enums.PanelOrder;
 
 public class changePassword extends PopUp {
     private User loggedUser;

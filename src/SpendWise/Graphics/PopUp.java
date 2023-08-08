@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import SpendWise.Utils.GraphicsUtils;
-import SpendWise.Utils.PanelOrder;
+import SpendWise.Utils.Enums.PanelOrder;
 
 public abstract class PopUp extends JFrame implements BlankPanels {
     protected final static Color BACKGROUND_COLOR = GraphicsUtils.BACKGROUND_COLOR;
