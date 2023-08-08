@@ -80,6 +80,17 @@ public abstract class GraphicsUtils {
         return blankPanels;
     }
 
+    public static JPanel[] createPanelWithCenter(JPanel mainPanel, Offsets innerOffsets, Color innerColor) {
+        final int OUTER_LEFT = 100;
+        final int OUTER_RIGHT = 0;
+        Offsets outerOffsets = new Offsets(innerOffsets.getNorth(), innerOffsets.getSouth(), OUTER_LEFT, OUTER_RIGHT);
+        JPanel[] outerBlankPanels = createOffsets(mainPanel, outerOffsets, BACKGROUND_COLOR);
+
+        JPanel[] innerBlankPanels = createOffsets(outerBlankPanels[PanelOrder.CENTRAL.ordinal()], innerOffsets,
+                innerColor);
+        return innerBlankPanels;
+    }
+
     public static void setBorder(JTextField field, Color color) {
         Border border = BorderFactory.createLineBorder(color);
         field.setBorder(border);
