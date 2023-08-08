@@ -1,4 +1,4 @@
-package SpendWise.Utils;
+package SpendWise.Utils.Enums;
 
 public enum Contexts {
     ACCOUNT("Account"),

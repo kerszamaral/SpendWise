@@ -1,4 +1,4 @@
-package SpendWise.Utils;
+package SpendWise.Utils.Enums;
 
 import java.awt.BorderLayout;
 

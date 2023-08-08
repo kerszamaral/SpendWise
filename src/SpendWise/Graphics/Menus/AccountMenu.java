@@ -10,7 +10,7 @@ import SpendWise.Graphics.Screen;
 import SpendWise.Graphics.PopUps.changePassword;
 import SpendWise.Managers.UserManager;
 import SpendWise.Utils.GraphicsUtils;
-import SpendWise.Utils.PanelOrder;
+import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.User;
 
 public class AccountMenu extends Screen {

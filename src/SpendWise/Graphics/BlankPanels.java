@@ -2,7 +2,7 @@ package SpendWise.Graphics;
 
 import javax.swing.JPanel;
 
-import SpendWise.Utils.PanelOrder;
+import SpendWise.Utils.Enums.PanelOrder;
 
 public interface BlankPanels {
     /**

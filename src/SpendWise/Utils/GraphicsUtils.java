@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.Border;
 
+import SpendWise.Utils.Enums.PanelOrder;
+
 public abstract class GraphicsUtils {
     public final static Color BACKGROUND_COLOR = new Color(98, 210, 162);
     public final static Font STD_FONT = new Font("Arial", Font.PLAIN, 14);
