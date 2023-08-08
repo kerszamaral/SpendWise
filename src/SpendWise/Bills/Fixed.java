@@ -60,4 +60,14 @@ public class Fixed extends Expense {
     public double calculatePayment() {
         return this.getValue();
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Triple<LocalDate, LocalDate, Double> triple : this.valueHistory) {
+            sb.append(triple.getFirst() + " " + triple.getSecond() + " " + triple.getThird() + " || ");
+        }
+
+        return super.toString() + " | Value History: " + sb.toString();
+    }
 }

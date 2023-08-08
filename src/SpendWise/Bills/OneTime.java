@@ -26,4 +26,9 @@ public class OneTime extends Expense {
     public void pay() {
         this.isPaid = true;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + " | Paid: " + isPaid;
+    }
 }

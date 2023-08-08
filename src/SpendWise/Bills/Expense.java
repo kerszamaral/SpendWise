@@ -18,6 +18,11 @@ public abstract class Expense {
         this.description = description;
     }
 
+    public String toString() {
+        return "Value: " + value + " | Essential: " + isEssential + " | Date: " + date + " | Description: "
+                + description;
+    }
+
     /**
      * @return the value
      */
