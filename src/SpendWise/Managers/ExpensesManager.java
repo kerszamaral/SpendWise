@@ -12,8 +12,34 @@ public class ExpensesManager {
         this.expenses = new ArrayList<Expense>();
     }
 
+    public boolean addExpense(Expense exp) {
+        expenses.add(exp);
+        return true;
+    }
+
+    public boolean createFixedExpense(double value, boolean isEssential, LocalDate date, String description) {
+        Expense exp = new Fixed(value, isEssential, date, description);
+        expenses.add(exp);
+        return true;
+    }
+
+    public boolean createOneTimeExpense(double value, boolean isEssential, LocalDate date, String description,
+            boolean isPaid) {
+        Expense exp = new OneTime(value, isEssential, date, description, isPaid);
+        expenses.add(exp);
+        return true;
+    }
+
+    public boolean createRecurringExpense(double value, boolean isEssential, LocalDate date, String description,
+            LocalDate endDate) {
+        Expense exp = new Recurring(value, isEssential, date, description, endDate);
+        expenses.add(exp);
+        return true;
+    }
+
     public boolean createExpense(double value, boolean isEssential, LocalDate date, String description,
             ExpenseType type,
+            boolean isPaid,
             LocalDate endDate) {
         Expense exp;
         switch (type) {
@@ -23,7 +49,7 @@ public class ExpensesManager {
                 return true;
 
             case ONETIME:
-                exp = new OneTime(value, isEssential, date, description, false);
+                exp = new OneTime(value, isEssential, date, description, isPaid);
                 expenses.add(exp);
                 return true;
 
