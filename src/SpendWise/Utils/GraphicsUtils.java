@@ -126,11 +126,12 @@ public abstract class GraphicsUtils {
         return new Pair<JLabel, JTextField>(lbl, textField);
     }
 
-    public static void addTextField(JPanel panel, String label, String userValue, int width, Boolean isPassword,
+    public static JTextField addTextField(JPanel panel, String label, String userValue, int width, Boolean isPassword,
             Boolean isEditable) {
         Pair<JLabel, JTextField> pair = createTextField(label, userValue, width, isPassword, isEditable);
         panel.add(pair.getKey());
         panel.add(pair.getValue());
+        return pair.getValue();
     }
 
     public static JPanel createPanelText(String label, String userValue, int width, Boolean isPassword,
