@@ -16,6 +16,10 @@ public class AccountMenu extends Screen {
     private JPanel pnlUserData;
     private User loggedUser;
     private UserManager userManager;
+    private JButton btnEditAccount;
+    private boolean isEditing = false;
+    private JTextField txtName, txtUsername, txtEmail;
+    private JPasswordField txtPassword;
 
     public AccountMenu(UserManager userManager) {
         this.userManager = userManager;
@@ -32,34 +36,29 @@ public class AccountMenu extends Screen {
         pnlUserData.setBackground(BACKGROUND_COLOR);
         pnlUserData.setLayout(new BoxLayout(pnlUserData, BoxLayout.Y_AXIS));
 
-        addTextField("Name: ", loggedUser.getName(), 100);
-        addTextField("Username: ", loggedUser.getUsername(), 100);
-        addTextField("E-mail: ", loggedUser.getEmail(), 100);
-        addPasswordField("Password: ", "*".repeat(loggedUser.getPasswordSize()), 100);
+        txtName = addTextField("Name: ", loggedUser.getName(), 100, false);
+        addTextField("Username: ", loggedUser.getUsername(), 100, false);
+        addTextField("E-mail: ", loggedUser.getEmail(), 100, false);
+        addTextField("Password: ", "*".repeat(loggedUser.getPasswordSize()), 100, true);
 
-        Screen.createButton(this.getBlankPanel(PanelOrder.SOUTH), "Edit Account", e -> edit(e));
+        btnEditAccount = Screen.createButton(this.getBlankPanel(PanelOrder.SOUTH), "Edit Account", e -> edit(e));
     }
 
-    private void addTextField(String label, String userValue, int width) {
+    private JTextField addTextField(String label, String userValue, int width, boolean isPassword) {
         JLabel lbl = new JLabel(label);
         pnlUserData.add(lbl);
 
-        JTextField textField = new JTextField(userValue, 20);
+        JTextField textField = isPassword ? new JPasswordField(userValue, 20) : new JTextField(userValue, 20);
         textField.setEditable(false);
         textField.setPreferredSize(new Dimension(width, textField.getPreferredSize().height));
         pnlUserData.add(textField);
-    }
 
-    private void addPasswordField(String label, String userValue, int width) {
-        JLabel lbl = new JLabel(label);
-        pnlUserData.add(lbl);
-        JPasswordField passwordField = new JPasswordField(userValue, 20);
-        passwordField.setEditable(false);
-        passwordField.setPreferredSize(new Dimension(width, passwordField.getPreferredSize().height));
-        pnlUserData.add(passwordField);
+        return textField;
     }
 
     private void edit(ActionEvent e) {
+        // isEditing = !isEditing;
+        // btnEditAccount.setText(isEditing ? "Apply Changes" : "Edit Account");
         PopUp editAccount = new editAccount(this, "Edit Account", loggedUser, pnlUserData, userManager);
         editAccount.run();
     }
