@@ -44,7 +44,8 @@ public class BillCreator extends Screen {
 
     @Override
     protected void initialize() {
-        super.initialize();
+        blankPanels = GraphicsUtils.createOffsets(this, DEFAULT_OFFSETS);
+
         pnlCentral = super.getBlankPanel(PanelOrder.CENTRAL);
         pnlCentral.setBackground(BACKGROUND_COLOR);
         pnlCentral.setLayout(new GridLayout(8, 2));

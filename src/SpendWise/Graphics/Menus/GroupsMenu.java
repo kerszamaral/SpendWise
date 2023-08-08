@@ -28,7 +28,8 @@ public class GroupsMenu extends Screen {
 
     @Override
     protected void initialize() {
-        super.initialize();
+        blankPanels = GraphicsUtils.createOffsets(this, DEFAULT_OFFSETS);
+
         pnlGroupManagement = super.getBlankPanel(PanelOrder.CENTRAL);
         pnlGroupManagement.setLayout(new BoxLayout(pnlGroupManagement, BoxLayout.Y_AXIS));
 

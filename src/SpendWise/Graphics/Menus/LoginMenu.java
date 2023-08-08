@@ -31,8 +31,6 @@ public class LoginMenu extends Screen {
 
     @Override
     protected void initialize() {
-        super.initialize();
-
         this.setLayout(new BorderLayout());
 
         Offsets offsets = new Offsets(100, 100, 270, 270);

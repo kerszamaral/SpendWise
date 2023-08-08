@@ -31,12 +31,10 @@ public class AccountMenu extends Screen {
 
     @Override
     protected void initialize() {
-        super.initialize();
-
         Offsets offsets = new Offsets(100, 100, 100, 100);
-        JPanel[] panels = GraphicsUtils.createOffsets(super.getBlankPanel(PanelOrder.CENTRAL), offsets, ACCENT_COLOR);
+        blankPanels = GraphicsUtils.createPanelWithCenter(this, offsets, ACCENT_COLOR);
 
-        pnlUserData = panels[PanelOrder.CENTRAL.ordinal()];
+        pnlUserData = getBlankPanel(PanelOrder.CENTRAL);
         pnlUserData.setBackground(BACKGROUND_COLOR);
         pnlUserData.setLayout(new BoxLayout(pnlUserData, BoxLayout.Y_AXIS));
 

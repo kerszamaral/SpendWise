@@ -1,6 +1,7 @@
 package SpendWise.Graphics.Menus;
 
 import SpendWise.Graphics.Screen;
+import SpendWise.Utils.GraphicsUtils;
 
 public class ChartsMenu extends Screen {
     // TODO implement ChartsMenu
@@ -10,6 +11,6 @@ public class ChartsMenu extends Screen {
 
     @Override
     protected void initialize() {
-        super.initialize();
+        blankPanels = GraphicsUtils.createOffsets(this, DEFAULT_OFFSETS);
     }
 }
