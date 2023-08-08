@@ -1,14 +1,13 @@
 package SpendWise.Graphics.Menus;
 
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 
 import SpendWise.Graphics.PopUp;
 import SpendWise.Graphics.Screen;
-// import SpendWise.Graphics.PopUps.editAccount;
+import SpendWise.Graphics.PopUps.editAccount;
 import SpendWise.Utils.PanelOrder;
 import SpendWise.User;
 
@@ -58,7 +57,7 @@ public class AccountMenu extends Screen {
     }
 
     private void edit(ActionEvent e) {
-        // PopUp editAccount = new editAccount();
-        // editAccount.run();
+        PopUp editAccount = new editAccount(this, "Edit Account", loggedUser, pnlUserData);
+        editAccount.run();
     }
 }
