@@ -36,7 +36,7 @@ public class changePassword extends PopUp {
 
         // Creating the sign up panel and it's fields
         JPanel editPanel = new JPanel(new GridLayout(6, 1));
-        editPanel.setBackground(ACCENT_COLOR);
+        editPanel.setBackground(BACKGROUND_COLOR);
 
         fieldRepeatPassword = (JPasswordField) GraphicsUtils.addTextFieldCenter(editPanel, "Repeat New Password:", "",
                 15, true, true);

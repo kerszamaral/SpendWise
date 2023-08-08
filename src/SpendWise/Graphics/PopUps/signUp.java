@@ -34,7 +34,7 @@ public class signUp extends PopUp {
         blankPanels = GraphicsUtils.initializeOffsets((JPanel) this.getContentPane(), offsets);
 
         JPanel signUpPanel = new JPanel(new GridLayout(SignUpLabels.values().length * 2, 1));
-        signUpPanel.setBackground(ACCENT_COLOR);
+        signUpPanel.setBackground(BACKGROUND_COLOR);
 
         final int TEXT_WIDTH = 200;
 
