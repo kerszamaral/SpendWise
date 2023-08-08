@@ -118,6 +118,12 @@ public abstract class Screen extends JPanel implements BlankPanels {
         panel.repaint();
     }
 
+    public static void clearErrorMessage(JPanel panel) {
+        panel.removeAll();
+        panel.revalidate();
+        panel.repaint();
+    }
+
     public static void showMessage(JPanel panel, String msg, Color color) {
         panel.removeAll();
         JLabel errorLabel = new JLabel(msg);

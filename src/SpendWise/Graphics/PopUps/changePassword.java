@@ -4,24 +4,28 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 
 import SpendWise.User;
 import SpendWise.Graphics.PopUp;
 import SpendWise.Graphics.Screen;
-import SpendWise.Managers.UserManager;
+import SpendWise.Utils.PanelOrder;
 
-public class editAccount extends PopUp {
+public class changePassword extends PopUp {
     private User loggedUser;
     private JPanel pnlUserData;
-    private UserManager userManager;
+    private String newPassword;
 
-    public editAccount(Screen parent, String title, User loggedUser, JPanel pnlUserData, UserManager userManager) {
+    JTextField fieldRepeatPassword;
+    JTextField fieldOldPassword;
+
+    public changePassword(Screen parent, String title, User loggedUser, String newPassword) {
         super(parent, title);
         this.loggedUser = loggedUser;
-        this.pnlUserData = pnlUserData;
-        this.userManager = userManager;
+        this.pnlUserData = parent.getBlankPanel(PanelOrder.CENTRAL);
+        this.newPassword = newPassword;
     }
 
     @Override
@@ -29,40 +33,19 @@ public class editAccount extends PopUp {
         JPanel editPanel = new JPanel(new GridLayout(6, 2));
         editPanel.setBackground(BACKGROUND_COLOR);
 
-        JLabel txtName = new JLabel("New name: ");
-        txtName.setForeground(Color.WHITE);
-        txtName.setFont(STD_FONT);
-        editPanel.add(txtName);
-        JTextField fieldName = new JTextField(loggedUser.getName(), 15);
-        editPanel.add(fieldName);
-
-        JLabel txtUsername = new JLabel("New username: ");
-        txtUsername.setForeground(Color.WHITE);
-        txtUsername.setFont(STD_FONT);
-        editPanel.add(txtUsername);
-        JTextField fieldUsername = new JTextField(loggedUser.getUsername(), 15);
-        editPanel.add(fieldUsername);
-
-        JLabel txtEmail = new JLabel("New e-mail: ");
-        txtEmail.setForeground(Color.WHITE);
-        txtEmail.setFont(STD_FONT);
-        editPanel.add(txtEmail);
-        JTextField fieldEmail = new JTextField(loggedUser.getEmail(), 15);
-        editPanel.add(fieldEmail);
+        JLabel txtRepeatPassword = new JLabel("Repeat New password: ");
+        txtRepeatPassword.setForeground(Color.WHITE);
+        txtRepeatPassword.setFont(STD_FONT);
+        editPanel.add(txtRepeatPassword);
+        fieldRepeatPassword = new JTextField("", 15);
+        editPanel.add(fieldRepeatPassword);
 
         JLabel txtOldPassword = new JLabel("Old password: ");
         txtOldPassword.setForeground(Color.WHITE);
         txtOldPassword.setFont(STD_FONT);
         editPanel.add(txtOldPassword);
-        JTextField fieldOldPassword = new JTextField("", 15);
+        fieldOldPassword = new JTextField("", 15);
         editPanel.add(fieldOldPassword);
-
-        JLabel txtPassword = new JLabel("New password: ");
-        txtPassword.setForeground(Color.WHITE);
-        txtPassword.setFont(STD_FONT);
-        editPanel.add(txtPassword);
-        JTextField fieldPassword = new JTextField("", 15);
-        editPanel.add(fieldPassword);
 
         this.setLayout(new BorderLayout());
         Screen.createOffsets((JPanel) this.getContentPane(), 50, 0, 100, 100);
@@ -79,26 +62,34 @@ public class editAccount extends PopUp {
         pnlSouth.add(pnlSouthEast, BorderLayout.EAST);
         pnlSouth.add(pnlSouthWest, BorderLayout.WEST);
 
-        JButton btnApplyChanges = new JButton("Apply Changes");
+        JButton btnApplyChanges = new JButton("Change Password");
         btnApplyChanges.setBackground(Color.BLACK);
         btnApplyChanges.setForeground(BACKGROUND_COLOR);
-        btnApplyChanges.addActionListener(actionEvent -> {
-            userManager.removeUser(loggedUser);
-            loggedUser.setName(fieldName.getText());
-            loggedUser.setUsername(fieldUsername.getText());
-            loggedUser.setEmail(fieldEmail.getText());
-            String oldPassword = fieldOldPassword.getText();
-            String newPassword = fieldPassword.getText();
-            loggedUser.changePassword(oldPassword, newPassword);
-            userManager.addUser(loggedUser);
-            this.updateAccountFields();
-            this.dispose();
-        });
+        btnApplyChanges.addActionListener(e -> updatePassword(e));
         pnlSouth.add(btnApplyChanges, BorderLayout.CENTER);
 
         this.add(pnlSouth, BorderLayout.SOUTH);
 
         this.setVisible(true);
+    }
+
+    private void updatePassword(ActionEvent e) {
+        String oldPassword = fieldOldPassword.getText();
+        String repeatNewPassword = fieldRepeatPassword.getText();
+
+        if (!newPassword.equals(repeatNewPassword)) {
+            JOptionPane.showMessageDialog(this, "New Passwords do not match!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (loggedUser.changePassword(oldPassword, newPassword)) {
+            this.dispose();
+            this.updateAccountFields();
+            JOptionPane.showMessageDialog(this, "Password changed successfully!", "Success",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Old Password Incorrect!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void addTextField(String label, String userValue, int width) {

@@ -7,7 +7,7 @@ import javax.swing.*;
 
 import SpendWise.Graphics.PopUp;
 import SpendWise.Graphics.Screen;
-import SpendWise.Graphics.PopUps.editAccount;
+import SpendWise.Graphics.PopUps.changePassword;
 import SpendWise.Managers.UserManager;
 import SpendWise.Utils.PanelOrder;
 import SpendWise.User;
@@ -18,8 +18,7 @@ public class AccountMenu extends Screen {
     private UserManager userManager;
     private JButton btnEditAccount;
     private boolean isEditing = false;
-    private JTextField txtName, txtUsername, txtEmail;
-    private JPasswordField txtPassword;
+    private JTextField[] txtFields;
 
     public AccountMenu(UserManager userManager) {
         this.userManager = userManager;
@@ -36,10 +35,12 @@ public class AccountMenu extends Screen {
         pnlUserData.setBackground(BACKGROUND_COLOR);
         pnlUserData.setLayout(new BoxLayout(pnlUserData, BoxLayout.Y_AXIS));
 
-        txtName = addTextField("Name: ", loggedUser.getName(), 100, false);
-        addTextField("Username: ", loggedUser.getUsername(), 100, false);
-        addTextField("E-mail: ", loggedUser.getEmail(), 100, false);
-        addTextField("Password: ", "*".repeat(loggedUser.getPasswordSize()), 100, true);
+        txtFields = new JTextField[4];
+
+        txtFields[0] = addTextField("Name: ", loggedUser.getName(), 100, false);
+        txtFields[1] = addTextField("Username: ", loggedUser.getUsername(), 100, false);
+        txtFields[2] = addTextField("E-mail: ", loggedUser.getEmail(), 100, false);
+        txtFields[3] = addTextField("Password: ", "*".repeat(loggedUser.getPasswordSize()), 100, true);
 
         btnEditAccount = Screen.createButton(this.getBlankPanel(PanelOrder.SOUTH), "Edit Account", e -> edit(e));
     }
@@ -57,9 +58,64 @@ public class AccountMenu extends Screen {
     }
 
     private void edit(ActionEvent e) {
-        // isEditing = !isEditing;
-        // btnEditAccount.setText(isEditing ? "Apply Changes" : "Edit Account");
-        PopUp editAccount = new editAccount(this, "Edit Account", loggedUser, pnlUserData, userManager);
-        editAccount.run();
+        boolean nextState = !isEditing;
+
+        JTextField txtName = txtFields[0];
+        JTextField txtUsername = txtFields[1];
+        JTextField txtEmail = txtFields[2];
+        JPasswordField txtPassword = (JPasswordField) txtFields[3];
+
+        Screen.clearErrorMessage(super.getBlankPanel(PanelOrder.NORTH));
+        if (!nextState) {
+            for (JTextField txtField : txtFields) {
+                Screen.setErrorBorder(txtField, false);
+                if (txtField.getText().isEmpty() && !(txtField instanceof JPasswordField)) {
+                    Screen.setErrorBorder(txtField, true);
+                    Screen.showErrorMessage(super.getBlankPanel(PanelOrder.NORTH),
+                            "Please fill all Non Password fields");
+                    nextState = true;
+                }
+            }
+        }
+
+        // Decision to edit or not based on previous checks
+        if (nextState) {
+            txtPassword = (JPasswordField) txtFields[3];
+            txtPassword.setText("");
+        } else {
+            String newName = txtName.getText();
+            String newUsername = txtUsername.getText();
+            String newEmail = txtEmail.getText();
+            String newPassword = new String(txtPassword.getPassword());
+
+            if (!loggedUser.getName().equals(newName)) {
+                loggedUser.setName(newName);
+            }
+
+            if (!loggedUser.getUsername().equals(newUsername)) {
+                userManager.changeUsername(loggedUser.getUsername(), newUsername);
+            }
+
+            if (!loggedUser.getEmail().equals(newEmail)) {
+                loggedUser.setEmail(newEmail);
+            }
+
+            if (!newPassword.isEmpty()) {
+                if (!loggedUser.checkPassword(newPassword)) {
+                    PopUp changePassword = new changePassword(this, "Change Password", loggedUser, newPassword);
+                    changePassword.run();
+                }
+            }
+
+            txtPassword.setText("*".repeat(loggedUser.getPasswordSize()));
+        }
+
+        btnEditAccount.setText(nextState ? "Apply Changes" : "Edit Account");
+
+        for (JTextField txtField : txtFields) {
+            txtField.setEditable(nextState);
+        }
+
+        isEditing = nextState;
     }
 }
