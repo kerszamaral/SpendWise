@@ -49,7 +49,7 @@ public class changePassword extends PopUp {
 
         this.setLayout(new BorderLayout());
         Offsets offsets = new Offsets(50, 0, 100, 100);
-        GraphicsUtils.createOffsets((JPanel) this.getContentPane(), offsets);
+        GraphicsUtils.initializeOffsets((JPanel) this.getContentPane(), offsets);
         this.add(editPanel, BorderLayout.CENTER);
 
         JPanel pnlSouth = new JPanel();

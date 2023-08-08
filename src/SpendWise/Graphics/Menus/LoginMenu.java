@@ -34,7 +34,7 @@ public class LoginMenu extends Screen {
         this.setLayout(new BorderLayout());
 
         Offsets offsets = new Offsets(100, 100, 270, 270);
-        GraphicsUtils.createOffsets(this, offsets);
+        GraphicsUtils.initializeOffsets(this, offsets);
         final int TEXT_WIDTH = 200;
         final int TEXT_HEIGHT = 30;
 
@@ -43,7 +43,7 @@ public class LoginMenu extends Screen {
         pnlMiddle.setLayout(new BorderLayout());
 
         Offsets middleOffsets = new Offsets(50, 50, 100, 100);
-        JPanel[] blankPanels = GraphicsUtils.createOffsets(pnlMiddle, middleOffsets, Color.WHITE);
+        JPanel[] blankPanels = GraphicsUtils.initializeOffsets(pnlMiddle, middleOffsets, Color.WHITE);
         pnlTop = blankPanels[PanelOrder.NORTH.ordinal()];
 
         JPanel pnlLogin = new JPanel();

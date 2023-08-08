@@ -11,6 +11,6 @@ public class ChartsMenu extends Screen {
 
     @Override
     protected void initialize() {
-        blankPanels = GraphicsUtils.createOffsets(this, DEFAULT_OFFSETS);
+        blankPanels = GraphicsUtils.initializeOffsets(this, DEFAULT_OFFSETS);
     }
 }

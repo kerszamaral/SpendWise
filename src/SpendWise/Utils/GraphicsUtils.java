@@ -23,7 +23,7 @@ public abstract class GraphicsUtils {
         initializeBlankPanel(blankPanel, width, height, BACKGROUND_COLOR);
     }
 
-    public static JPanel initializeBlankPanel(int width, int height) {
+    public static JPanel createBlankPanel(int width, int height) {
         JPanel blankPanel = new JPanel();
         initializeBlankPanel(blankPanel, width, height);
         return blankPanel;
@@ -32,15 +32,15 @@ public abstract class GraphicsUtils {
     public static JPanel[] createOffsets(Offsets offsets) {
         JPanel[] blankPanels = new JPanel[PanelOrder.values().length];
 
-        blankPanels[PanelOrder.NORTH.ordinal()] = initializeBlankPanel(0, offsets.getNorth());
+        blankPanels[PanelOrder.NORTH.ordinal()] = createBlankPanel(0, offsets.getNorth());
 
-        blankPanels[PanelOrder.WEST.ordinal()] = initializeBlankPanel(offsets.getWest(), 0);
+        blankPanels[PanelOrder.WEST.ordinal()] = createBlankPanel(offsets.getWest(), 0);
 
         blankPanels[PanelOrder.CENTRAL.ordinal()] = new JPanel();
 
-        blankPanels[PanelOrder.EAST.ordinal()] = initializeBlankPanel(offsets.getEast(), 0);
+        blankPanels[PanelOrder.EAST.ordinal()] = createBlankPanel(offsets.getEast(), 0);
 
-        blankPanels[PanelOrder.SOUTH.ordinal()] = initializeBlankPanel(0, offsets.getSouth());
+        blankPanels[PanelOrder.SOUTH.ordinal()] = createBlankPanel(0, offsets.getSouth());
 
         return blankPanels;
     }
@@ -50,7 +50,7 @@ public abstract class GraphicsUtils {
      * 
      * @return the blank panels created, in the order of PanelOrder
      */
-    public static JPanel[] createOffsets(JPanel panel, Offsets offsets) {
+    public static JPanel[] initializeOffsets(JPanel panel, Offsets offsets) {
         panel.setLayout(new BorderLayout());
         JPanel[] blankPanels = createOffsets(offsets);
 
@@ -67,8 +67,8 @@ public abstract class GraphicsUtils {
      * 
      * @return the blank panels created, in the order of PanelOrder
      */
-    public static JPanel[] createOffsets(JPanel panel, Offsets offsets, Color color) {
-        JPanel[] blankPanels = createOffsets(panel, offsets);
+    public static JPanel[] initializeOffsets(JPanel panel, Offsets offsets, Color color) {
+        JPanel[] blankPanels = initializeOffsets(panel, offsets);
 
         for (PanelOrder pnl : PanelOrder.values()) {
             if (blankPanels[pnl.ordinal()] != null) {
@@ -84,9 +84,9 @@ public abstract class GraphicsUtils {
         final int OUTER_LEFT = 100;
         final int OUTER_RIGHT = 0;
         Offsets outerOffsets = new Offsets(innerOffsets.getNorth(), innerOffsets.getSouth(), OUTER_LEFT, OUTER_RIGHT);
-        JPanel[] outerBlankPanels = createOffsets(mainPanel, outerOffsets, BACKGROUND_COLOR);
+        JPanel[] outerBlankPanels = initializeOffsets(mainPanel, outerOffsets, BACKGROUND_COLOR);
 
-        JPanel[] innerBlankPanels = createOffsets(outerBlankPanels[PanelOrder.CENTRAL.ordinal()], innerOffsets,
+        JPanel[] innerBlankPanels = initializeOffsets(outerBlankPanels[PanelOrder.CENTRAL.ordinal()], innerOffsets,
                 innerColor);
         return innerBlankPanels;
     }
@@ -166,7 +166,7 @@ public abstract class GraphicsUtils {
         pnlSouth.setLayout(new BorderLayout());
 
         Offsets offsets = new Offsets(10, 10, 550, 0);
-        createOffsets(pnlSouth, offsets);
+        initializeOffsets(pnlSouth, offsets);
 
         // Creates the button itself and adds it to the east panel
         JButton btnEdit = new JButton(text);

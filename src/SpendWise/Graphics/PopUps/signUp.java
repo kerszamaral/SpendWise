@@ -52,7 +52,7 @@ public class signUp extends PopUp {
         this.setLayout(new BorderLayout());
 
         Offsets offsets = new Offsets(50, 0, 100, 100);
-        JPanel[] blankPanels = GraphicsUtils.createOffsets((JPanel) this.getContentPane(), offsets);
+        JPanel[] blankPanels = GraphicsUtils.initializeOffsets((JPanel) this.getContentPane(), offsets);
         pnlTop = blankPanels[PanelOrder.NORTH.ordinal()];
 
         this.add(signUpPanel, BorderLayout.CENTER);
@@ -62,7 +62,7 @@ public class signUp extends PopUp {
         pnlSouth.setBackground(BACKGROUND_COLOR);
 
         Offsets southOffsets = new Offsets(5, 20, 200, 200);
-        GraphicsUtils.createOffsets(pnlSouth, southOffsets);
+        GraphicsUtils.initializeOffsets(pnlSouth, southOffsets);
 
         // Creating the create account button
         JButton btnCreateAccount = new JButton("Create Account");
