@@ -8,13 +8,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import SpendWise.Managers.UserManager;
+import SpendWise.Utils.GraphicsUtils;
 import SpendWise.Utils.Enums.Contexts;
 
 public class MainMenu extends JFrame {
     private final static String APP_NAME = "SpendWise";
     private final static int SCREEN_WIDTH = 1920 / 2;
     private final static int SCREEN_HEIGHT = 1080 / 2;
-    private final static Color BACKGROUND_COLOR = Screen.getBackgroundColor();
+    private final static Color BACKGROUND_COLOR = GraphicsUtils.BACKGROUND_COLOR;
     private final static int BUTTON_MAX_WIDTH = 285;
     private final static int BUTTON_SPACING = 25;
     private Contexts currentContext;
