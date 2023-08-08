@@ -32,7 +32,7 @@ public class AccountMenu extends Screen {
         addTextField("Name: ", loggedUser.getName(), 100);
         addTextField("Username: ", loggedUser.getUsername(), 100);
         addTextField("E-mail: ", loggedUser.getEmail(), 100);
-        addPasswordField("Password: ", "ABACATINHO", 100);
+        addPasswordField("Password: ", "*".repeat(loggedUser.getPasswordSize()), 100);
 
         Screen.createButton(this, "Edit Account", e -> edit(e));
     }

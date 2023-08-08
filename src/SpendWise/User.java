@@ -123,4 +123,8 @@ public class User {
         this.monthlyLimit = monthlyLimit;
     }
 
+    public int getPasswordSize() {
+        return this.password.length();
+    }
+
 }
