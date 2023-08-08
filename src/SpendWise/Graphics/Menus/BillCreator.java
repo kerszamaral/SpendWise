@@ -99,9 +99,7 @@ public class BillCreator extends Screen {
                     break;
             }
 
-            fieldType.setMinimumSize(fieldSize);
-            fieldType.setPreferredSize(fieldSize);
-            fieldType.setMaximumSize(fieldSize);
+            GraphicsUtils.defineSize(fieldType, fieldSize);
 
             fieldType.setEnabled(true);
             fieldType.setBackground(ACCENT_COLOR);
@@ -150,9 +148,7 @@ public class BillCreator extends Screen {
                 recurringEndDateField = new JFormattedTextField(dateFormatter);
                 recurringEndDateField.setValue(new java.util.Date());
 
-                recurringEndDateField.setMinimumSize(fieldSize);
-                recurringEndDateField.setPreferredSize(fieldSize);
-                recurringEndDateField.setMaximumSize(fieldSize);
+                GraphicsUtils.defineSize(recurringEndDateField, fieldSize);
 
                 recurringEndDateField.setEnabled(true);
                 recurringEndDateField.setBackground(ACCENT_COLOR);

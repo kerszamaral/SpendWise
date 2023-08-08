@@ -106,9 +106,7 @@ public class LoginMenu extends Screen {
         textField.setFont(STD_FONT);
 
         Dimension size = new Dimension(width, height);
-        textField.setMinimumSize(size);
-        textField.setPreferredSize(size);
-        textField.setMaximumSize(size);
+        GraphicsUtils.defineSize(textField, size);
 
         return textField;
     }
@@ -120,9 +118,7 @@ public class LoginMenu extends Screen {
         button.setFont(STD_FONT_BOLD);
 
         Dimension size = new Dimension(width, height);
-        button.setMinimumSize(size);
-        button.setPreferredSize(size);
-        button.setMaximumSize(size);
+        GraphicsUtils.defineSize(button, size);
 
         return button;
     }

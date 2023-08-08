@@ -14,6 +14,12 @@ public abstract class GraphicsUtils {
     public final static Font STD_FONT = new Font("Arial", Font.PLAIN, 14);
     public final static Font STD_FONT_BOLD = new Font("Arial", Font.BOLD, 14);
 
+    public static void defineSize(JComponent component, Dimension size) {
+        component.setMinimumSize(size);
+        component.setPreferredSize(size);
+        component.setMaximumSize(size);
+    }
+
     public static void initializeBlankPanel(JPanel blankPanel, int width, int height, Color color) {
         blankPanel.setBackground(BACKGROUND_COLOR);
         blankPanel.setPreferredSize(new Dimension(width, height));
@@ -141,9 +147,7 @@ public abstract class GraphicsUtils {
         textField.setEditable(isEditable);
 
         Dimension size = new Dimension(width, 30);
-        textField.setMinimumSize(size);
-        textField.setPreferredSize(size);
-        textField.setMaximumSize(size);
+        defineSize(textField, size);
 
         return new Pair<JLabel, JTextField>(lbl, textField);
     }
