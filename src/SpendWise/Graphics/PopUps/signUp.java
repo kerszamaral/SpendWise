@@ -35,7 +35,7 @@ public class signUp extends PopUp {
             txtInfo.setHorizontalAlignment(JLabel.RIGHT);
             signUpPanel.add(txtInfo);
 
-            boolean isPassword = label.getLabelName().contains("Password");
+            boolean isPassword = label.getLabelName().toLowerCase().contains("password");
             signUpFields[label.ordinal()] = isPassword ? new JPasswordField(15) : new JTextField(15);
             signUpPanel.add(signUpFields[label.ordinal()]);
 

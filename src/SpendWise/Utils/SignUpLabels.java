@@ -5,7 +5,7 @@ public enum SignUpLabels {
     USERNAME("Username: "),
     EMAIL("E-mail: "),
     PASSWORD("Password: "),
-    REPEAT_PASSWORD("Repeat password: ");
+    REPEAT_PASSWORD("Repeat Password: ");
 
     private final String labelName;
 
