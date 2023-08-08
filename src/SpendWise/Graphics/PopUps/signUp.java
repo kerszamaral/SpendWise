@@ -9,11 +9,13 @@ import SpendWise.User;
 import SpendWise.Graphics.PopUp;
 import SpendWise.Graphics.Screen;
 import SpendWise.Managers.UserManager;
+import SpendWise.Utils.PanelOrder;
 import SpendWise.Utils.SignUpLabels;
 
 public class signUp extends PopUp {
     private JTextField[] signUpFields;
     private UserManager userManager;
+    private JPanel pnlTop;
 
     public signUp(Screen parent, String title, UserManager userManager) {
         super(parent, title);
@@ -43,7 +45,10 @@ public class signUp extends PopUp {
         }
 
         this.setLayout(new BorderLayout());
-        Screen.createOffsets((JPanel) this.getContentPane(), 50, 0, 100, 100);
+
+        JPanel[] blankPanels = Screen.createOffsets((JPanel) this.getContentPane(), 50, 0, 100, 100);
+        pnlTop = blankPanels[PanelOrder.NORTH.ordinal()];
+
         this.add(signUpPanel, BorderLayout.CENTER);
 
         // Creating the spacers for the layout to look nice
@@ -65,20 +70,20 @@ public class signUp extends PopUp {
     }
 
     private void createUser(ActionEvent e) {
-        Screen.errorString(this, "");
+        Screen.showErrorMessage(pnlTop, "");
 
         if (this.singUpFieldsEmpty()) {
-            Screen.errorString(this, "One or more fields are empty!");
+            Screen.showErrorMessage(pnlTop, "One or more fields are empty!");
             return;
         }
 
         if (!this.isEmailValid()) {
-            Screen.errorString(this, "Invalid e-mail!");
+            Screen.showErrorMessage(pnlTop, "Invalid e-mail!");
             return;
         }
 
         if (!this.isPasswordTheSame()) {
-            Screen.errorString(this, "Passwords do not match!");
+            Screen.showErrorMessage(pnlTop, "Passwords do not match!");
             return;
         }
 
@@ -90,23 +95,23 @@ public class signUp extends PopUp {
 
         User user = new User(username, name, email, password, 0, 0);
 
-        Screen.errorBorder(txtUsername, false);
+        Screen.setErrorBorder(txtUsername, false);
         if (userManager.createUser(user)) {
             this.dispose();
             JOptionPane.showMessageDialog(this, "User created successfully!");
         } else {
-            Screen.errorString(this, "Username already taken!");
-            Screen.errorBorder(txtUsername, true);
+            Screen.showErrorMessage(pnlTop, "Username already taken!");
+            Screen.setErrorBorder(txtUsername, true);
         }
     }
 
     private boolean singUpFieldsEmpty() {
         boolean isAnyFieldEmpty = false;
         for (JTextField field : signUpFields) {
-            Screen.errorBorder(field, false);
+            Screen.setErrorBorder(field, false);
             if (field.getText().isEmpty()) {
                 isAnyFieldEmpty = true;
-                Screen.errorBorder(field, true);
+                Screen.setErrorBorder(field, true);
             }
         }
         return isAnyFieldEmpty;
@@ -115,12 +120,12 @@ public class signUp extends PopUp {
     private boolean isEmailValid() {
         final String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
         JTextField emailField = signUpFields[SignUpLabels.EMAIL.ordinal()];
-        Screen.errorBorder(emailField, false);
+        Screen.setErrorBorder(emailField, false);
         String email = emailField.getText();
         if (email.matches(emailRegex)) {
             return true;
         } else {
-            Screen.errorBorder(emailField, true);
+            Screen.setErrorBorder(emailField, true);
             return false;
         }
     }
@@ -129,16 +134,16 @@ public class signUp extends PopUp {
         JPasswordField passwordField = (JPasswordField) signUpFields[SignUpLabels.PASSWORD.ordinal()];
         JPasswordField repeatPasswordField = (JPasswordField) signUpFields[SignUpLabels.REPEAT_PASSWORD.ordinal()];
 
-        Screen.errorBorder(passwordField, false);
-        Screen.errorBorder(repeatPasswordField, false);
+        Screen.setErrorBorder(passwordField, false);
+        Screen.setErrorBorder(repeatPasswordField, false);
 
         String password = new String(passwordField.getPassword());
         String repeatPassword = new String(repeatPasswordField.getPassword());
         if (password.equals(repeatPassword)) {
             return true;
         } else {
-            Screen.errorBorder(passwordField, true);
-            Screen.errorBorder(repeatPasswordField, true);
+            Screen.setErrorBorder(passwordField, true);
+            Screen.setErrorBorder(repeatPasswordField, true);
             return false;
         }
     }
