@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
@@ -15,6 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import SpendWise.Bills.Expense;
+import SpendWise.Bills.OneTime;
 import SpendWise.Graphics.Screen;
 import SpendWise.Managers.ExpensesManager;
 import SpendWise.Utils.ExpenseType;
@@ -31,7 +34,8 @@ public class BillCreator extends Screen {
     private JComboBox<ExpenseType> typeSelector;
     private JPanel pnlTypeSpecific;
 
-    // TODO implement BillCreator
+    private JCheckBox onetimeCheckBox;
+
     public BillCreator(ExpensesManager expensesManager) {
         this.expensesManager = expensesManager;
         this.initialize();
@@ -55,7 +59,7 @@ public class BillCreator extends Screen {
         pnlCentral.add(pnlTypeSpecific);
 
         this.createTypeSpecificFields(null);
-        Screen.createButton(this, "Submit", null);
+        Screen.createButton(this.getBlankPanel(PanelOrder.SOUTH), "Submit", e -> submit(e));
     }
 
     private void createValueField() {
@@ -146,7 +150,7 @@ public class BillCreator extends Screen {
         lbl.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
         pnlTypeSpecific.add(lbl);
 
-        JCheckBox onetimeCheckBox = new JCheckBox();
+        onetimeCheckBox = new JCheckBox();
         onetimeCheckBox.setBackground(BACKGROUND_COLOR);
         pnlTypeSpecific.add(onetimeCheckBox);
     }
@@ -158,5 +162,47 @@ public class BillCreator extends Screen {
         JCheckBox recurringCheckBox = new JCheckBox();
         recurringCheckBox.setBackground(BACKGROUND_COLOR);
         pnlTypeSpecific.add(recurringCheckBox);
+    }
+
+    private void submit(ActionEvent action) {
+        ExpenseType type = (ExpenseType) typeSelector.getSelectedItem();
+        Expense exp = null;
+
+        double value = 0;
+        try {
+            value = NumberFormat.getCurrencyInstance().parse(valueField.getText()).doubleValue();
+        } catch (Exception e) {
+            return;
+        }
+
+        boolean essential = essentialCheckBox.isSelected();
+
+        LocalDate date = null;
+        try {
+            date = LocalDate.parse(dateField.getText());
+        } catch (Exception e) {
+            return;
+        }
+
+        String description = descriptionField.getText();
+
+        switch (type) {
+            case FIXED:
+                this.createFixedFields();
+                break;
+            case ONETIME:
+                boolean paid = onetimeCheckBox.isSelected();
+                exp = new OneTime(value, essential, date, description, paid);
+                break;
+            case RECURRING:
+                this.createRecurringFields();
+                break;
+            default:
+                break;
+        }
+
+        if (exp != null) {
+            expensesManager.addExpense(exp);
+        }
     }
 }
