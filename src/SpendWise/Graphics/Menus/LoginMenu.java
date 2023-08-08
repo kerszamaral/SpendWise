@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import SpendWise.Graphics.Screen;
 import SpendWise.Graphics.PopUps.signUp;
 import SpendWise.Managers.UserManager;
+import SpendWise.Utils.PanelOrder;
 import SpendWise.Graphics.PopUp;
 
 public class LoginMenu extends Screen {
@@ -17,6 +18,7 @@ public class LoginMenu extends Screen {
     private JTextField txtLogin;
     private JPasswordField txtPassword;
     private UserManager userManager;
+    private JPanel pnlTop;
 
     public LoginMenu(ActionListener loginAction, UserManager userManager) {
         this.initialize();
@@ -29,77 +31,97 @@ public class LoginMenu extends Screen {
     protected void initialize() {
         super.initialize();
 
-        this.setLayout(null); // We will use absolute positioning
+        this.setLayout(new BorderLayout()); // We will use absolute positioning
 
-        final int MIDDLE_X = 400;
-        final int MIDDLE_Y = 200;
-        final int SPACER_X = 10;
-        final int SPACER_Y = 5;
-
-        final int START_OFFSET = 100;
-        final int MIDDLE_OFFSET = 30;
+        Screen.createOffsets(this, 100, 100, 270, 270);
         final int TEXT_WIDTH = 200;
         final int TEXT_HEIGHT = 30;
 
-        // Username Fields
-        JLabel lblUsername = this.createLabel("Username:");
-        lblUsername.setBounds(MIDDLE_X - 50, MIDDLE_Y - START_OFFSET, TEXT_WIDTH, TEXT_HEIGHT);
-        this.add(lblUsername);
+        JPanel pnlMiddle = new JPanel();
+        pnlMiddle.setBackground(Color.WHITE);
+        pnlMiddle.setLayout(new BorderLayout());
 
-        txtLogin = this.createTextField(false);
-        txtLogin.setBounds(MIDDLE_X - 50, MIDDLE_Y - START_OFFSET + TEXT_HEIGHT, TEXT_WIDTH, TEXT_HEIGHT);
-        this.add(txtLogin);
+        JPanel[] blankPanels = Screen.createOffsets(pnlMiddle, 50, 50, 100, 100, Color.WHITE);
+        pnlTop = blankPanels[PanelOrder.NORTH.ordinal()];
+
+        JPanel pnlLogin = new JPanel();
+        pnlLogin.setBackground(Color.WHITE);
+        pnlLogin.setLayout(new BoxLayout(pnlLogin, BoxLayout.Y_AXIS));
+        pnlLogin.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        // Username Fields
+        JPanel lblUsername = this.createPanel("Username");
+        pnlLogin.add(lblUsername);
+
+        txtLogin = this.createTextField(false, TEXT_WIDTH, TEXT_HEIGHT);
+        pnlLogin.add(txtLogin);
+
+        pnlLogin.add(Box.createRigidArea(new Dimension(0, 20)));
 
         // Password Fields
-        JLabel lblPassword = this.createLabel("Password:");
-        lblPassword.setBounds(MIDDLE_X - 50, MIDDLE_Y - MIDDLE_OFFSET, TEXT_WIDTH, TEXT_HEIGHT);
-        this.add(lblPassword);
+        JPanel lblPassword = this.createPanel("Password");
+        pnlLogin.add(lblPassword);
 
-        txtPassword = (JPasswordField) this.createTextField(true);
-        txtPassword.setBounds(MIDDLE_X - 50, MIDDLE_Y - MIDDLE_OFFSET + TEXT_HEIGHT, TEXT_WIDTH, TEXT_HEIGHT);
-        this.add(txtPassword);
+        txtPassword = (JPasswordField) this.createTextField(true, TEXT_WIDTH, TEXT_HEIGHT);
+        pnlLogin.add(txtPassword);
+
+        pnlLogin.add(Box.createRigidArea(new Dimension(0, 50)));
 
         // Buttons
         final int BUTTON_WIDTH = 95;
         final int BUTTON_HEIGHT = 30;
-        final int BUTTON_START_X = MIDDLE_X - BUTTON_WIDTH / 2;
-        final int BUTTON_START_Y = MIDDLE_Y + 2 * TEXT_HEIGHT + 2 * SPACER_Y;
+        JPanel pnlButtons = new JPanel();
+        pnlButtons.setBackground(Color.WHITE);
 
-        btnLogin = createButton("Login", Color.WHITE, Color.BLACK);
-        btnLogin.setBounds(BUTTON_START_X, BUTTON_START_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
-        this.add(btnLogin);
+        btnLogin = createButton("Login", Color.WHITE, Color.BLACK, BUTTON_WIDTH, BUTTON_HEIGHT);
+        pnlButtons.add(btnLogin);
 
-        btnSignUp = createButton("Sign Up!", Color.BLACK, BACKGROUND_COLOR);
-        btnSignUp.setBounds(BUTTON_START_X + BUTTON_WIDTH + SPACER_X, BUTTON_START_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
-        this.add(btnSignUp);
+        btnSignUp = createButton("Sign Up!", Color.BLACK, BACKGROUND_COLOR, BUTTON_WIDTH, BUTTON_HEIGHT);
+        pnlButtons.add(btnSignUp);
 
-        JPanel whiteBox = new JPanel();
-        whiteBox.setBackground(Color.WHITE);
-        whiteBox.setBounds(250, 50, 400, 300);
-        this.add(whiteBox);
+        pnlButtons.setAlignmentX(Component.CENTER_ALIGNMENT);
+        pnlLogin.add(pnlButtons);
 
-        this.setAlignmentX(Component.CENTER_ALIGNMENT);
+        pnlMiddle.add(pnlLogin, BorderLayout.CENTER);
+        this.add(pnlMiddle, BorderLayout.CENTER);
     }
 
-    private JLabel createLabel(String text) {
+    private JPanel createPanel(String text) {
+        JPanel panel = new JPanel();
+        panel.setBackground(Color.WHITE);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         JLabel label = new JLabel(text);
         label.setForeground(Color.BLACK);
+        label.setBackground(Color.RED);
         label.setFont(STD_FONT_BOLD);
-        return label;
+        panel.add(label);
+        return panel;
     }
 
-    private JTextField createTextField(Boolean isPassword) {
-        JTextField textField = isPassword ? new JPasswordField(15) : new JTextField(15);
+    private JTextField createTextField(Boolean isPassword, int width, int height) {
+        JTextField textField = isPassword ? new JPasswordField(1) : new JTextField(2);
         textField.setBackground(Color.WHITE);
         textField.setFont(STD_FONT);
+
+        Dimension size = new Dimension(width, height);
+        textField.setMinimumSize(size);
+        textField.setPreferredSize(size);
+        textField.setMaximumSize(size);
+
         return textField;
     }
 
-    private JButton createButton(String text, Color background, Color foreground) {
+    private JButton createButton(String text, Color background, Color foreground, int width, int height) {
         JButton button = new JButton(text);
         button.setBackground(background);
         button.setForeground(foreground);
         button.setFont(STD_FONT_BOLD);
+
+        Dimension size = new Dimension(width, height);
+        button.setMinimumSize(size);
+        button.setPreferredSize(size);
+        button.setMaximumSize(size);
+
         return button;
     }
 
@@ -111,15 +133,27 @@ public class LoginMenu extends Screen {
     public boolean authorizeUser() {
         String username = txtLogin.getText();
         String password = new String(txtPassword.getPassword());
-        if (username.equals("") || password.equals("")) {
-            JOptionPane.showMessageDialog(this, "Please enter a username and password.");
+        Screen.setErrorBorder(txtLogin, false);
+        Screen.setErrorBorder(txtPassword, false);
+
+        if (username.equals("")) {
+            Screen.showErrorMessage(pnlTop, "Please enter a username.");
+            Screen.setErrorBorder(txtLogin, true);
+            return false;
+        }
+
+        if (password.equals("")) {
+            Screen.showErrorMessage(pnlTop, "Please enter a password.");
+            Screen.setErrorBorder(txtPassword, true);
             return false;
         }
 
         if (userManager.validateLogin(username, password)) {
             return true;
         } else {
-            JOptionPane.showMessageDialog(this, "Invalid user.");
+            Screen.showErrorMessage(pnlTop, "Invalid username or password.");
+            Screen.setErrorBorder(txtLogin, true);
+            Screen.setErrorBorder(txtPassword, true);
             return false;
         }
     }
