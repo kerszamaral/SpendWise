@@ -36,14 +36,17 @@ public class AccountMenu extends Screen {
         blankPanels = GraphicsUtils.createPanelWithCenter(this, offsets, ACCENT_COLOR);
 
         pnlUserData = getBlankPanel(PanelOrder.CENTRAL);
-        pnlUserData.setLayout(new GridLayout(AccountFields.values().length * 3, 1));
+        pnlUserData.setLayout(new GridLayout(AccountFields.values().length * 3, 1)); // Label + TextField + Spacer
         pnlUserData.setBackground(ACCENT_COLOR);
         pnlUserData.setAlignmentY(CENTER_ALIGNMENT);
 
         txtFields = new JTextField[AccountFields.values().length];
         this.updateAccountFields();
 
-        btnEditAccount = GraphicsUtils.createButton(this.getBlankPanel(PanelOrder.SOUTH), "Edit Account", e -> edit(e));
+        Offsets offsetsBtn = new Offsets(10, 10, 400, 20);
+        btnEditAccount = GraphicsUtils.createButton(this.getBlankPanel(PanelOrder.SOUTH), offsetsBtn, "Edit Account",
+                ACCENT_COLOR,
+                e -> edit(e));
     }
 
     private void updateAccountFields() {

@@ -1,6 +1,7 @@
 package SpendWise.Graphics.Menus;
 
 import SpendWise.Utils.GraphicsUtils;
+import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.Graphics.Screen;
 
@@ -37,7 +38,9 @@ public class GroupsMenu extends Screen {
         addInputGroup("Add Member:   ");
         addInputGroup("Remove Member:", members);
 
-        GraphicsUtils.createButton(this.getBlankPanel(PanelOrder.SOUTH), "Save", this::saveButton);
+        Offsets offsets = new Offsets(10, 10, 400, 20);
+        GraphicsUtils.createButton(this.getBlankPanel(PanelOrder.SOUTH), offsets, "Save", BACKGROUND_COLOR,
+                this::saveButton);
     }
 
     private void addInputGroup(String label, String... options) {

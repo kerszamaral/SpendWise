@@ -21,6 +21,7 @@ import SpendWise.Bills.OneTime;
 import SpendWise.Graphics.Screen;
 import SpendWise.Managers.ExpensesManager;
 import SpendWise.Utils.GraphicsUtils;
+import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.ExpenseType;
 import SpendWise.Utils.Enums.PanelOrder;
 
@@ -61,7 +62,9 @@ public class BillCreator extends Screen {
         pnlCentral.add(pnlTypeSpecific);
 
         this.createTypeSpecificFields(null);
-        GraphicsUtils.createButton(this.getBlankPanel(PanelOrder.SOUTH), "Submit", e -> submit(e));
+        Offsets offsets = new Offsets(10, 10, 400, 20);
+        GraphicsUtils.createButton(this.getBlankPanel(PanelOrder.SOUTH), offsets, "Submit", BACKGROUND_COLOR,
+                e -> submit(e));
     }
 
     private void createValueField() {
