@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 
+import SpendWise.Graphics.GraphicsUtils;
 import SpendWise.Graphics.PopUp;
 import SpendWise.Graphics.Screen;
 import SpendWise.Graphics.PopUps.changePassword;
@@ -42,7 +43,7 @@ public class AccountMenu extends Screen {
         txtFields[2] = addTextField("E-mail: ", loggedUser.getEmail(), 100, false);
         txtFields[3] = addTextField("Password: ", "*".repeat(loggedUser.getPasswordSize()), 100, true);
 
-        btnEditAccount = Screen.createButton(this.getBlankPanel(PanelOrder.SOUTH), "Edit Account", e -> edit(e));
+        btnEditAccount = GraphicsUtils.createButton(this.getBlankPanel(PanelOrder.SOUTH), "Edit Account", e -> edit(e));
     }
 
     private JTextField addTextField(String label, String userValue, int width, boolean isPassword) {
@@ -65,13 +66,13 @@ public class AccountMenu extends Screen {
         JTextField txtEmail = txtFields[2];
         JPasswordField txtPassword = (JPasswordField) txtFields[3];
 
-        Screen.clearErrorMessage(super.getBlankPanel(PanelOrder.NORTH));
+        GraphicsUtils.clearErrorMessage(super.getBlankPanel(PanelOrder.NORTH));
         if (!nextState) {
             for (JTextField txtField : txtFields) {
-                Screen.setErrorBorder(txtField, false);
+                GraphicsUtils.setErrorBorder(txtField, false);
                 if (txtField.getText().isEmpty() && !(txtField instanceof JPasswordField)) {
-                    Screen.setErrorBorder(txtField, true);
-                    Screen.showErrorMessage(super.getBlankPanel(PanelOrder.NORTH),
+                    GraphicsUtils.setErrorBorder(txtField, true);
+                    GraphicsUtils.showErrorMessage(super.getBlankPanel(PanelOrder.NORTH),
                             "Please fill all Non Password fields");
                     nextState = true;
                 }

@@ -10,6 +10,7 @@ import SpendWise.Graphics.Screen;
 import SpendWise.Graphics.PopUps.signUp;
 import SpendWise.Managers.UserManager;
 import SpendWise.Utils.PanelOrder;
+import SpendWise.Graphics.GraphicsUtils;
 import SpendWise.Graphics.PopUp;
 
 public class LoginMenu extends Screen {
@@ -33,7 +34,7 @@ public class LoginMenu extends Screen {
 
         this.setLayout(new BorderLayout()); // We will use absolute positioning
 
-        Screen.createOffsets(this, 100, 100, 270, 270);
+        GraphicsUtils.createOffsets(this, 100, 100, 270, 270);
         final int TEXT_WIDTH = 200;
         final int TEXT_HEIGHT = 30;
 
@@ -41,7 +42,7 @@ public class LoginMenu extends Screen {
         pnlMiddle.setBackground(Color.WHITE);
         pnlMiddle.setLayout(new BorderLayout());
 
-        JPanel[] blankPanels = Screen.createOffsets(pnlMiddle, 50, 50, 100, 100, Color.WHITE);
+        JPanel[] blankPanels = GraphicsUtils.createOffsets(pnlMiddle, 50, 50, 100, 100, Color.WHITE);
         pnlTop = blankPanels[PanelOrder.NORTH.ordinal()];
 
         JPanel pnlLogin = new JPanel();
@@ -126,7 +127,7 @@ public class LoginMenu extends Screen {
     }
 
     private void singUpSuccess(ActionEvent e) {
-        Screen.showMessage(pnlTop, "Sign up successful!", BACKGROUND_COLOR);
+        GraphicsUtils.showMessage(pnlTop, "Sign up successful!", BACKGROUND_COLOR);
     }
 
     private void signUp(ActionEvent action) {
@@ -137,28 +138,28 @@ public class LoginMenu extends Screen {
     public boolean authorizeUser() {
         String username = txtLogin.getText();
         String password = new String(txtPassword.getPassword());
-        Screen.setErrorBorder(txtLogin, false);
-        Screen.setErrorBorder(txtPassword, false);
-        Screen.showErrorMessage(pnlTop, "");
+        GraphicsUtils.setErrorBorder(txtLogin, false);
+        GraphicsUtils.setErrorBorder(txtPassword, false);
+        GraphicsUtils.showErrorMessage(pnlTop, "");
 
         if (username.equals("")) {
-            Screen.showErrorMessage(pnlTop, "Please enter a username.");
-            Screen.setErrorBorder(txtLogin, true);
+            GraphicsUtils.showErrorMessage(pnlTop, "Please enter a username.");
+            GraphicsUtils.setErrorBorder(txtLogin, true);
             return false;
         }
 
         if (password.equals("")) {
-            Screen.showErrorMessage(pnlTop, "Please enter a password.");
-            Screen.setErrorBorder(txtPassword, true);
+            GraphicsUtils.showErrorMessage(pnlTop, "Please enter a password.");
+            GraphicsUtils.setErrorBorder(txtPassword, true);
             return false;
         }
 
         if (userManager.validateLogin(username, password)) {
             return true;
         } else {
-            Screen.showErrorMessage(pnlTop, "Invalid username or password.");
-            Screen.setErrorBorder(txtLogin, true);
-            Screen.setErrorBorder(txtPassword, true);
+            GraphicsUtils.showErrorMessage(pnlTop, "Invalid username or password.");
+            GraphicsUtils.setErrorBorder(txtLogin, true);
+            GraphicsUtils.setErrorBorder(txtPassword, true);
             return false;
         }
     }

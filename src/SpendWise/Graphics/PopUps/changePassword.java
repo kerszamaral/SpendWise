@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 import SpendWise.User;
+import SpendWise.Graphics.GraphicsUtils;
 import SpendWise.Graphics.PopUp;
 import SpendWise.Graphics.Screen;
 import SpendWise.Utils.PanelOrder;
@@ -48,17 +49,17 @@ public class changePassword extends PopUp {
         editPanel.add(fieldOldPassword);
 
         this.setLayout(new BorderLayout());
-        Screen.createOffsets((JPanel) this.getContentPane(), 50, 0, 100, 100);
+        GraphicsUtils.createOffsets((JPanel) this.getContentPane(), 50, 0, 100, 100);
         this.add(editPanel, BorderLayout.CENTER);
 
         JPanel pnlSouth = new JPanel();
-        Screen.initializeBlankPanel(pnlSouth, 100, 50);
+        GraphicsUtils.initializeBlankPanel(pnlSouth, 100, 50);
         pnlSouth.setLayout(new BorderLayout());
 
         JPanel pnlSouthEast = new JPanel();
-        Screen.initializeBlankPanel(pnlSouthEast, 200, 50);
+        GraphicsUtils.initializeBlankPanel(pnlSouthEast, 200, 50);
         JPanel pnlSouthWest = new JPanel();
-        Screen.initializeBlankPanel(pnlSouthWest, 200, 50);
+        GraphicsUtils.initializeBlankPanel(pnlSouthWest, 200, 50);
         pnlSouth.add(pnlSouthEast, BorderLayout.EAST);
         pnlSouth.add(pnlSouthWest, BorderLayout.WEST);
 

@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 
 import SpendWise.Bills.Expense;
 import SpendWise.Bills.OneTime;
+import SpendWise.Graphics.GraphicsUtils;
 import SpendWise.Graphics.Screen;
 import SpendWise.Managers.ExpensesManager;
 import SpendWise.Utils.ExpenseType;
@@ -59,7 +60,7 @@ public class BillCreator extends Screen {
         pnlCentral.add(pnlTypeSpecific);
 
         this.createTypeSpecificFields(null);
-        Screen.createButton(this.getBlankPanel(PanelOrder.SOUTH), "Submit", e -> submit(e));
+        GraphicsUtils.createButton(this.getBlankPanel(PanelOrder.SOUTH), "Submit", e -> submit(e));
     }
 
     private void createValueField() {

@@ -1,6 +1,7 @@
 package SpendWise.Graphics.Menus;
 
 import SpendWise.Utils.PanelOrder;
+import SpendWise.Graphics.GraphicsUtils;
 import SpendWise.Graphics.Screen;
 
 import java.awt.Color;
@@ -35,7 +36,7 @@ public class GroupsMenu extends Screen {
         addInputGroup("Add Member:   ");
         addInputGroup("Remove Member:", members);
 
-        Screen.createButton(this.getBlankPanel(PanelOrder.SOUTH), "Save", this::saveButton);
+        GraphicsUtils.createButton(this.getBlankPanel(PanelOrder.SOUTH), "Save", this::saveButton);
     }
 
     private void addInputGroup(String label, String... options) {
