@@ -105,6 +105,11 @@ public abstract class GraphicsUtils {
         showMessage(panel, "", Color.BLACK);
     }
 
+    public static void refresh(JComponent component) {
+        component.revalidate();
+        component.repaint();
+    }
+
     public static JButton createButton(JPanel panel, String text, ActionListener actionListener) {
         // Creates the panel that is going to the south of the screen
         JPanel pnlSouth = new JPanel();

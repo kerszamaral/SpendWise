@@ -31,8 +31,7 @@ public abstract class Screen extends JPanel implements BlankPanels {
     }
 
     public void refresh() {
-        this.revalidate();
-        this.repaint();
+        GraphicsUtils.refresh(this);
     }
 
     /**
