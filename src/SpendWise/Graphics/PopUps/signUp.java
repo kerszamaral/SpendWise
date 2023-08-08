@@ -53,15 +53,11 @@ public class signUp extends PopUp {
         pnlSouth.setBackground(BACKGROUND_COLOR);
 
         Offsets southOffsets = new Offsets(5, 20, 200, 200);
-        // GraphicsUtils.initializeButton(pnlSouth, southOffsets, "Create Account",
-        // ACCENT_COLOR, singUpAction)
         GraphicsUtils.initializeOffsets(pnlSouth, southOffsets);
 
         // Creating the create account button
-        JButton btnCreateAccount = new JButton("Create Account");
-        btnCreateAccount.setBackground(Color.BLACK);
-        btnCreateAccount.setForeground(BACKGROUND_COLOR);
-        btnCreateAccount.addActionListener(e -> this.createUser(e));
+        JButton btnCreateAccount = GraphicsUtils.createButton("Create Account", Color.BLACK, BACKGROUND_COLOR, null,
+                e -> this.createUser(e));
         pnlSouth.add(btnCreateAccount, BorderLayout.CENTER);
 
         this.add(pnlSouth, BorderLayout.SOUTH);
