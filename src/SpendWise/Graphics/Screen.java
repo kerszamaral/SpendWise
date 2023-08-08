@@ -102,10 +102,24 @@ public abstract class Screen extends JPanel implements BlankPanels {
         field.setBorder(isError ? redBorder : blackBorder);
     }
 
+    public static void setBorder(JTextField field, Color color) {
+        Border border = BorderFactory.createLineBorder(color);
+        field.setBorder(border);
+    }
+
     public static void showErrorMessage(JPanel panel, String error) {
         panel.removeAll();
         JLabel errorLabel = new JLabel(error);
         errorLabel.setForeground(Color.RED);
+        panel.add(errorLabel);
+        panel.revalidate();
+        panel.repaint();
+    }
+
+    public static void showMessage(JPanel panel, String msg, Color color) {
+        panel.removeAll();
+        JLabel errorLabel = new JLabel(msg);
+        errorLabel.setForeground(color);
         panel.add(errorLabel);
         panel.revalidate();
         panel.repaint();

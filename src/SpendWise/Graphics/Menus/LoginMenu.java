@@ -125,8 +125,12 @@ public class LoginMenu extends Screen {
         return button;
     }
 
-    private void signUp(ActionEvent e) {
-        PopUp signUpWindow = new signUp(this, "Sign Up", userManager);
+    private void singUpSuccess(ActionEvent e) {
+        Screen.showMessage(pnlTop, "Sign up successful!", BACKGROUND_COLOR);
+    }
+
+    private void signUp(ActionEvent action) {
+        PopUp signUpWindow = new signUp(this, "Sign Up", userManager, e -> singUpSuccess(e));
         signUpWindow.run();
     }
 
@@ -135,6 +139,7 @@ public class LoginMenu extends Screen {
         String password = new String(txtPassword.getPassword());
         Screen.setErrorBorder(txtLogin, false);
         Screen.setErrorBorder(txtPassword, false);
+        Screen.showErrorMessage(pnlTop, "");
 
         if (username.equals("")) {
             Screen.showErrorMessage(pnlTop, "Please enter a username.");

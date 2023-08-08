@@ -2,6 +2,7 @@ package SpendWise.Graphics.PopUps;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -16,10 +17,12 @@ public class signUp extends PopUp {
     private JTextField[] signUpFields;
     private UserManager userManager;
     private JPanel pnlTop;
+    private ActionListener singUpAction;
 
-    public signUp(Screen parent, String title, UserManager userManager) {
+    public signUp(Screen parent, String title, UserManager userManager, ActionListener singUpAction) {
         super(parent, title);
         this.userManager = userManager;
+        this.singUpAction = singUpAction;
     }
 
     @Override
@@ -98,11 +101,12 @@ public class signUp extends PopUp {
         Screen.setErrorBorder(txtUsername, false);
         if (userManager.createUser(user)) {
             this.dispose();
-            JOptionPane.showMessageDialog(this, "User created successfully!");
+            singUpAction.actionPerformed(e);
         } else {
             Screen.showErrorMessage(pnlTop, "Username already taken!");
             Screen.setErrorBorder(txtUsername, true);
         }
+
     }
 
     private boolean singUpFieldsEmpty() {
