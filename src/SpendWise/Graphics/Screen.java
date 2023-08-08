@@ -43,17 +43,54 @@ public abstract class Screen extends JPanel {
 
         blankPanels[PanelOrder.EAST.ordinal()] = new JPanel();
         JPanel blankPanelEast = blankPanels[PanelOrder.EAST.ordinal()];
-        initializeBlankPanel(blankPanelEast, 25, 100);
+        initializeBlankPanel(blankPanelEast, 0, 100);
         this.add(blankPanelEast, BorderLayout.EAST);
-    }
 
-    public static Color getBackgroundColor(){
-        return BACKGROUND_COLOR;
+        blankPanels[PanelOrder.SOUTH.ordinal()] = new JPanel();
+        JPanel blankPanelSouth = blankPanels[PanelOrder.SOUTH.ordinal()];
+        initializeBlankPanel(blankPanelSouth, 100, 50);
+        this.add(blankPanelSouth, BorderLayout.SOUTH);
     }
 
     public static void initializeBlankPanel(JPanel blankPanel, int width, int height) {
         blankPanel.setBackground(BACKGROUND_COLOR);
         blankPanel.setPreferredSize(new Dimension(width, height));
+    }
+
+    public static void createOffsets(JPanel panel, int northOffSet, int southOffSet, int westOffSet, int eastOffSet) {
+        JPanel pnlNorth = new JPanel();
+        initializeBlankPanel(pnlNorth, 1, northOffSet);
+        panel.add(pnlNorth, BorderLayout.NORTH);
+
+        JPanel pnlWest = new JPanel();
+        initializeBlankPanel(pnlWest, westOffSet, 1);
+        panel.add(pnlWest, BorderLayout.WEST);
+
+        JPanel pnlEast = new JPanel();
+        initializeBlankPanel(pnlEast, eastOffSet, 1);
+        panel.add(pnlEast, BorderLayout.EAST);
+
+        JPanel pnlSouth = new JPanel();
+        initializeBlankPanel(pnlSouth, 1, southOffSet);
+        panel.add(pnlSouth, BorderLayout.SOUTH);
+    }
+
+    public static void createButton(JPanel panel, String text, ActionListener actionListener) {
+        // Creates the panel that is going to the south of the screen
+        JPanel pnlSouth = new JPanel();
+        pnlSouth.setLayout(new BorderLayout());
+
+        createOffsets(pnlSouth, 10, 10, 550, 0);
+
+        // Creates the button itself and adds it to the east panel
+        JButton btnEdit = new JButton(text);
+        btnEdit.setBackground(Color.BLACK);
+        btnEdit.setForeground(BACKGROUND_COLOR);
+        btnEdit.addActionListener(actionListener);
+        pnlSouth.add(btnEdit, BorderLayout.CENTER);
+
+        // And, finnaly, add the south panel to the screen
+        panel.add(pnlSouth, BorderLayout.SOUTH);
     }
 
     public void refresh() {
@@ -62,10 +99,31 @@ public abstract class Screen extends JPanel {
     }
 
     /**
+     * @return the backgroundColor
+     */
+    public static Color getBackgroundColor() {
+        return BACKGROUND_COLOR;
+    }
+
+    /**
      * @param panel the panel to get
      * @return the blankPanels
      */
     public JPanel getBlankPanel(PanelOrder panel) {
         return blankPanels[panel.ordinal()];
+    }
+
+    /**
+     * @return the stdFont
+     */
+    public static Font getStdFont() {
+        return STD_FONT;
+    }
+
+    /**
+     * @return the stdFontBold
+     */
+    public static Font getStdFontBold() {
+        return STD_FONT_BOLD;
     }
 }

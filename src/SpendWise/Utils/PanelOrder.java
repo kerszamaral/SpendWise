@@ -4,5 +4,6 @@ public enum PanelOrder {
     CENTRAL,
     NORTH,
     WEST,
-    EAST;
+    EAST,
+    SOUTH;
 }
