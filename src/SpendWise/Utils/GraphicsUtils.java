@@ -110,6 +110,39 @@ public abstract class GraphicsUtils {
         component.repaint();
     }
 
+    public static Pair<JLabel, JTextField> createTextField(String label, String userValue, int width,
+            Boolean isPassword,
+            Boolean isEditable) {
+        JLabel lbl = new JLabel(label);
+
+        JTextField textField = isPassword ? new JPasswordField(userValue, 20) : new JTextField(userValue, 20);
+        textField.setEditable(isEditable);
+
+        Dimension size = new Dimension(width, 30);
+        textField.setMinimumSize(size);
+        textField.setPreferredSize(size);
+        textField.setMaximumSize(size);
+
+        return new Pair<JLabel, JTextField>(lbl, textField);
+    }
+
+    public static void addTextField(JPanel panel, String label, String userValue, int width, Boolean isPassword,
+            Boolean isEditable) {
+        Pair<JLabel, JTextField> pair = createTextField(label, userValue, width, isPassword, isEditable);
+        panel.add(pair.getKey());
+        panel.add(pair.getValue());
+    }
+
+    public static JPanel createPanelText(String label, String userValue, int width, Boolean isPassword,
+            Boolean isEditable) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+
+        addTextField(panel, label, userValue, width, isPassword, isEditable);
+
+        return panel;
+    }
+
     public static JButton createButton(JPanel panel, String text, ActionListener actionListener) {
         // Creates the panel that is going to the south of the screen
         JPanel pnlSouth = new JPanel();
