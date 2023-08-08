@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 import SpendWise.Utils.PanelOrder;
 
-public abstract class PopUp extends JFrame {
+public abstract class PopUp extends JFrame implements BlankPanels {
     protected final static Color BACKGROUND_COLOR = Screen.getBackgroundColor();
     protected final static Font STD_FONT = Screen.getStdFont();
     protected final static Font STD_FONT_BOLD = Screen.getStdFontBold();
