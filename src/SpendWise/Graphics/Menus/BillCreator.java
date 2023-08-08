@@ -42,12 +42,10 @@ public class BillCreator extends Screen {
         Offsets offsets = new Offsets(50, 50, 50, 50);
         blankPanels = GraphicsUtils.createPanelWithCenter(this, offsets, ACCENT_COLOR);
 
-        getBlankPanel(PanelOrder.CENTRAL).add(new JLabel("Create a new bill"));
+        getBlankPanel(PanelOrder.NORTH).add(new JLabel("Create a new bill"));
 
         pnlCentral = super.getBlankPanel(PanelOrder.CENTRAL);
         pnlCentral.setLayout(new GridLayout(BillsFields.values().length * 2 + 1, 1));
-
-
 
         fields = new JComponent[BillsFields.values().length];
 
