@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.Font;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -13,6 +14,8 @@ import SpendWise.Utils.PanelOrder;
 
 public abstract class PopUp extends JFrame {
     protected final static Color BACKGROUND_COLOR = Screen.getBackgroundColor();
+    protected final static Font STD_FONT = Screen.getStdFont();
+    protected final static Font STD_FONT_BOLD = Screen.getStdFontBold();
     private final int WIDTH = 600;
     private final int HEIGHT = 400;
     private Component originalWindow;
