@@ -5,9 +5,9 @@ import java.awt.BorderLayout;
 public enum PanelOrder {
     NORTH(BorderLayout.NORTH),
     WEST(BorderLayout.WEST),
+    CENTRAL(BorderLayout.CENTER),
     EAST(BorderLayout.EAST),
-    SOUTH(BorderLayout.SOUTH),
-    CENTRAL(BorderLayout.CENTER);
+    SOUTH(BorderLayout.SOUTH);
 
     private final String constrains;
 

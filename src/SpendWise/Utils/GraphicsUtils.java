@@ -10,12 +10,17 @@ import SpendWise.Utils.Enums.PanelOrder;
 
 public abstract class GraphicsUtils {
     public final static Color BACKGROUND_COLOR = new Color(98, 210, 162);
+    public final static Color ACCENT_COLOR = new Color(255, 255, 255);
     public final static Font STD_FONT = new Font("Arial", Font.PLAIN, 14);
     public final static Font STD_FONT_BOLD = new Font("Arial", Font.BOLD, 14);
 
-    public static void initializeBlankPanel(JPanel blankPanel, int width, int height) {
+    public static void initializeBlankPanel(JPanel blankPanel, int width, int height, Color color) {
         blankPanel.setBackground(BACKGROUND_COLOR);
         blankPanel.setPreferredSize(new Dimension(width, height));
+    }
+
+    public static void initializeBlankPanel(JPanel blankPanel, int width, int height) {
+        initializeBlankPanel(blankPanel, width, height, BACKGROUND_COLOR);
     }
 
     public static JPanel initializeBlankPanel(int width, int height) {
@@ -28,13 +33,16 @@ public abstract class GraphicsUtils {
             int eastOffSet) {
         JPanel[] blankPanels = new JPanel[PanelOrder.values().length];
 
-        blankPanels[PanelOrder.NORTH.ordinal()] = initializeBlankPanel(1, northOffSet);
+        blankPanels[PanelOrder.NORTH.ordinal()] = initializeBlankPanel(0, northOffSet);
 
-        blankPanels[PanelOrder.WEST.ordinal()] = initializeBlankPanel(westOffSet, 1);
+        blankPanels[PanelOrder.WEST.ordinal()] = initializeBlankPanel(westOffSet, 0);
 
-        blankPanels[PanelOrder.EAST.ordinal()] = initializeBlankPanel(eastOffSet, 1);
+        blankPanels[PanelOrder.CENTRAL.ordinal()] = new JPanel();
 
-        blankPanels[PanelOrder.SOUTH.ordinal()] = initializeBlankPanel(1, southOffSet);
+        blankPanels[PanelOrder.EAST.ordinal()] = initializeBlankPanel(eastOffSet, 0);
+
+        blankPanels[PanelOrder.SOUTH.ordinal()] = initializeBlankPanel(0, southOffSet);
+
 
         return blankPanels;
     }
@@ -46,6 +54,7 @@ public abstract class GraphicsUtils {
      */
     public static JPanel[] createOffsets(JPanel panel, int northOffSet, int southOffSet, int westOffSet,
             int eastOffSet) {
+        panel.setLayout(new BorderLayout());
         JPanel[] blankPanels = createOffsets(northOffSet, southOffSet, westOffSet, eastOffSet);
 
         for (PanelOrder pnl : PanelOrder.values()) {
