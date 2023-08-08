@@ -16,6 +16,17 @@ public class UserManager {
         createUser(new User("a", "a", "admin@admin.com", "a", 0, 0));
     }
 
+    public boolean changeUsername(String username, String newUsername) {
+        if (!this.users.containsKey(username)) {
+            return false;
+        }
+        User user = this.users.get(username);
+        user.setUsername(newUsername);
+        this.users.remove(username);
+        this.users.put(newUsername, user);
+        return true;
+    }
+
     public void removeUser(User user) {
         this.users.remove(user.getUsername());
     }
