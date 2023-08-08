@@ -78,7 +78,7 @@ public abstract class Screen extends JPanel implements BlankPanels {
         return blankPanels;
     }
 
-    public static void createButton(JPanel panel, String text, ActionListener actionListener) {
+    public static JButton createButton(JPanel panel, String text, ActionListener actionListener) {
         // Creates the panel that is going to the south of the screen
         JPanel pnlSouth = new JPanel();
         pnlSouth.setLayout(new BorderLayout());
@@ -94,6 +94,8 @@ public abstract class Screen extends JPanel implements BlankPanels {
 
         // And, finnaly, add the south panel to the screen
         panel.add(pnlSouth, BorderLayout.SOUTH);
+
+        return btnEdit;
     }
 
     public static void setErrorBorder(JTextField field, Boolean isError) {
