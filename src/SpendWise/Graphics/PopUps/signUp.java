@@ -7,10 +7,10 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import SpendWise.User;
-import SpendWise.Graphics.GraphicsUtils;
 import SpendWise.Graphics.PopUp;
 import SpendWise.Graphics.Screen;
 import SpendWise.Managers.UserManager;
+import SpendWise.Utils.GraphicsUtils;
 import SpendWise.Utils.PanelOrder;
 import SpendWise.Utils.SignUpLabels;
 

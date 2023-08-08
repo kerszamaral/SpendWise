@@ -5,11 +5,11 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 
-import SpendWise.Graphics.GraphicsUtils;
 import SpendWise.Graphics.PopUp;
 import SpendWise.Graphics.Screen;
 import SpendWise.Graphics.PopUps.changePassword;
 import SpendWise.Managers.UserManager;
+import SpendWise.Utils.GraphicsUtils;
 import SpendWise.Utils.PanelOrder;
 import SpendWise.User;
 

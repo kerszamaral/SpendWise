@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 
+import SpendWise.Utils.GraphicsUtils;
 import SpendWise.Utils.PanelOrder;
 
 public abstract class Screen extends JPanel implements BlankPanels {

@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import SpendWise.Utils.GraphicsUtils;
 import SpendWise.Utils.PanelOrder;
 
 public abstract class PopUp extends JFrame implements BlankPanels {

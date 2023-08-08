@@ -1,7 +1,7 @@
 package SpendWise.Graphics.Menus;
 
+import SpendWise.Utils.GraphicsUtils;
 import SpendWise.Utils.PanelOrder;
-import SpendWise.Graphics.GraphicsUtils;
 import SpendWise.Graphics.Screen;
 
 import java.awt.Color;

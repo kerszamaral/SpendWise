@@ -9,9 +9,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 import SpendWise.User;
-import SpendWise.Graphics.GraphicsUtils;
 import SpendWise.Graphics.PopUp;
 import SpendWise.Graphics.Screen;
+import SpendWise.Utils.GraphicsUtils;
 import SpendWise.Utils.PanelOrder;
 
 public class changePassword extends PopUp {
