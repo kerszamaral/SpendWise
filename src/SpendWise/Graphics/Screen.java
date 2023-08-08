@@ -2,8 +2,7 @@ package SpendWise.Graphics;
 
 import javax.swing.JPanel;
 
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.*;
 
 import SpendWise.Utils.GraphicsUtils;
 import SpendWise.Utils.Offsets;
@@ -15,6 +14,7 @@ public abstract class Screen extends JPanel implements BlankPanels {
     protected final static Font STD_FONT = GraphicsUtils.STD_FONT;
     protected final static Font STD_FONT_BOLD = GraphicsUtils.STD_FONT_BOLD;
     protected final static Offsets DEFAULT_OFFSETS = new Offsets(50, 50, 100, 0);
+    protected final static Dimension DEFAULT_FIELD_SIZE = GraphicsUtils.DEFAULT_FIELD_SIZE;
 
     protected JPanel[] blankPanels;
 

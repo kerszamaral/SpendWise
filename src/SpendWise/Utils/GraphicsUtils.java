@@ -13,6 +13,7 @@ public abstract class GraphicsUtils {
     public final static Color ACCENT_COLOR = new Color(255, 255, 255);
     public final static Font STD_FONT = new Font("Arial", Font.PLAIN, 14);
     public final static Font STD_FONT_BOLD = new Font("Arial", Font.BOLD, 14);
+    public final static Dimension DEFAULT_FIELD_SIZE = new Dimension(100, 30);;
 
     public static void defineSize(JComponent component, Dimension size) {
         component.setMinimumSize(size);

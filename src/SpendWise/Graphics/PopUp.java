@@ -1,9 +1,6 @@
 package SpendWise.Graphics;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
+import java.awt.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -17,6 +14,7 @@ public abstract class PopUp extends JFrame implements BlankPanels {
     protected final static Color ACCENT_COLOR = GraphicsUtils.ACCENT_COLOR;
     protected final static Font STD_FONT = GraphicsUtils.STD_FONT;
     protected final static Font STD_FONT_BOLD = GraphicsUtils.STD_FONT_BOLD;
+    protected final static Dimension DEFAULT_FIELD_SIZE = GraphicsUtils.DEFAULT_FIELD_SIZE;
 
     private final int WIDTH = 600;
     private final int HEIGHT = 400;

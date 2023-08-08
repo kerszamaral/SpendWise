@@ -27,7 +27,6 @@ public class BillCreator extends Screen {
     private JComponent[] fields;
     private JComboBox<String> typeSelector;
     final private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
-    final private Dimension fieldSize = new Dimension(100, 30);
 
     JPanel pnlTypeSpecific;
 
@@ -44,8 +43,7 @@ public class BillCreator extends Screen {
         Offsets offsets = new Offsets(50, 50, 50, 50);
         blankPanels = GraphicsUtils.createPanelWithCenter(this, offsets, ACCENT_COLOR);
 
-        blankPanels[PanelOrder.NORTH.ordinal()].add(new JLabel("Create a new bill"));
-        super.getBlankPanel(PanelOrder.NORTH).setSize(new Dimension(0, 0));
+        getBlankPanel(PanelOrder.CENTRAL).add(new JLabel("Create a new bill"));
 
         pnlCentral = super.getBlankPanel(PanelOrder.CENTRAL);
         pnlCentral.setLayout(new GridLayout(BillsFields.values().length * 2 + 1, 1));
@@ -99,7 +97,7 @@ public class BillCreator extends Screen {
                     break;
             }
 
-            GraphicsUtils.defineSize(fieldType, fieldSize);
+            GraphicsUtils.defineSize(fieldType, DEFAULT_FIELD_SIZE);
 
             fieldType.setEnabled(true);
             fieldType.setBackground(ACCENT_COLOR);
@@ -148,7 +146,7 @@ public class BillCreator extends Screen {
                 recurringEndDateField = new JFormattedTextField(dateFormatter);
                 recurringEndDateField.setValue(new java.util.Date());
 
-                GraphicsUtils.defineSize(recurringEndDateField, fieldSize);
+                GraphicsUtils.defineSize(recurringEndDateField, DEFAULT_FIELD_SIZE);
 
                 recurringEndDateField.setEnabled(true);
                 recurringEndDateField.setBackground(ACCENT_COLOR);
