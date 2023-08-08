@@ -12,6 +12,7 @@ import SpendWise.Graphics.PopUp;
 import SpendWise.Graphics.Screen;
 import SpendWise.Utils.GraphicsUtils;
 import SpendWise.Utils.Offsets;
+import SpendWise.Utils.Enums.PanelOrder;
 
 public class changePassword extends PopUp {
     private User loggedUser;
@@ -30,43 +31,28 @@ public class changePassword extends PopUp {
 
     @Override
     public void run() {
-        JPanel editPanel = new JPanel(new GridLayout(6, 2));
-        editPanel.setBackground(BACKGROUND_COLOR);
-
-        JLabel txtRepeatPassword = new JLabel("Repeat New password: ");
-        txtRepeatPassword.setForeground(Color.WHITE);
-        txtRepeatPassword.setFont(STD_FONT);
-        editPanel.add(txtRepeatPassword);
-        fieldRepeatPassword = new JTextField("", 15);
-        editPanel.add(fieldRepeatPassword);
-
-        JLabel txtOldPassword = new JLabel("Old password: ");
-        txtOldPassword.setForeground(Color.WHITE);
-        txtOldPassword.setFont(STD_FONT);
-        editPanel.add(txtOldPassword);
-        fieldOldPassword = new JTextField("", 15);
-        editPanel.add(fieldOldPassword);
-
-        this.setLayout(new BorderLayout());
         Offsets offsets = new Offsets(50, 0, 100, 100);
-        GraphicsUtils.initializeOffsets((JPanel) this.getContentPane(), offsets);
+        blankPanels = GraphicsUtils.initializeOffsets((JPanel) this.getContentPane(), offsets);
+
+        // Creating the sign up panel and it's fields
+        JPanel editPanel = new JPanel(new GridLayout(6, 1));
+        editPanel.setBackground(ACCENT_COLOR);
+
+        fieldRepeatPassword = (JPasswordField) GraphicsUtils.addTextFieldCenter(editPanel, "Repeat New Password:", "",
+                15, true, true);
+
+        fieldOldPassword = (JPasswordField) GraphicsUtils.addTextFieldCenter(editPanel, "Old Password:", "", 15, true,
+                true);
+
         this.add(editPanel, BorderLayout.CENTER);
 
+        // Creating the south panel and button
         JPanel pnlSouth = new JPanel();
-        GraphicsUtils.initializeBlankPanel(pnlSouth, 100, 50);
-        pnlSouth.setLayout(new BorderLayout());
+        Offsets southOffsets = new Offsets(5, 20, 200, 200);
+        GraphicsUtils.initializeOffsets(pnlSouth, southOffsets);
 
-        JPanel pnlSouthEast = new JPanel();
-        GraphicsUtils.initializeBlankPanel(pnlSouthEast, 200, 50);
-        JPanel pnlSouthWest = new JPanel();
-        GraphicsUtils.initializeBlankPanel(pnlSouthWest, 200, 50);
-        pnlSouth.add(pnlSouthEast, BorderLayout.EAST);
-        pnlSouth.add(pnlSouthWest, BorderLayout.WEST);
-
-        JButton btnApplyChanges = new JButton("Change Password");
-        btnApplyChanges.setBackground(Color.BLACK);
-        btnApplyChanges.setForeground(BACKGROUND_COLOR);
-        btnApplyChanges.addActionListener(e -> updatePassword(e));
+        JButton btnApplyChanges = GraphicsUtils.createButton("Change Password", Color.BLACK, BACKGROUND_COLOR, null,
+                e -> updatePassword(e));
         pnlSouth.add(btnApplyChanges, BorderLayout.CENTER);
 
         this.add(pnlSouth, BorderLayout.SOUTH);
@@ -75,21 +61,26 @@ public class changePassword extends PopUp {
     }
 
     private void updatePassword(ActionEvent e) {
+        GraphicsUtils.clearErrorMessage(getBlankPanel(PanelOrder.NORTH));
+
         String oldPassword = fieldOldPassword.getText();
+        GraphicsUtils.setErrorBorder(fieldOldPassword, false);
+
         String repeatNewPassword = fieldRepeatPassword.getText();
+        GraphicsUtils.setErrorBorder(fieldRepeatPassword, false);
 
         if (!newPassword.equals(repeatNewPassword)) {
-            JOptionPane.showMessageDialog(this, "New Passwords do not match!", "Error", JOptionPane.ERROR_MESSAGE);
+            GraphicsUtils.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "New Passwords do not match!");
+            GraphicsUtils.setErrorBorder(fieldOldPassword, true);
             return;
         }
 
         if (loggedUser.changePassword(oldPassword, newPassword)) {
             this.dispose();
             this.updateFields.run();
-            JOptionPane.showMessageDialog(this, "Password changed successfully!", "Success",
-                    JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "Old Password Incorrect!", "Error", JOptionPane.ERROR_MESSAGE);
+            GraphicsUtils.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Old Password Incorrect!");
+            GraphicsUtils.setErrorBorder(fieldOldPassword, true);
         }
     }
 }

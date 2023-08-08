@@ -118,7 +118,7 @@ public class AccountMenu extends Screen {
             if (!newPassword.isEmpty()) {
                 if (!loggedUser.checkPassword(newPassword)) {
                     PopUp changePassword = new changePassword(this, "Change Password", loggedUser, newPassword,
-                            this::updateAccountFields);
+                            this::changePassword);
                     changePassword.run();
                 }
             }
@@ -133,5 +133,12 @@ public class AccountMenu extends Screen {
         }
 
         isEditing = nextState;
+    }
+
+    private void changePassword() {
+        this.updateAccountFields();
+        GraphicsUtils.clearErrorMessage(getBlankPanel(PanelOrder.NORTH));
+        GraphicsUtils.showMessage(getBlankPanel(PanelOrder.NORTH), "Password changed successfully!",
+                BACKGROUND_COLOR);
     }
 }
