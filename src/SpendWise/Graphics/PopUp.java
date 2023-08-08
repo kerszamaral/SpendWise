@@ -3,7 +3,6 @@ package SpendWise.Graphics;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.FlowLayout;
 import java.awt.Font;
 
 import javax.swing.ImageIcon;
@@ -12,7 +11,7 @@ import javax.swing.JPanel;
 
 import SpendWise.Utils.PanelOrder;
 
-public abstract class PopUp extends JFrame {
+public abstract class PopUp extends JFrame implements BlankPanels {
     protected final static Color BACKGROUND_COLOR = Screen.getBackgroundColor();
     protected final static Font STD_FONT = Screen.getStdFont();
     protected final static Font STD_FONT_BOLD = Screen.getStdFontBold();
@@ -43,31 +42,6 @@ public abstract class PopUp extends JFrame {
         this.setResizable(false);
     }
 
-    public void setCentralPanel(JPanel pnlCentral) {
-
-        blankPanels[PanelOrder.NORTH.ordinal()] = new JPanel();
-        JPanel pnlNorth = blankPanels[PanelOrder.NORTH.ordinal()];
-        Screen.initializeBlankPanel(pnlNorth, 100, 50);
-        pnlNorth.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-        blankPanels[PanelOrder.EAST.ordinal()] = new JPanel();
-        JPanel pnlBlankEast = blankPanels[PanelOrder.EAST.ordinal()];
-        Screen.initializeBlankPanel(pnlBlankEast, 100, 50);
-
-        blankPanels[PanelOrder.WEST.ordinal()] = new JPanel();
-        JPanel pnlBlankWest = blankPanels[PanelOrder.WEST.ordinal()];
-        Screen.initializeBlankPanel(pnlBlankWest, 100, 50);
-
-        JPanel pnlMain = new JPanel();
-        pnlMain.setLayout(new BorderLayout());
-        pnlMain.add(pnlCentral, BorderLayout.CENTER);
-        pnlMain.add(pnlNorth, BorderLayout.NORTH);
-        pnlMain.add(pnlBlankEast, BorderLayout.EAST);
-        pnlMain.add(pnlBlankWest, BorderLayout.WEST);
-
-        this.add(pnlMain);
-    }
-    
     /**
      * @param panel the panel to get
      * @return the blankPanels
