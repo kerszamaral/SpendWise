@@ -12,7 +12,6 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -26,7 +25,6 @@ public class GroupsMenu extends Screen {
     private JComponent[] fields;
 
     public GroupsMenu() {
-        pnlGroupManagement = new JPanel();
         initialize();
     }
 
@@ -41,19 +39,24 @@ public class GroupsMenu extends Screen {
         groupTitle.setFont(STD_FONT_BOLD);
         getBlankPanel(PanelOrder.NORTH).add(groupTitle);
 
+        pnlGroupManagement = innerPanels[PanelOrder.CENTRAL.ordinal()];
+        
         addImage(innerPanels[PanelOrder.EAST.ordinal()]);
-
-        pnlGroupManagement.setLayout(new GridLayout(3, 2));
-
+        
+        pnlGroupManagement.setLayout(new GridLayout(GroupFields.values().length * 2, 1));
+        
         fields = new JComponent[GroupFields.values().length];
-
+        
         JComponent fieldType = null;
         for (GroupFields field : GroupFields.values()) {
-            String label = field.getLabel() + ": ";
+            String label = field.getLabel() + ":";
             JLabel lbl = new JLabel(label);
-
+            pnlGroupManagement.add(lbl);
+            // TODO: add select and remove
             switch (field) {
                 case SELECT:
+                    JTextField seila = new JTextField();
+                    fieldType = seila;
                     break;
                 case ADD:
                     JTextField addUserField = new JTextField();
@@ -64,20 +67,14 @@ public class GroupsMenu extends Screen {
                     fieldType = removeUserField;
                     break;
             }
-
+                
             GraphicsUtils.defineSize(fieldType, DEFAULT_FIELD_SIZE);
-
+                
             fieldType.setEnabled(true);
             fieldType.setBackground(ACCENT_COLOR);
-
+                
             fields[field.ordinal()] = fieldType;
             pnlGroupManagement.add(fieldType);
-            // pnlCentral.add(lbl);
-
-            // JComponent fieldType = null;
-            // switch (field) {
-
-            // }
         }
 
         /*
@@ -91,6 +88,8 @@ public class GroupsMenu extends Screen {
         GraphicsUtils.initializeButton(this.getBlankPanel(PanelOrder.SOUTH), new Offsets(10, 10, 400, 20), "Save",
                 ACCENT_COLOR,
                 this::saveButton);
+
+        
     }
 
     /*
