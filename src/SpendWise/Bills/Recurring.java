@@ -56,9 +56,4 @@ public class Recurring extends Expense {
         }
         return this.getValue();
     }
-
-    @Override
-    public String toString() {
-        return super.toString() + " | End Date: " + endDate;
-    }
 }

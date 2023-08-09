@@ -19,7 +19,7 @@ public abstract class Expense {
     }
 
     public String toString() {
-        return "Value: " + value + " | Essential: " + isEssential + " | Date: " + date + " | Description: "
+        return "Value: R$" + value + " || Date: " + date + " || Description: "
                 + description;
     }
 
