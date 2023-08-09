@@ -9,20 +9,22 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import SpendWise.Managers.UserManager;
 import SpendWise.Utils.GraphicsUtils;
+import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.Contexts;
+import SpendWise.Utils.Enums.PanelOrder;
 
 public class MainMenu extends JFrame {
     private final static String APP_NAME = "SpendWise";
     private final static int SCREEN_WIDTH = 1920 / 2;
     private final static int SCREEN_HEIGHT = 1080 / 2;
     private final static Color BACKGROUND_COLOR = GraphicsUtils.BACKGROUND_COLOR;
-    private final static int BUTTON_MAX_WIDTH = 285;
+    private final static int BUTTON_MAX_WIDTH = 160;
     private final static int BUTTON_SPACING = 25;
     private Contexts currentContext;
     private Screen[] screens;
     private JButton[] buttons;
     private Box centerLayout;
-    private Box sidePanel;
+    private JPanel sidePanel;
     private UserManager userManager;
 
     public MainMenu() {
@@ -67,8 +69,7 @@ public class MainMenu extends JFrame {
 
         this.currentContext = Contexts.LOGIN;
         this.centerLayout = Box.createVerticalBox();
-        this.sidePanel = Box.createVerticalBox();
-    
+        this.sidePanel = new JPanel();
     }
 
     private void refresh() {
@@ -89,8 +90,12 @@ public class MainMenu extends JFrame {
     }
 
     private void createButtons() {
-        sidePanel.add(Box.createVerticalGlue());
-        sidePanel.add(Box.createHorizontalStrut(BUTTON_MAX_WIDTH));
+        Offsets offsets = new Offsets(20, 35, 0, 0);
+        JPanel[] blankPanels = GraphicsUtils.createPanelWithCenter(sidePanel, offsets, BACKGROUND_COLOR);
+
+        JPanel mainSidePanel = blankPanels[PanelOrder.CENTRAL.ordinal()];
+
+        mainSidePanel.setLayout(new BoxLayout(mainSidePanel, BoxLayout.Y_AXIS));
 
         buttons = new JButton[Contexts.values().length];
 
@@ -102,9 +107,11 @@ public class MainMenu extends JFrame {
             buttons[ctx.ordinal()] = new MenuButton(ctx.getContextName(), Color.WHITE);
 
             buttons[ctx.ordinal()].addActionListener(e -> updateContext(e));
+            Dimension buttonSize = new Dimension(BUTTON_MAX_WIDTH, 50);
+            GraphicsUtils.defineSize(buttons[ctx.ordinal()], buttonSize);
 
-            sidePanel.add(buttons[ctx.ordinal()]);
-            sidePanel.add(Box.createVerticalStrut(BUTTON_SPACING));
+            mainSidePanel.add(buttons[ctx.ordinal()]);
+            mainSidePanel.add(Box.createVerticalStrut(BUTTON_SPACING));
         }
 
         // Easier manipulation of the logout button
@@ -118,9 +125,7 @@ public class MainMenu extends JFrame {
 
         logoutButton.addActionListener(e -> logout(e));
 
-        sidePanel.add(buttons[Contexts.LOGIN.ordinal()]);
-
-        sidePanel.add(Box.createVerticalGlue());
+        blankPanels[PanelOrder.SOUTH.ordinal()].add(logoutButton);
     }
 
     private void updateContext(ActionEvent e) {

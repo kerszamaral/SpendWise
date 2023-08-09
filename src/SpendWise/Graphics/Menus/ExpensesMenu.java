@@ -41,7 +41,7 @@ public class ExpensesMenu extends Screen {
 
     @Override
     protected void initialize() {
-        Offsets outerOffsets = new Offsets(50, 50, 50, 50);
+        Offsets outerOffsets = new Offsets(50, 50, 100, 0);
         Offsets innerOffsets = new Offsets(50, 50, 50, 50);
         blankPanels = GraphicsUtils.createPanelWithCenter(this, innerOffsets, outerOffsets, ACCENT_COLOR);
 

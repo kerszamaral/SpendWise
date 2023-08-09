@@ -2,7 +2,11 @@ package SpendWise.Graphics;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+
+import SpendWise.Utils.Enums.Contexts;
+
 import java.awt.Color;
+import java.awt.ComponentOrientation;
 
 public class MenuButton extends JButton {
     private String name;
@@ -12,7 +16,8 @@ public class MenuButton extends JButton {
     public MenuButton(String name, Color background) {
         this.name = name;
         this.Background = background;
-        icon = new ImageIcon("src\\Images\\" + this.name.toLowerCase() + "Icon.png");
+        String fileName = Contexts.getContext(name).toString().toLowerCase();
+        icon = new ImageIcon("src\\Images\\" + fileName + "Icon.png");
         this.initialize();
     }
 
@@ -24,12 +29,13 @@ public class MenuButton extends JButton {
         this.setBorderPainted(false);
         this.setFocusPainted(false);
         this.setContentAreaFilled(true);
+        this.setOpaque(false);
         this.setVisible(true);
         this.setBackground(Background);
 
         // Aligment settings
-        this.setAlignmentX(JButton.LEFT_ALIGNMENT);
-        this.setHorizontalAlignment(JButton.LEFT);
+        this.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        this.setHorizontalAlignment(JButton.RIGHT);
         this.setHorizontalTextPosition(JButton.LEFT);
         this.setVerticalTextPosition(JButton.CENTER);
     }
@@ -46,9 +52,11 @@ public class MenuButton extends JButton {
 
     private void openMenu() {
         this.setText(this.name);
+        this.setOpaque(true);
     }
 
     private void closeMenu() {
         this.setText("");
+        this.setOpaque(false);
     }
 }
