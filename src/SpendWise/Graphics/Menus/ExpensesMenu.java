@@ -1,5 +1,6 @@
 package SpendWise.Graphics.Menus;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.text.NumberFormat;
@@ -46,6 +47,8 @@ public class ExpensesMenu extends Screen {
 
         expensesComboBox = new JComboBox<Expense>(expensesManager.getExpenses().toArray(new Expense[0]));
         expensesComboBox.addActionListener(e -> createBillFields(e));
+        Dimension comboBoxSize = new Dimension(450, 30);
+        GraphicsUtils.defineSize(expensesComboBox, comboBoxSize);
         getBlankPanel(PanelOrder.NORTH).add(expensesComboBox);
 
         pnlCentral = super.getBlankPanel(PanelOrder.CENTRAL);
