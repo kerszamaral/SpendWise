@@ -211,9 +211,5 @@ public class BillCreator extends Screen {
         if (exp != null) {
             expensesManager.addExpense(exp);
         }
-
-        for (Expense e : expensesManager.getExpenses()) {
-            System.out.println(e.toString());
-        }
     }
 }
