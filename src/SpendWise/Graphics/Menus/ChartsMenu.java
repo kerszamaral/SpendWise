@@ -17,7 +17,7 @@ import javax.swing.SwingUtilities;
 public class ChartsMenu extends Screen {
     // TODO implement ChartsMenu
     private JPanel pnlChartsMenu;
-    //private final String BACKGROUND_COLOR = "-fx-background-color: #FFFFFF;";
+    private static final String BACKGROUND_COLOR = "-fx-background-color: #FFFFFF;";
 
     public ChartsMenu() {
         initialize();
@@ -43,8 +43,8 @@ public class ChartsMenu extends Screen {
         PieChart pieChart = new PieChart();
         pieChart.getData().addAll(slice1, slice2, slice3, slice4);
     
-        Scene scene = new Scene(pieChart,300,300);
-        //scene.getRoot().setStyle(BACKGROUND_COLOR);
+        Scene scene = new Scene(pieChart, 300, 300);
+        scene.getRoot().setStyle(BACKGROUND_COLOR);
         fxPanel.setScene(scene);
     }
 }
