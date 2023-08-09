@@ -234,4 +234,8 @@ public abstract class GraphicsUtils {
 
         return btnEdit;
     }
+
+    public static String getColorHex(Color color) {
+        return "#" + Integer.toHexString(color.getRGB()).substring(2);
+    }
 }

@@ -17,7 +17,8 @@ import javax.swing.SwingUtilities;
 public class ChartsMenu extends Screen {
     // TODO implement ChartsMenu
     private JPanel pnlChartsMenu;
-    private static final String BACKGROUND_COLOR = "-fx-background-color: #FFFFFF;";
+    private static final String BACKGROUND_COLOR = "-fx-background-color: " + GraphicsUtils.getColorHex(ACCENT_COLOR)
+            + ";";
 
     public ChartsMenu() {
         initialize();
