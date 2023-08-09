@@ -2,6 +2,8 @@ package SpendWise.Bills;
 
 import java.time.LocalDate;
 
+import SpendWise.Utils.Enums.ExpenseType;
+
 public abstract class Expense {
     private double value;
 
@@ -21,6 +23,18 @@ public abstract class Expense {
     public String toString() {
         return "Value: R$" + value + " || Date: " + date + " || Description: "
                 + description;
+    }
+
+    public ExpenseType getType() {
+        if (this instanceof Fixed) {
+            return ExpenseType.FIXED;
+        } else if (this instanceof OneTime) {
+            return ExpenseType.ONETIME;
+        } else if (this instanceof Recurring) {
+            return ExpenseType.RECURRING;
+        } else {
+            return null;
+        }
     }
 
     /**
