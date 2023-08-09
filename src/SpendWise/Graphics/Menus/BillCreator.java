@@ -21,7 +21,6 @@ import SpendWise.Utils.Enums.PanelOrder;
 
 public class BillCreator extends Screen {
     private ExpensesManager expensesManager;
-    private JPanel pnlCentral;
 
     private JComponent[] fields;
     private JComboBox<String> typeSelector;
@@ -42,9 +41,11 @@ public class BillCreator extends Screen {
         Offsets offsets = new Offsets(50, 50, 50, 50);
         blankPanels = GraphicsUtils.createPanelWithCenter(this, offsets, ACCENT_COLOR);
 
-        getBlankPanel(PanelOrder.NORTH).add(new JLabel("Create a new bill"));
+        JLabel billTitle = new JLabel("CREATE A NEW BILL");
+        billTitle.setFont(STD_FONT_BOLD);
+        getBlankPanel(PanelOrder.NORTH).add(billTitle);
 
-        pnlCentral = super.getBlankPanel(PanelOrder.CENTRAL);
+        JPanel pnlCentral = super.getBlankPanel(PanelOrder.CENTRAL);
         pnlCentral.setLayout(new GridLayout(BillsFields.values().length * 2 + 1, 1));
 
         fields = new JComponent[BillsFields.values().length];
