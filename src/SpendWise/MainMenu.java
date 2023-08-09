@@ -85,7 +85,7 @@ public class MainMenu extends JFrame {
         screens[Contexts.BILL.ordinal()] = new BillCreator(loggedUser.getExpensesManager());
         screens[Contexts.CHARTS.ordinal()] = new ChartsMenu();
         screens[Contexts.GROUPS.ordinal()] = new GroupsMenu();
-        screens[Contexts.EXPENSES.ordinal()] = new ExpensesMenu();
+        screens[Contexts.EXPENSES.ordinal()] = new ExpensesMenu(loggedUser.getExpensesManager());
     }
 
     private void createButtons() {
