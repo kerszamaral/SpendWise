@@ -10,10 +10,13 @@ import SpendWise.Graphics.Screen;
 import SpendWise.Graphics.PopUps.changePassword;
 import SpendWise.Managers.UserManager;
 import SpendWise.Utils.Email;
-import SpendWise.Utils.GraphicsUtils;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.AccountFields;
 import SpendWise.Utils.Enums.PanelOrder;
+import SpendWise.Utils.Graphics.Components;
+import SpendWise.Utils.Graphics.Alerts;
+import SpendWise.Utils.Graphics.Misc;
+import SpendWise.Utils.Graphics.Panels;
 import SpendWise.User;
 
 public class AccountMenu extends Screen {
@@ -34,7 +37,7 @@ public class AccountMenu extends Screen {
     @Override
     protected void initialize() {
         Offsets offsets = new Offsets(50, 50, 50, 50);
-        blankPanels = GraphicsUtils.createPanelWithCenter(this, offsets, ACCENT_COLOR);
+        blankPanels = Panels.createPanelWithCenter(this, offsets, ACCENT_COLOR);
 
         pnlUserData = getBlankPanel(PanelOrder.CENTRAL);
         pnlUserData.setLayout(new GridLayout(AccountFields.values().length * 3, 1)); // Label + TextField + Spacer
@@ -45,7 +48,7 @@ public class AccountMenu extends Screen {
         this.updateAccountFields();
 
         Offsets offsetsBtn = new Offsets(10, 10, 400, 20);
-        btnEditAccount = GraphicsUtils.initializeButton(this.getBlankPanel(PanelOrder.SOUTH), offsetsBtn,
+        btnEditAccount = Components.initializeButton(this.getBlankPanel(PanelOrder.SOUTH), offsetsBtn,
                 "Edit Account",
                 ACCENT_COLOR,
                 e -> edit(e));
@@ -63,14 +66,14 @@ public class AccountMenu extends Screen {
             Boolean isPassword = field.getValue().toLowerCase().contains("password");
             String userValue = loggedUser.getField(field);
 
-            txtFields[field.ordinal()] = GraphicsUtils.addTextField(pnlUserData, label, userValue, textFieldSize,
+            txtFields[field.ordinal()] = Components.addTextField(pnlUserData, label, userValue, textFieldSize,
                     isPassword,
                     startingEditState);
 
             pnlUserData.add(Box.createVerticalStrut(verticalGap));
         }
 
-        GraphicsUtils.refresh(pnlUserData);
+        Misc.refresh(pnlUserData);
     }
 
     private void edit(ActionEvent e) {
@@ -81,20 +84,20 @@ public class AccountMenu extends Screen {
         JTextField txtEmail = txtFields[AccountFields.EMAIL.ordinal()];
         JPasswordField txtPassword = (JPasswordField) txtFields[AccountFields.PASSWORD.ordinal()];
 
-        GraphicsUtils.clearErrorMessage(super.getBlankPanel(PanelOrder.NORTH));
+        Alerts.clearErrorMessage(super.getBlankPanel(PanelOrder.NORTH));
         if (!nextState) {
             for (JTextField txtField : txtFields) {
-                GraphicsUtils.setErrorBorder(txtField, false);
+                Alerts.setErrorBorder(txtField, false);
                 if (txtField.getText().isEmpty() && !(txtField instanceof JPasswordField)) {
-                    GraphicsUtils.setErrorBorder(txtField, true);
-                    GraphicsUtils.showErrorMessage(super.getBlankPanel(PanelOrder.NORTH),
+                    Alerts.setErrorBorder(txtField, true);
+                    Alerts.showErrorMessage(super.getBlankPanel(PanelOrder.NORTH),
                             "Please fill all Non Password fields");
                     nextState = true;
                 }
             }
 
             if (!Email.isEmailValid(txtEmail)) {
-                GraphicsUtils.showErrorMessage(super.getBlankPanel(PanelOrder.NORTH), "Please enter a valid email");
+                Alerts.showErrorMessage(super.getBlankPanel(PanelOrder.NORTH), "Please enter a valid email");
                 nextState = true;
             }
         }
@@ -143,8 +146,8 @@ public class AccountMenu extends Screen {
 
     private void changePassword() {
         this.updateAccountFields();
-        GraphicsUtils.clearErrorMessage(getBlankPanel(PanelOrder.NORTH));
-        GraphicsUtils.showMessage(getBlankPanel(PanelOrder.NORTH), "Password changed successfully!",
+        Alerts.clearErrorMessage(getBlankPanel(PanelOrder.NORTH));
+        Alerts.showMessage(getBlankPanel(PanelOrder.NORTH), "Password changed successfully!",
                 BACKGROUND_COLOR);
     }
 }

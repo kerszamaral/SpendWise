@@ -10,9 +10,11 @@ import javax.swing.*;
 import SpendWise.User;
 import SpendWise.Graphics.PopUp;
 import SpendWise.Graphics.Screen;
-import SpendWise.Utils.GraphicsUtils;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.PanelOrder;
+import SpendWise.Utils.Graphics.Components;
+import SpendWise.Utils.Graphics.Alerts;
+import SpendWise.Utils.Graphics.Panels;
 
 public class changePassword extends PopUp {
     private User loggedUser;
@@ -32,16 +34,16 @@ public class changePassword extends PopUp {
     @Override
     public void run() {
         Offsets offsets = new Offsets(50, 0, 100, 100);
-        blankPanels = GraphicsUtils.initializeOffsets((JPanel) this.getContentPane(), offsets);
+        blankPanels = Panels.initializeOffsets((JPanel) this.getContentPane(), offsets);
 
         // Creating the sign up panel and it's fields
         JPanel editPanel = new JPanel(new GridLayout(6, 1));
         editPanel.setBackground(BACKGROUND_COLOR);
 
-        fieldRepeatPassword = (JPasswordField) GraphicsUtils.addTextFieldCenter(editPanel, "Repeat New Password:", "",
+        fieldRepeatPassword = (JPasswordField) Components.addTextFieldCenter(editPanel, "Repeat New Password:", "",
                 15, true, true);
 
-        fieldOldPassword = (JPasswordField) GraphicsUtils.addTextFieldCenter(editPanel, "Old Password:", "", 15, true,
+        fieldOldPassword = (JPasswordField) Components.addTextFieldCenter(editPanel, "Old Password:", "", 15, true,
                 true);
 
         this.add(editPanel, BorderLayout.CENTER);
@@ -49,9 +51,9 @@ public class changePassword extends PopUp {
         // Creating the south panel and button
         JPanel pnlSouth = new JPanel();
         Offsets southOffsets = new Offsets(5, 20, 200, 200);
-        GraphicsUtils.initializeOffsets(pnlSouth, southOffsets);
+        Panels.initializeOffsets(pnlSouth, southOffsets);
 
-        JButton btnApplyChanges = GraphicsUtils.createButton("Change Password", Color.BLACK, BACKGROUND_COLOR, null,
+        JButton btnApplyChanges = Components.createButton("Change Password", Color.BLACK, BACKGROUND_COLOR, null,
                 e -> updatePassword(e));
         pnlSouth.add(btnApplyChanges, BorderLayout.CENTER);
 
@@ -61,17 +63,17 @@ public class changePassword extends PopUp {
     }
 
     private void updatePassword(ActionEvent e) {
-        GraphicsUtils.clearErrorMessage(getBlankPanel(PanelOrder.NORTH));
+        Alerts.clearErrorMessage(getBlankPanel(PanelOrder.NORTH));
 
         String oldPassword = fieldOldPassword.getText();
-        GraphicsUtils.setErrorBorder(fieldOldPassword, false);
+        Alerts.setErrorBorder(fieldOldPassword, false);
 
         String repeatNewPassword = fieldRepeatPassword.getText();
-        GraphicsUtils.setErrorBorder(fieldRepeatPassword, false);
+        Alerts.setErrorBorder(fieldRepeatPassword, false);
 
         if (!newPassword.equals(repeatNewPassword)) {
-            GraphicsUtils.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "New Passwords do not match!");
-            GraphicsUtils.setErrorBorder(fieldOldPassword, true);
+            Alerts.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "New Passwords do not match!");
+            Alerts.setErrorBorder(fieldOldPassword, true);
             return;
         }
 
@@ -79,8 +81,8 @@ public class changePassword extends PopUp {
             this.dispose();
             this.updateFields.run();
         } else {
-            GraphicsUtils.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Old Password Incorrect!");
-            GraphicsUtils.setErrorBorder(fieldOldPassword, true);
+            Alerts.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Old Password Incorrect!");
+            Alerts.setErrorBorder(fieldOldPassword, true);
         }
     }
 }

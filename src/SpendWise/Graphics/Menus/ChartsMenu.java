@@ -1,9 +1,10 @@
 package SpendWise.Graphics.Menus;
 
 import SpendWise.Graphics.Screen;
-import SpendWise.Utils.GraphicsUtils;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.PanelOrder;
+import SpendWise.Utils.Graphics.Misc;
+import SpendWise.Utils.Graphics.Panels;
 import SpendWise.Utils.Enums.GroupFields;
 
 import javafx.application.Platform;
@@ -17,7 +18,7 @@ import javax.swing.SwingUtilities;
 public class ChartsMenu extends Screen {
     // TODO implement ChartsMenu
     private JPanel pnlChartsMenu;
-    private static final String BACKGROUND_COLOR = "-fx-background-color: " + GraphicsUtils.getColorHex(ACCENT_COLOR)
+    private static final String BACKGROUND_COLOR = "-fx-background-color: " + Misc.getColorHex(ACCENT_COLOR)
             + ";";
 
     public ChartsMenu() {
@@ -26,7 +27,7 @@ public class ChartsMenu extends Screen {
 
     @Override
     protected void initialize() {
-        blankPanels = GraphicsUtils.createPanelWithCenter(this, new Offsets(50, 50, 50, 50), ACCENT_COLOR);
+        blankPanels = Panels.createPanelWithCenter(this, new Offsets(50, 50, 50, 50), ACCENT_COLOR);
 
         pnlChartsMenu = super.getBlankPanel(PanelOrder.CENTRAL);
 

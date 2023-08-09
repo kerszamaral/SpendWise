@@ -16,11 +16,13 @@ import SpendWise.Bills.Expense;
 import SpendWise.Bills.OneTime;
 import SpendWise.Bills.Recurring;
 import SpendWise.Managers.ExpensesManager;
-import SpendWise.Utils.GraphicsUtils;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.BillsFields;
 import SpendWise.Utils.Enums.ExpenseType;
 import SpendWise.Utils.Enums.PanelOrder;
+import SpendWise.Utils.Graphics.Components;
+import SpendWise.Utils.Graphics.Misc;
+import SpendWise.Utils.Graphics.Panels;
 
 public class ExpensesMenu extends Screen {
     private ExpensesManager expensesManager;
@@ -43,19 +45,19 @@ public class ExpensesMenu extends Screen {
     protected void initialize() {
         Offsets outerOffsets = new Offsets(50, 50, 100, 0);
         Offsets innerOffsets = new Offsets(50, 50, 50, 50);
-        blankPanels = GraphicsUtils.createPanelWithCenter(this, innerOffsets, outerOffsets, ACCENT_COLOR);
+        blankPanels = Panels.createPanelWithCenter(this, innerOffsets, outerOffsets, ACCENT_COLOR);
 
         expensesComboBox = new JComboBox<Expense>(expensesManager.getExpenses().toArray(new Expense[0]));
         expensesComboBox.addActionListener(e -> createBillFields(e));
         Dimension comboBoxSize = new Dimension(450, 30);
-        GraphicsUtils.defineSize(expensesComboBox, comboBoxSize);
+        Misc.defineSize(expensesComboBox, comboBoxSize);
         getBlankPanel(PanelOrder.NORTH).add(expensesComboBox);
 
         pnlCentral = super.getBlankPanel(PanelOrder.CENTRAL);
         createBillFields(null);
 
         Offsets offsetsBtn = new Offsets(10, 10, 400, 20);
-        GraphicsUtils.initializeButton(getBlankPanel(PanelOrder.SOUTH), offsetsBtn, "Removed Expense", ACCENT_COLOR,
+        Components.initializeButton(getBlankPanel(PanelOrder.SOUTH), offsetsBtn, "Removed Expense", ACCENT_COLOR,
                 e -> removeExpense(e));
     }
 
@@ -183,7 +185,7 @@ public class ExpensesMenu extends Screen {
 
                 recurringEndDateField.setValue(dateEnd);
 
-                GraphicsUtils.defineSize(recurringEndDateField, DEFAULT_FIELD_SIZE);
+                Misc.defineSize(recurringEndDateField, DEFAULT_FIELD_SIZE);
 
                 recurringEndDateField.setEnabled(true);
                 recurringEndDateField.setBackground(ACCENT_COLOR);

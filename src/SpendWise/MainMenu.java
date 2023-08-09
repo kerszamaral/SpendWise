@@ -8,11 +8,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import SpendWise.Managers.UserManager;
-import SpendWise.Utils.GraphicsUtils;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.Contexts;
 import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.Utils.Graphics.Colors;
+import SpendWise.Utils.Graphics.Panels;
 
 public class MainMenu extends JFrame implements Colors {
     private final static String APP_NAME = "SpendWise";
@@ -91,7 +91,7 @@ public class MainMenu extends JFrame implements Colors {
 
     private void createButtons() {
         Offsets offsets = new Offsets(20, 35, 0, 0);
-        JPanel[] blankPanels = GraphicsUtils.createPanelWithCenter(sidePanel, offsets, BACKGROUND_COLOR);
+        JPanel[] blankPanels = Panels.createPanelWithCenter(sidePanel, offsets, BACKGROUND_COLOR);
 
         JPanel mainSidePanel = blankPanels[PanelOrder.CENTRAL.ordinal()];
 

@@ -1,8 +1,10 @@
 package SpendWise.Graphics.Menus;
 
-import SpendWise.Utils.GraphicsUtils;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.PanelOrder;
+import SpendWise.Utils.Graphics.Components;
+import SpendWise.Utils.Graphics.Misc;
+import SpendWise.Utils.Graphics.Panels;
 import SpendWise.Graphics.Screen;
 import SpendWise.Utils.Enums.GroupFields;
 
@@ -32,10 +34,10 @@ public class GroupsMenu extends Screen {
 
     @Override
     protected void initialize() {
-        blankPanels = GraphicsUtils.createPanelWithCenter(this, new Offsets(50, 50, 50, 50), ACCENT_COLOR);
+        blankPanels = Panels.createPanelWithCenter(this, new Offsets(50, 50, 50, 50), ACCENT_COLOR);
 
         JPanel centerPanel = getBlankPanel(PanelOrder.CENTRAL);
-        JPanel[] innerPanels = GraphicsUtils.initializeOffsets(centerPanel, new Offsets(0, 0, 0, 150), ACCENT_COLOR);
+        JPanel[] innerPanels = Panels.initializeOffsets(centerPanel, new Offsets(0, 0, 0, 150), ACCENT_COLOR);
 
         JLabel groupTitle = new JLabel("MANAGE GROUPS");
         groupTitle.setFont(STD_FONT_BOLD);
@@ -68,7 +70,7 @@ public class GroupsMenu extends Screen {
             if (fieldType == null)
                 continue;
 
-            GraphicsUtils.defineSize(fieldType, DEFAULT_FIELD_SIZE);
+            Misc.defineSize(fieldType, DEFAULT_FIELD_SIZE);
 
             fieldType.setEnabled(true);
             fieldType.setBackground(ACCENT_COLOR);
@@ -91,7 +93,7 @@ public class GroupsMenu extends Screen {
          */
 
         centerPanel.add(pnlGroupManagement, BorderLayout.CENTER);
-        GraphicsUtils.initializeButton(this.getBlankPanel(PanelOrder.SOUTH), new Offsets(10, 10, 400, 20), "Save",
+        Components.initializeButton(this.getBlankPanel(PanelOrder.SOUTH), new Offsets(10, 10, 400, 20), "Save",
                 ACCENT_COLOR,
                 this::saveButton);
     }
@@ -132,7 +134,7 @@ public class GroupsMenu extends Screen {
     }
 
     private void centralizeImage(JPanel panel, JLabel lblImage) {
-        JPanel[] imageOffsets = GraphicsUtils.initializeOffsets(panel, new Offsets(90, 90, 25, 0), ACCENT_COLOR);
+        JPanel[] imageOffsets = Panels.initializeOffsets(panel, new Offsets(90, 90, 25, 0), ACCENT_COLOR);
         imageOffsets[PanelOrder.CENTRAL.ordinal()].add(lblImage);
     }
 

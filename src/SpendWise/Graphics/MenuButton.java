@@ -1,10 +1,9 @@
 package SpendWise.Graphics;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import SpendWise.Utils.Graphics.Images;
-import SpendWise.Utils.GraphicsUtils;
+import SpendWise.Utils.Graphics.Misc;
 import SpendWise.Utils.Enums.Contexts;
 
 import java.awt.Color;
@@ -28,7 +27,7 @@ public class MenuButton extends JButton {
 
         resizedIcon = Images.resizedIcon(imagePath, 30, 30).getImage();
 
-        GraphicsUtils.defineSize(this, size);
+        Misc.defineSize(this, size);
 
         this.initialize();
     }

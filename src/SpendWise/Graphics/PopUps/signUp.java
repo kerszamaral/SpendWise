@@ -11,10 +11,12 @@ import SpendWise.Graphics.PopUp;
 import SpendWise.Graphics.Screen;
 import SpendWise.Managers.UserManager;
 import SpendWise.Utils.Email;
-import SpendWise.Utils.GraphicsUtils;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.Utils.Enums.SignUpLabels;
+import SpendWise.Utils.Graphics.Components;
+import SpendWise.Utils.Graphics.Alerts;
+import SpendWise.Utils.Graphics.Panels;
 
 public class signUp extends PopUp {
     private JTextField[] signUpFields;
@@ -32,7 +34,7 @@ public class signUp extends PopUp {
         // Creating the sign up panel and it's fields
         this.setLayout(new BorderLayout());
         Offsets offsets = new Offsets(50, 0, 100, 100);
-        blankPanels = GraphicsUtils.initializeOffsets((JPanel) this.getContentPane(), offsets);
+        blankPanels = Panels.initializeOffsets((JPanel) this.getContentPane(), offsets);
 
         JPanel signUpPanel = new JPanel(new GridLayout(SignUpLabels.values().length * 2, 1));
         signUpPanel.setBackground(BACKGROUND_COLOR);
@@ -43,7 +45,7 @@ public class signUp extends PopUp {
         for (SignUpLabels label : SignUpLabels.values()) {
             boolean isPassword = label.getLabelName().toLowerCase().contains("password");
 
-            signUpFields[label.ordinal()] = GraphicsUtils.addTextFieldCenter(signUpPanel, label.getLabelName(),
+            signUpFields[label.ordinal()] = Components.addTextFieldCenter(signUpPanel, label.getLabelName(),
                     "", TEXT_WIDTH, isPassword, true);
         }
 
@@ -54,10 +56,10 @@ public class signUp extends PopUp {
         pnlSouth.setBackground(BACKGROUND_COLOR);
 
         Offsets southOffsets = new Offsets(5, 20, 200, 200);
-        GraphicsUtils.initializeOffsets(pnlSouth, southOffsets);
+        Panels.initializeOffsets(pnlSouth, southOffsets);
 
         // Creating the create account button
-        JButton btnCreateAccount = GraphicsUtils.createButton("Create Account", Color.BLACK, BACKGROUND_COLOR, null,
+        JButton btnCreateAccount = Components.createButton("Create Account", Color.BLACK, BACKGROUND_COLOR, null,
                 e -> this.createUser(e));
         pnlSouth.add(btnCreateAccount, BorderLayout.CENTER);
 
@@ -67,20 +69,20 @@ public class signUp extends PopUp {
     }
 
     private void createUser(ActionEvent e) {
-        GraphicsUtils.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "");
+        Alerts.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "");
 
         if (this.singUpFieldsEmpty()) {
-            GraphicsUtils.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "One or more fields are empty!");
+            Alerts.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "One or more fields are empty!");
             return;
         }
 
         if (!Email.isEmailValid(signUpFields[SignUpLabels.EMAIL.ordinal()])) {
-            GraphicsUtils.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Invalid e-mail!");
+            Alerts.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Invalid e-mail!");
             return;
         }
 
         if (!this.isPasswordTheSame()) {
-            GraphicsUtils.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Passwords do not match!");
+            Alerts.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Passwords do not match!");
             return;
         }
 
@@ -92,13 +94,13 @@ public class signUp extends PopUp {
 
         User user = new User(username, name, email, password, 0, 0);
 
-        GraphicsUtils.setErrorBorder(txtUsername, false);
+        Alerts.setErrorBorder(txtUsername, false);
         if (userManager.createUser(user)) {
             this.dispose();
             singUpAction.actionPerformed(e);
         } else {
-            GraphicsUtils.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Username already taken!");
-            GraphicsUtils.setErrorBorder(txtUsername, true);
+            Alerts.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Username already taken!");
+            Alerts.setErrorBorder(txtUsername, true);
         }
 
     }
@@ -106,10 +108,10 @@ public class signUp extends PopUp {
     private boolean singUpFieldsEmpty() {
         boolean isAnyFieldEmpty = false;
         for (JTextField field : signUpFields) {
-            GraphicsUtils.setErrorBorder(field, false);
+            Alerts.setErrorBorder(field, false);
             if (field.getText().isEmpty()) {
                 isAnyFieldEmpty = true;
-                GraphicsUtils.setErrorBorder(field, true);
+                Alerts.setErrorBorder(field, true);
             }
         }
         return isAnyFieldEmpty;
@@ -119,16 +121,16 @@ public class signUp extends PopUp {
         JPasswordField passwordField = (JPasswordField) signUpFields[SignUpLabels.PASSWORD.ordinal()];
         JPasswordField repeatPasswordField = (JPasswordField) signUpFields[SignUpLabels.REPEAT_PASSWORD.ordinal()];
 
-        GraphicsUtils.setErrorBorder(passwordField, false);
-        GraphicsUtils.setErrorBorder(repeatPasswordField, false);
+        Alerts.setErrorBorder(passwordField, false);
+        Alerts.setErrorBorder(repeatPasswordField, false);
 
         String password = new String(passwordField.getPassword());
         String repeatPassword = new String(repeatPasswordField.getPassword());
         if (password.equals(repeatPassword)) {
             return true;
         } else {
-            GraphicsUtils.setErrorBorder(passwordField, true);
-            GraphicsUtils.setErrorBorder(repeatPasswordField, true);
+            Alerts.setErrorBorder(passwordField, true);
+            Alerts.setErrorBorder(repeatPasswordField, true);
             return false;
         }
     }
