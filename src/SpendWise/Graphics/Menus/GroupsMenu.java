@@ -48,8 +48,8 @@ public class GroupsMenu extends Screen {
 
         JComponent fieldType = null;
         for (GroupFields field : GroupFields.values()) {
-            String label = field.getLabel() + ": ";
-            JLabel lbl = new JLabel(label);
+            // String label = field.getLabel() + ": ";
+            // JLabel lbl = new JLabel(label);
 
             switch (field) {
                 case SELECT:
