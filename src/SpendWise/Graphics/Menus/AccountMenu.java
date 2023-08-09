@@ -9,6 +9,7 @@ import SpendWise.Graphics.PopUp;
 import SpendWise.Graphics.Screen;
 import SpendWise.Graphics.PopUps.changePassword;
 import SpendWise.Managers.UserManager;
+import SpendWise.Utils.Email;
 import SpendWise.Utils.GraphicsUtils;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.AccountFields;
@@ -90,6 +91,11 @@ public class AccountMenu extends Screen {
                             "Please fill all Non Password fields");
                     nextState = true;
                 }
+            }
+
+            if (!Email.isEmailValid(txtEmail)) {
+                GraphicsUtils.showErrorMessage(super.getBlankPanel(PanelOrder.NORTH), "Please enter a valid email");
+                nextState = true;
             }
         }
 

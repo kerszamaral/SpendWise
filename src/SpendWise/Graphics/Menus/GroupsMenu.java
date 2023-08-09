@@ -32,8 +32,8 @@ public class GroupsMenu extends Screen {
 
     @Override
     protected void initialize() {
-        blankPanels = GraphicsUtils.createPanelWithCenter(this,  new Offsets(50, 50, 50, 50), ACCENT_COLOR);
-        
+        blankPanels = GraphicsUtils.createPanelWithCenter(this, new Offsets(50, 50, 50, 50), ACCENT_COLOR);
+
         JPanel centerPanel = getBlankPanel(PanelOrder.CENTRAL);
         JPanel[] innerPanels = GraphicsUtils.initializeOffsets(centerPanel, new Offsets(0, 0, 0, 150), ACCENT_COLOR);
 
@@ -64,6 +64,9 @@ public class GroupsMenu extends Screen {
                     fieldType = removeUserField;
                     break;
             }
+
+            if (fieldType == null)
+                continue;
 
             GraphicsUtils.defineSize(fieldType, DEFAULT_FIELD_SIZE);
 
@@ -122,7 +125,7 @@ public class GroupsMenu extends Screen {
      * }
      */
 
-    private ImageIcon resizeImage(String path, int width, int height){
+    private ImageIcon resizeImage(String path, int width, int height) {
         Image originalImage = new ImageIcon(path).getImage();
         ImageIcon resizedImageIcon = new ImageIcon(originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH));
         return resizedImageIcon;

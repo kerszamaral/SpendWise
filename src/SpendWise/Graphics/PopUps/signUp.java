@@ -10,6 +10,7 @@ import SpendWise.User;
 import SpendWise.Graphics.PopUp;
 import SpendWise.Graphics.Screen;
 import SpendWise.Managers.UserManager;
+import SpendWise.Utils.Email;
 import SpendWise.Utils.GraphicsUtils;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.PanelOrder;
@@ -73,7 +74,7 @@ public class signUp extends PopUp {
             return;
         }
 
-        if (!this.isEmailValid()) {
+        if (!Email.isEmailValid(signUpFields[SignUpLabels.EMAIL.ordinal()])) {
             GraphicsUtils.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Invalid e-mail!");
             return;
         }
@@ -112,19 +113,6 @@ public class signUp extends PopUp {
             }
         }
         return isAnyFieldEmpty;
-    }
-
-    private boolean isEmailValid() {
-        final String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
-        JTextField emailField = signUpFields[SignUpLabels.EMAIL.ordinal()];
-        GraphicsUtils.setErrorBorder(emailField, false);
-        String email = emailField.getText();
-        if (email.matches(emailRegex)) {
-            return true;
-        } else {
-            GraphicsUtils.setErrorBorder(emailField, true);
-            return false;
-        }
     }
 
     private boolean isPasswordTheSame() {
