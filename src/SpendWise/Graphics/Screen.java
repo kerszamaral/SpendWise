@@ -3,6 +3,7 @@ package SpendWise.Graphics;
 import javax.swing.JPanel;
 
 import SpendWise.Utils.Enums.PanelOrder;
+import SpendWise.Utils.Graphics.BlankPanels;
 import SpendWise.Utils.Graphics.Colors;
 import SpendWise.Utils.Graphics.Fonts;
 import SpendWise.Utils.Graphics.Misc;

@@ -28,7 +28,7 @@ public abstract class PopUp extends JFrame implements BlankPanels, Colors, Fonts
 
     protected void initialize() {
         this.setTitle(title);
-        this.setSize(WIDTH, HEIGHT);
+        this.setSize(POPUP_WIDTH, POPUP_HEIGHT);
         this.getContentPane().setBackground(BACKGROUND_COLOR);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(originalWindow);
