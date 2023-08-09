@@ -219,31 +219,19 @@ public abstract class GraphicsUtils {
         return button;
     }
 
-    public static JButton initializeButton(JPanel mainPanel, Offsets offsets, Color color,
-            ActionListener actionListener, String... text) {
+    public static JButton initializeButton(JPanel mainPanel, Offsets offsets, String text, Color color,
+            ActionListener actionListener) {
         // Creates the panel that is going to the south of the screen
         JPanel panel = new JPanel();
         initializeOffsets(panel, offsets, color);
 
         // Creates the button itself and adds it to the east panel
-        if (text.length == 1) {
-            JButton btnEdit = createButton(text[0], Color.BLACK, BACKGROUND_COLOR, null, actionListener);
-            panel.add(btnEdit, BorderLayout.CENTER);
-            mainPanel.add(panel, BorderLayout.SOUTH);
-            return btnEdit;
-        } else {
-            JPanel innerPanel = new JPanel();
-            innerPanel.setLayout(new BoxLayout(innerPanel, BoxLayout.X_AXIS));
-            innerPanel.setOpaque(false);
-            JButton btnEdit = null;
-            for (String txt : text) {
-                JButton btnEditTemp = createButton(txt, Color.BLACK, BACKGROUND_COLOR, null, actionListener);
-                innerPanel.add(btnEditTemp);
-                btnEdit = btnEditTemp;
-            }
-            panel.add(innerPanel, BorderLayout.CENTER);
-            mainPanel.add(panel, BorderLayout.SOUTH);
-            return btnEdit;
-        }
+        JButton btnEdit = createButton(text, Color.BLACK, BACKGROUND_COLOR, null, actionListener);
+        panel.add(btnEdit, BorderLayout.CENTER);
+
+        // And, finnaly, add the south panel to the screen
+        mainPanel.add(panel, BorderLayout.SOUTH);
+
+        return btnEdit;
     }
 }

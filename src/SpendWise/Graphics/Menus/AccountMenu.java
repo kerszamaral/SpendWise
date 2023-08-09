@@ -45,8 +45,9 @@ public class AccountMenu extends Screen {
 
         Offsets offsetsBtn = new Offsets(10, 10, 400, 20);
         btnEditAccount = GraphicsUtils.initializeButton(this.getBlankPanel(PanelOrder.SOUTH), offsetsBtn,
+                "Edit Account",
                 ACCENT_COLOR,
-                e -> edit(e), "Edit Account");
+                e -> edit(e));
     }
 
     private void updateAccountFields() {
