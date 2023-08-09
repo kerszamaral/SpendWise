@@ -6,15 +6,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import SpendWise.Utils.GraphicsUtils;
 import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.Utils.Graphics.Colors;
+import SpendWise.Utils.Graphics.Fonts;
+import SpendWise.Utils.Graphics.Sizes;
 
-public abstract class PopUp extends JFrame implements BlankPanels, Colors {
-    protected final static Font STD_FONT = GraphicsUtils.STD_FONT;
-    protected final static Font STD_FONT_BOLD = GraphicsUtils.STD_FONT_BOLD;
-    protected final static Dimension DEFAULT_FIELD_SIZE = GraphicsUtils.DEFAULT_FIELD_SIZE;
-
+public abstract class PopUp extends JFrame implements BlankPanels, Colors, Fonts, Sizes {
     private final int WIDTH = 600;
     private final int HEIGHT = 400;
     private Component originalWindow;
