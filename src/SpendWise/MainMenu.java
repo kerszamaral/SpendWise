@@ -140,6 +140,7 @@ public class MainMenu extends JFrame {
 
         // Adds the new context to the screen
         this.centerLayout.add(screens[this.currentContext.ordinal()]);
+        screens[this.currentContext.ordinal()].refresh();
 
         switch (this.currentContext) {
             case LOGIN:
