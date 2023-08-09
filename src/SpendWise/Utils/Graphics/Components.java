@@ -24,6 +24,7 @@ public abstract class Components implements Colors, Fonts {
 
         JTextField textField = isPassword ? new JPasswordField(userValue, 20) : new JTextField(userValue, 20);
         textField.setEditable(isEditable);
+        textField.setBackground(ACCENT_COLOR);
 
         Dimension size = new Dimension(width, 30);
         Misc.defineSize(textField, size);
