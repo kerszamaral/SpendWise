@@ -159,15 +159,52 @@ public class BillCreator extends Screen {
         this.refresh();
     }
 
+    private void cleanFields() {
+        for (BillsFields field : BillsFields.values()) {
+            JComponent fieldType = fields[field.ordinal()];
+            switch (field) {
+                case VALUE:
+                    ((JFormattedTextField) fieldType).setValue(Double.valueOf(0.0));
+                    break;
+
+                case ESSENTIAL:
+                    ((JCheckBox) fieldType).setSelected(false);
+                    break;
+
+                case DATE:
+                    ((JFormattedTextField) fieldType).setValue(new java.util.Date());
+                    break;
+
+                case DESCRIPTION:
+                    ((JTextField) fieldType).setText("");
+                    break;
+
+                case TYPE:
+                    typeSelector.setSelectedIndex(0);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
     private void submit(ActionEvent action) {
+        GraphicsUtils.clearErrorMessage(getBlankPanel(PanelOrder.NORTH));
         ExpenseType type = ExpenseType.values()[typeSelector.getSelectedIndex()];
         Expense exp = null;
 
         JFormattedTextField valueField = (JFormattedTextField) fields[BillsFields.VALUE.ordinal()];
+        GraphicsUtils.setErrorBorder(valueField, false);
+
         double value = 0;
         try {
             value = NumberFormat.getCurrencyInstance().parse(valueField.getText()).doubleValue();
         } catch (Exception e) {
+            return;
+        }
+        if (value <= 0) {
+            GraphicsUtils.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Value must be greater than 0!");
+            GraphicsUtils.setErrorBorder(valueField, true);
             return;
         }
 
@@ -184,7 +221,14 @@ public class BillCreator extends Screen {
         }
 
         JTextField descriptionField = (JTextField) fields[BillsFields.DESCRIPTION.ordinal()];
+        GraphicsUtils.setErrorBorder(descriptionField, false);
+
         String description = descriptionField.getText();
+        if (description.isEmpty()) {
+            GraphicsUtils.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Description cannot be empty!");
+            GraphicsUtils.setErrorBorder(descriptionField, true);
+            return;
+        }
 
         switch (type) {
             case FIXED:
@@ -208,8 +252,13 @@ public class BillCreator extends Screen {
                 break;
         }
 
+        cleanFields();
         if (exp != null) {
+            GraphicsUtils.showMessage(getBlankPanel(PanelOrder.NORTH), "Expense added successfully!", BACKGROUND_COLOR);
             expensesManager.addExpense(exp);
+        } else {
+            GraphicsUtils.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Expense could not be added!");
         }
+
     }
 }
