@@ -1,6 +1,7 @@
 package SpendWise.Bills;
 
 import java.time.LocalDate;
+
 public class OneTime extends Expense {
     private boolean isPaid;
 

@@ -1,12 +1,25 @@
 package SpendWise;
 
-import SpendWise.Graphics.Menus.*;
-import SpendWise.Graphics.*;
-
-import javax.swing.*;
-
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import SpendWise.Graphics.MenuButton;
+import SpendWise.Graphics.Screen;
+import SpendWise.Graphics.Menus.AccountMenu;
+import SpendWise.Graphics.Menus.BillCreator;
+import SpendWise.Graphics.Menus.ChartsMenu;
+import SpendWise.Graphics.Menus.ExpensesMenu;
+import SpendWise.Graphics.Menus.GroupsMenu;
+import SpendWise.Graphics.Menus.LoginMenu;
 import SpendWise.Managers.UserManager;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.Contexts;

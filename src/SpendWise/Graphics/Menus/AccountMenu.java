@@ -3,8 +3,13 @@ package SpendWise.Graphics.Menus;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 
-import javax.swing.*;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
+import SpendWise.User;
 import SpendWise.Graphics.PopUp;
 import SpendWise.Graphics.Screen;
 import SpendWise.Graphics.PopUps.changePassword;
@@ -13,11 +18,10 @@ import SpendWise.Utils.Email;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.AccountFields;
 import SpendWise.Utils.Enums.PanelOrder;
-import SpendWise.Utils.Graphics.Components;
 import SpendWise.Utils.Graphics.Alerts;
+import SpendWise.Utils.Graphics.Components;
 import SpendWise.Utils.Graphics.Misc;
 import SpendWise.Utils.Graphics.Panels;
-import SpendWise.User;
 
 public class AccountMenu extends Screen {
     private JPanel pnlUserData;

@@ -1,6 +1,7 @@
 package SpendWise.Managers;
 
 import java.util.Hashtable;
+
 import SpendWise.User;
 
 public class UserManager {

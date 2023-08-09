@@ -1,6 +1,6 @@
 package SpendWise.Graphics;
 
-import java.awt.*;
+import java.awt.Component;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;

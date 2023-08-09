@@ -1,26 +1,23 @@
 package SpendWise.Graphics.Menus;
 
-import SpendWise.Utils.Offsets;
-import SpendWise.Utils.Enums.PanelOrder;
-import SpendWise.Utils.Graphics.Components;
-import SpendWise.Utils.Graphics.Misc;
-import SpendWise.Utils.Graphics.Panels;
-import SpendWise.Graphics.Screen;
-import SpendWise.Utils.Enums.GroupFields;
-
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JComponent;
+
+import SpendWise.Graphics.Screen;
+import SpendWise.Utils.Offsets;
+import SpendWise.Utils.Enums.GroupFields;
+import SpendWise.Utils.Enums.PanelOrder;
+import SpendWise.Utils.Graphics.Components;
+import SpendWise.Utils.Graphics.Misc;
+import SpendWise.Utils.Graphics.Panels;
 
 public class GroupsMenu extends Screen {
     private JPanel pnlGroupManagement;

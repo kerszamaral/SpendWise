@@ -1,19 +1,16 @@
 package SpendWise.Graphics.Menus;
 
+import javax.swing.JPanel;
+
 import SpendWise.Graphics.Screen;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.Utils.Graphics.Misc;
 import SpendWise.Utils.Graphics.Panels;
-import SpendWise.Utils.Enums.GroupFields;
-
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 public class ChartsMenu extends Screen {
     // TODO implement ChartsMenu

@@ -1,10 +1,15 @@
 package SpendWise.Graphics.PopUps;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 import SpendWise.User;
 import SpendWise.Graphics.PopUp;
@@ -14,8 +19,8 @@ import SpendWise.Utils.Email;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.Utils.Enums.SignUpLabels;
-import SpendWise.Utils.Graphics.Components;
 import SpendWise.Utils.Graphics.Alerts;
+import SpendWise.Utils.Graphics.Components;
 import SpendWise.Utils.Graphics.Panels;
 
 public class signUp extends PopUp {

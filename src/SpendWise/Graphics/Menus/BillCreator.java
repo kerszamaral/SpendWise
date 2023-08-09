@@ -5,9 +5,19 @@ import java.awt.event.ActionEvent;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
-import SpendWise.Bills.*;
+import SpendWise.Bills.Expense;
+import SpendWise.Bills.Fixed;
+import SpendWise.Bills.OneTime;
+import SpendWise.Bills.Recurring;
 import SpendWise.Graphics.Screen;
 import SpendWise.Managers.ExpensesManager;
 import SpendWise.Utils.Dates;
@@ -15,8 +25,8 @@ import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.BillsFields;
 import SpendWise.Utils.Enums.ExpenseType;
 import SpendWise.Utils.Enums.PanelOrder;
-import SpendWise.Utils.Graphics.Components;
 import SpendWise.Utils.Graphics.Alerts;
+import SpendWise.Utils.Graphics.Components;
 import SpendWise.Utils.Graphics.Misc;
 import SpendWise.Utils.Graphics.Panels;
 

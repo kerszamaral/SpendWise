@@ -1,6 +1,7 @@
 package SpendWise.Managers;
 
 import java.util.ArrayList;
+
 import SpendWise.User;
 
 public class GroupManager {

@@ -1,15 +1,15 @@
 package SpendWise.Graphics;
 
-import javax.swing.JButton;
-
-import SpendWise.Utils.Graphics.Images;
-import SpendWise.Utils.Graphics.Misc;
-import SpendWise.Utils.Enums.Contexts;
-
 import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.Image;
+
+import javax.swing.JButton;
+
+import SpendWise.Utils.Enums.Contexts;
+import SpendWise.Utils.Graphics.Images;
+import SpendWise.Utils.Graphics.Misc;
 
 public class MenuButton extends JButton {
     private String name;

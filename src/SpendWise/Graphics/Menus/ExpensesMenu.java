@@ -8,12 +8,19 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
-import SpendWise.Graphics.Screen;
 import SpendWise.Bills.Expense;
 import SpendWise.Bills.OneTime;
 import SpendWise.Bills.Recurring;
+import SpendWise.Graphics.Screen;
 import SpendWise.Managers.ExpensesManager;
 import SpendWise.Utils.Dates;
 import SpendWise.Utils.Offsets;
