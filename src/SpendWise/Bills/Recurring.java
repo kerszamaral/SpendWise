@@ -56,4 +56,14 @@ public class Recurring extends Expense {
         }
         return this.getValue();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Recurring) {
+            Recurring recurring = (Recurring) obj;
+            return super.equals(obj) && recurring.getEndDate().equals(endDate);
+        } else {
+            return false;
+        }
+    }
 }

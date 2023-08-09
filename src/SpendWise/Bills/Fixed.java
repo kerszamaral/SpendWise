@@ -60,4 +60,13 @@ public class Fixed extends Expense {
     public double calculatePayment() {
         return this.getValue();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Fixed) {
+            Fixed other = (Fixed) obj;
+            return super.equals(other) && this.valueHistory.equals(other.valueHistory);
+        }
+        return false;
+    }
 }

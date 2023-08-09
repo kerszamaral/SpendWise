@@ -26,4 +26,15 @@ public class OneTime extends Expense {
     public void pay() {
         this.isPaid = true;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof OneTime) {
+            OneTime oneTime = (OneTime) obj;
+            return super.equals(obj) && oneTime.isPaid() == isPaid;
+        } else {
+            return false;
+        }
+    }
+
 }

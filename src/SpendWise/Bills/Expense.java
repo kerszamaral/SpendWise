@@ -21,8 +21,8 @@ public abstract class Expense {
     }
 
     public String toString() {
-        return "Value: R$" + value + " || Date: " + date + " || Description: "
-                + description;
+        return "Value: R$" + value + " || Type: " + getType().getType() + " || Description: " + description
+                + " || Date: " + date;
     }
 
     public ExpenseType getType() {
@@ -34,6 +34,16 @@ public abstract class Expense {
             return ExpenseType.RECURRING;
         } else {
             return null;
+        }
+    }
+
+    public boolean equals(Object obj) {
+        if (obj instanceof Expense) {
+            Expense exp = (Expense) obj;
+            return exp.getValue() == value && exp.isEssential() == isEssential
+                    && exp.getDate().equals(date) && exp.getDescription().equals(description);
+        } else {
+            return false;
         }
     }
 
