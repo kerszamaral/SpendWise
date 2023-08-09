@@ -110,8 +110,8 @@ public class BillCreator extends Screen {
 
         Offsets offsetsBtn = new Offsets(10, 10, 400, 20);
         GraphicsUtils.initializeButton(this.getBlankPanel(PanelOrder.SOUTH), offsetsBtn,
-                "Submit", ACCENT_COLOR,
-                e -> submit(e));
+                ACCENT_COLOR,
+                e -> submit(e), "Submit");
     }
 
     private void createTypeSpecificFields(ActionEvent e) {
