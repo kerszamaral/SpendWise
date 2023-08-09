@@ -2,7 +2,6 @@ package SpendWise;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 
 import javax.swing.Box;
@@ -25,9 +24,10 @@ import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.Contexts;
 import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.Utils.Graphics.Colors;
+import SpendWise.Utils.Graphics.Fonts;
 import SpendWise.Utils.Graphics.Panels;
 
-public class MainMenu extends JFrame implements Colors {
+public class MainMenu extends JFrame implements Colors, Fonts {
     private final static String APP_NAME = "SpendWise";
     private final static int SCREEN_WIDTH = 1920 / 2;
     private final static int SCREEN_HEIGHT = 1080 / 2;
@@ -131,7 +131,7 @@ public class MainMenu extends JFrame implements Colors {
         JButton logoutButton = buttons[Contexts.LOGIN.ordinal()];
 
         logoutButton.setBackground(ACCENT_COLOR);
-        logoutButton.setFont(new Font("Arial", Font.BOLD, 13));
+        logoutButton.setFont(STD_FONT_BOLD);
         logoutButton.setSize(50, 50);
         logoutButton.setVisible(true);
 

@@ -96,12 +96,35 @@ public abstract class Components implements Colors, Fonts {
 
         // Creates the button itself and adds it to the east panel
         JButton btnEdit = createButton(text, Color.BLACK, BACKGROUND_COLOR, null, actionListener);
-        panel.add(btnEdit, BorderLayout.CENTER);
+        panel.add(btnEdit, BorderLayout.EAST);
 
         // And, finnaly, add the south panel to the screen
         mainPanel.add(panel, BorderLayout.SOUTH);
 
         return btnEdit;
+    }
+
+    public static JButton[] initializeButtons(JPanel mainPanel, Offsets offsets, String[] texts, Color color,
+            ActionListener[] actionListeners) {
+        // Creates the panel that is going to the south of the screen
+        JPanel panel = new JPanel();
+        Panels.initializeOffsets(panel, offsets, color);
+
+        // Creates the button itself and adds it to the east panel
+        if (texts.length != actionListeners.length)
+            return null;
+
+        JButton[] buttons = new JButton[texts.length];
+        final String[] LayoutPlace = { BorderLayout.EAST, BorderLayout.WEST };
+        for (int i = 0; i < texts.length; i++) {
+            buttons[i] = createButton(texts[i], Color.BLACK, BACKGROUND_COLOR, null, actionListeners[i]);
+            panel.add(buttons[i], LayoutPlace[i % 2]);
+        }
+
+        // And, finnaly, add the south panel to the screen
+        mainPanel.add(panel, BorderLayout.SOUTH);
+
+        return buttons;
     }
 
 }
