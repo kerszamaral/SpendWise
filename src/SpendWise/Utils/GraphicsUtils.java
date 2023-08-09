@@ -8,12 +8,10 @@ import javax.swing.border.Border;
 
 import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.Utils.Graphics.Colors;
+import SpendWise.Utils.Graphics.Fonts;
+import SpendWise.Utils.Graphics.Sizes;
 
-public abstract class GraphicsUtils implements Colors {
-    public final static Font STD_FONT = new Font("Arial", Font.PLAIN, 14);
-    public final static Font STD_FONT_BOLD = new Font("Arial", Font.BOLD, 14);
-    public final static Dimension DEFAULT_FIELD_SIZE = new Dimension(100, 30);
-
+public abstract class GraphicsUtils implements Colors, Fonts, Sizes {
     public static void defineSize(JComponent component, Dimension size) {
         component.setMinimumSize(size);
         component.setPreferredSize(size);
