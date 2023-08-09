@@ -8,10 +8,9 @@ import javax.swing.JPanel;
 
 import SpendWise.Utils.GraphicsUtils;
 import SpendWise.Utils.Enums.PanelOrder;
+import SpendWise.Utils.Graphics.Colors;
 
-public abstract class PopUp extends JFrame implements BlankPanels {
-    protected final static Color BACKGROUND_COLOR = GraphicsUtils.BACKGROUND_COLOR;
-    protected final static Color ACCENT_COLOR = GraphicsUtils.ACCENT_COLOR;
+public abstract class PopUp extends JFrame implements BlankPanels, Colors {
     protected final static Font STD_FONT = GraphicsUtils.STD_FONT;
     protected final static Font STD_FONT_BOLD = GraphicsUtils.STD_FONT_BOLD;
     protected final static Dimension DEFAULT_FIELD_SIZE = GraphicsUtils.DEFAULT_FIELD_SIZE;

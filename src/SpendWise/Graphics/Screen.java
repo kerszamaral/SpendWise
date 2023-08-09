@@ -7,10 +7,9 @@ import java.awt.*;
 import SpendWise.Utils.GraphicsUtils;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.PanelOrder;
+import SpendWise.Utils.Graphics.Colors;
 
-public abstract class Screen extends JPanel implements BlankPanels {
-    protected final static Color BACKGROUND_COLOR = GraphicsUtils.BACKGROUND_COLOR;
-    protected final static Color ACCENT_COLOR = GraphicsUtils.ACCENT_COLOR;
+public abstract class Screen extends JPanel implements BlankPanels, Colors {
     protected final static Font STD_FONT = GraphicsUtils.STD_FONT;
     protected final static Font STD_FONT_BOLD = GraphicsUtils.STD_FONT_BOLD;
     protected final static Offsets DEFAULT_OFFSETS = new Offsets(50, 50, 100, 0);

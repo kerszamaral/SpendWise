@@ -12,12 +12,12 @@ import SpendWise.Utils.GraphicsUtils;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.Contexts;
 import SpendWise.Utils.Enums.PanelOrder;
+import SpendWise.Utils.Graphics.Colors;
 
-public class MainMenu extends JFrame {
+public class MainMenu extends JFrame implements Colors {
     private final static String APP_NAME = "SpendWise";
     private final static int SCREEN_WIDTH = 1920 / 2;
     private final static int SCREEN_HEIGHT = 1080 / 2;
-    private final static Color BACKGROUND_COLOR = GraphicsUtils.BACKGROUND_COLOR;
     private final static int BUTTON_MAX_WIDTH = 160;
     private final static int BUTTON_SPACING = 25;
     private Contexts currentContext;
@@ -105,8 +105,8 @@ public class MainMenu extends JFrame {
                 continue;
 
             Dimension buttonSize = new Dimension(BUTTON_MAX_WIDTH, 50);
-            buttons[ctx.ordinal()] = new MenuButton(ctx.getContextName(), GraphicsUtils.ACCENT_COLOR,
-                    GraphicsUtils.BACKGROUND_COLOR, buttonSize);
+            buttons[ctx.ordinal()] = new MenuButton(ctx.getContextName(), ACCENT_COLOR,
+                    BACKGROUND_COLOR, buttonSize);
             buttons[ctx.ordinal()].addActionListener(e -> updateContext(e));
 
             mainSidePanel.add(buttons[ctx.ordinal()]);
@@ -117,7 +117,7 @@ public class MainMenu extends JFrame {
         buttons[Contexts.LOGIN.ordinal()] = new JButton(Contexts.LOGIN.getContextName());
         JButton logoutButton = buttons[Contexts.LOGIN.ordinal()];
 
-        logoutButton.setBackground(GraphicsUtils.ACCENT_COLOR);
+        logoutButton.setBackground(ACCENT_COLOR);
         logoutButton.setFont(new Font("Arial", Font.BOLD, 13));
         logoutButton.setSize(50, 50);
         logoutButton.setVisible(true);
