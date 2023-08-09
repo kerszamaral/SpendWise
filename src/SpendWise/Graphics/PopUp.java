@@ -7,13 +7,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import SpendWise.Utils.Enums.PanelOrder;
+import SpendWise.Utils.Graphics.BlankPanels;
 import SpendWise.Utils.Graphics.Colors;
 import SpendWise.Utils.Graphics.Fonts;
 import SpendWise.Utils.Graphics.Sizes;
 
 public abstract class PopUp extends JFrame implements BlankPanels, Colors, Fonts, Sizes {
-    private final int WIDTH = 600;
-    private final int HEIGHT = 400;
     private Component originalWindow;
     private String title;
     protected JPanel[] blankPanels;
