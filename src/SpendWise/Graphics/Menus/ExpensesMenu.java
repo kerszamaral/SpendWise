@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -16,6 +15,7 @@ import SpendWise.Bills.Expense;
 import SpendWise.Bills.OneTime;
 import SpendWise.Bills.Recurring;
 import SpendWise.Managers.ExpensesManager;
+import SpendWise.Utils.Dates;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.BillsFields;
 import SpendWise.Utils.Enums.ExpenseType;
@@ -32,7 +32,6 @@ public class ExpensesMenu extends Screen {
     private JPanel pnlTypeSpecific;
 
     private JComponent[] fields;
-    final private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
     private JCheckBox oneTimeCheckBox;
     private JFormattedTextField recurringEndDateField;
 
@@ -115,7 +114,7 @@ public class ExpensesMenu extends Screen {
                     break;
 
                 case DATE:
-                    JFormattedTextField dateField = new JFormattedTextField(dateFormatter);
+                    JFormattedTextField dateField = new JFormattedTextField(Dates.dateFormatter);
                     dateField.setValue(defaultDate);
                     dateField.setEditable(false);
                     fieldType = dateField;
@@ -178,10 +177,9 @@ public class ExpensesMenu extends Screen {
                 lbl.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
                 pnlTypeSpecific.add(lbl);
 
-                recurringEndDateField = new JFormattedTextField(dateFormatter);
+                recurringEndDateField = new JFormattedTextField(Dates.dateFormatter);
 
-                Date dateEnd = Date.from(((Recurring) exp).getEndDate()
-                        .atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+                Date dateEnd = Dates.convLocalDate(((Recurring) exp).getEndDate());
 
                 recurringEndDateField.setValue(dateEnd);
 

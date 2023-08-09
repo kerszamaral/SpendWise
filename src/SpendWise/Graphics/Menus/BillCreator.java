@@ -3,16 +3,14 @@ package SpendWise.Graphics.Menus;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 
 import javax.swing.*;
 
 import SpendWise.Bills.*;
 import SpendWise.Graphics.Screen;
 import SpendWise.Managers.ExpensesManager;
+import SpendWise.Utils.Dates;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.BillsFields;
 import SpendWise.Utils.Enums.ExpenseType;
@@ -27,7 +25,6 @@ public class BillCreator extends Screen {
 
     private JComponent[] fields;
     private JComboBox<String> typeSelector;
-    final private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
 
     JPanel pnlTypeSpecific;
 
@@ -73,7 +70,7 @@ public class BillCreator extends Screen {
                     break;
 
                 case DATE:
-                    JFormattedTextField dateField = new JFormattedTextField(dateFormatter);
+                    JFormattedTextField dateField = new JFormattedTextField(Dates.dateFormatter);
                     dateField.setValue(new java.util.Date());
                     fieldType = dateField;
                     break;
@@ -144,7 +141,7 @@ public class BillCreator extends Screen {
                 lbl.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
                 pnlTypeSpecific.add(lbl);
 
-                recurringEndDateField = new JFormattedTextField(dateFormatter);
+                recurringEndDateField = new JFormattedTextField(Dates.dateFormatter);
                 recurringEndDateField.setValue(new java.util.Date());
 
                 Misc.defineSize(recurringEndDateField, DEFAULT_FIELD_SIZE);
@@ -215,13 +212,7 @@ public class BillCreator extends Screen {
         boolean essential = essentialCheckBox.isSelected();
 
         JFormattedTextField dateField = (JFormattedTextField) fields[BillsFields.DATE.ordinal()];
-        LocalDate date = null;
-        try {
-            Date temp = dateFormatter.parse(dateField.getText());
-            date = temp.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        } catch (Exception e) {
-            return;
-        }
+        LocalDate date = Dates.convDate(Dates.convString(dateField.getText()));
 
         JTextField descriptionField = (JTextField) fields[BillsFields.DESCRIPTION.ordinal()];
         Alerts.setErrorBorder(descriptionField, false);
@@ -242,13 +233,7 @@ public class BillCreator extends Screen {
                 exp = new OneTime(value, essential, date, description, paid);
                 break;
             case RECURRING:
-                LocalDate endDate = null;
-                try {
-                    Date temp = dateFormatter.parse(recurringEndDateField.getText());
-                    endDate = temp.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                } catch (Exception e) {
-                    return;
-                }
+                LocalDate endDate = Dates.convDate(Dates.convString(recurringEndDateField.getText()));
                 exp = new Recurring(value, essential, date, description, endDate);
                 break;
             default:
