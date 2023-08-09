@@ -115,7 +115,7 @@ public abstract class Components implements Colors, Fonts {
             return null;
 
         JButton[] buttons = new JButton[texts.length];
-        final String[] LayoutPlace = { BorderLayout.EAST, BorderLayout.WEST };
+        final String[] LayoutPlace = { BorderLayout.WEST, BorderLayout.EAST };
         for (int i = 0; i < texts.length; i++) {
             buttons[i] = createButton(texts[i], Color.BLACK, BACKGROUND_COLOR, null, actionListeners[i]);
             panel.add(buttons[i], LayoutPlace[i % 2]);
