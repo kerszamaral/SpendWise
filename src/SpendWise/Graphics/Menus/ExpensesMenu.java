@@ -53,6 +53,10 @@ public class ExpensesMenu extends Screen {
 
         pnlCentral = super.getBlankPanel(PanelOrder.CENTRAL);
         createBillFields(null);
+
+        Offsets offsetsBtn = new Offsets(10, 10, 400, 20);
+        GraphicsUtils.initializeButton(getBlankPanel(PanelOrder.SOUTH), offsetsBtn, "Removed Expense", ACCENT_COLOR,
+                e -> removeExpense(e));
     }
 
     @Override
@@ -61,6 +65,7 @@ public class ExpensesMenu extends Screen {
         for (Expense expense : expensesManager.getExpenses()) {
             expensesComboBox.addItem(expense);
         }
+        expensesComboBox.setSelectedIndex(-1);
         super.refresh();
     }
 
@@ -189,5 +194,16 @@ public class ExpensesMenu extends Screen {
             default:
                 return null;
         }
+    }
+
+    private void removeExpense(ActionEvent action) {
+        Expense selectedExpense = (Expense) expensesComboBox.getSelectedItem();
+        if (selectedExpense == null)
+            return;
+
+        expensesManager.removeExpense(selectedExpense);
+        expensesComboBox.removeItem(selectedExpense);
+        expensesComboBox.setSelectedIndex(-1);
+        createBillFields(null);
     }
 }
