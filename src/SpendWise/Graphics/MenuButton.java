@@ -3,35 +3,46 @@ package SpendWise.Graphics;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import SpendWise.Utils.Graphics.Images;
+import SpendWise.Utils.GraphicsUtils;
 import SpendWise.Utils.Enums.Contexts;
 
 import java.awt.Color;
 import java.awt.ComponentOrientation;
+import java.awt.Dimension;
+import java.awt.Image;
 
 public class MenuButton extends JButton {
     private String name;
-    private ImageIcon icon;
     private Color Background;
+    private Color Foreground;
+    private Image resizedIcon;
 
-    public MenuButton(String name, Color background) {
+    public MenuButton(String name, Color background, Color foreground, Dimension size) {
         this.name = name;
         this.Background = background;
+        this.Foreground = foreground;
+
         String fileName = Contexts.getContext(name).toString().toLowerCase();
-        icon = new ImageIcon("src\\Images\\" + fileName + "Icon.png");
+        String imagePath = "src\\Images\\Icons\\" + fileName + ".png";
+
+        resizedIcon = Images.resizedIcon(imagePath, 30, 30).getImage();
+
+        GraphicsUtils.defineSize(this, size);
+
         this.initialize();
     }
 
     private void initialize() {
         // Visual settings
-        this.setIcon(icon);
+        switchIconColor(Background);
+        this.setBackground(Background);
         this.setText("");
-        this.setSize(50, 50);
         this.setBorderPainted(false);
         this.setFocusPainted(false);
         this.setContentAreaFilled(true);
         this.setOpaque(false);
         this.setVisible(true);
-        this.setBackground(Background);
 
         // Aligment settings
         this.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
@@ -53,10 +64,16 @@ public class MenuButton extends JButton {
     private void openMenu() {
         this.setText(this.name);
         this.setOpaque(true);
+        switchIconColor(Foreground);
     }
 
     private void closeMenu() {
         this.setText("");
         this.setOpaque(false);
+        switchIconColor(Background);
+    }
+
+    private void switchIconColor(Color color) {
+        this.setIcon(Images.recolorIcon(resizedIcon, color, true));
     }
 }

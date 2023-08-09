@@ -104,11 +104,10 @@ public class MainMenu extends JFrame {
             if (ctx == Contexts.LOGIN)
                 continue;
 
-            buttons[ctx.ordinal()] = new MenuButton(ctx.getContextName(), Color.WHITE);
-
-            buttons[ctx.ordinal()].addActionListener(e -> updateContext(e));
             Dimension buttonSize = new Dimension(BUTTON_MAX_WIDTH, 50);
-            GraphicsUtils.defineSize(buttons[ctx.ordinal()], buttonSize);
+            buttons[ctx.ordinal()] = new MenuButton(ctx.getContextName(), GraphicsUtils.ACCENT_COLOR,
+                    GraphicsUtils.BACKGROUND_COLOR, buttonSize);
+            buttons[ctx.ordinal()].addActionListener(e -> updateContext(e));
 
             mainSidePanel.add(buttons[ctx.ordinal()]);
             mainSidePanel.add(Box.createVerticalStrut(BUTTON_SPACING));
@@ -118,7 +117,7 @@ public class MainMenu extends JFrame {
         buttons[Contexts.LOGIN.ordinal()] = new JButton(Contexts.LOGIN.getContextName());
         JButton logoutButton = buttons[Contexts.LOGIN.ordinal()];
 
-        logoutButton.setBackground(Color.WHITE);
+        logoutButton.setBackground(GraphicsUtils.ACCENT_COLOR);
         logoutButton.setFont(new Font("Arial", Font.BOLD, 13));
         logoutButton.setSize(50, 50);
         logoutButton.setVisible(true);
