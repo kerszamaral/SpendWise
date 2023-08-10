@@ -1,6 +1,8 @@
 package SpendWise.Utils;
 
-public class Triple<T1, T2, T3> {
+import java.util.Iterator;
+
+public class Triple<T1, T2, T3> implements Iterable<Object> {
     private T1 first;
     private T2 second;
     private T3 third;
@@ -33,5 +35,39 @@ public class Triple<T1, T2, T3> {
 
     public T3 getThird() {
         return third;
+    }
+
+    public String toString() {
+        return first.toString() + " || " + second.toString() + " || " + third.toString();
+    }
+
+    @Override
+    public Iterator<Object> iterator() {
+        return new Iterator<Object>() {
+            private int index = 0;
+
+            @Override
+            public boolean hasNext() {
+                return index < 3;
+            }
+
+            @Override
+            public Object next() {
+                switch (index++) {
+                    case 0:
+                        return first;
+                    case 1:
+                        return second;
+                    case 2:
+                        return third;
+                    default:
+                        return null;
+                }
+            }
+        };
+    }
+
+    public int getSize() {
+        return 3;
     }
 }
