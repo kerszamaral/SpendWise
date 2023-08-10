@@ -24,7 +24,7 @@ public class ChartsMenu extends Screen {
 
     @Override
     protected void initialize() {
-        blankPanels = Panels.createPanelWithCenter(this, new Offsets(50, 50, 50, 50), ACCENT_COLOR);
+        blankPanels = Panels.createPanelWithCenter(this, ACCENT_COLOR);
 
         pnlChartsMenu = super.getBlankPanel(PanelOrder.CENTRAL);
 

@@ -48,8 +48,7 @@ public class BillCreator extends Screen {
 
     @Override
     protected void initialize() {
-        Offsets offsets = new Offsets(50, 50, 50, 50);
-        blankPanels = Panels.createPanelWithCenter(this, offsets, ACCENT_COLOR);
+        blankPanels = Panels.createPanelWithCenter(this, ACCENT_COLOR);
 
         JLabel billTitle = new JLabel("CREATE A NEW BILL");
         billTitle.setFont(STD_FONT_BOLD);

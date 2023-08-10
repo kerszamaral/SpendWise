@@ -40,8 +40,7 @@ public class AccountMenu extends Screen {
 
     @Override
     protected void initialize() {
-        Offsets offsets = new Offsets(50, 50, 50, 50);
-        blankPanels = Panels.createPanelWithCenter(this, offsets, ACCENT_COLOR);
+        blankPanels = Panels.createPanelWithCenter(this, ACCENT_COLOR);
 
         pnlUserData = getBlankPanel(PanelOrder.CENTRAL);
         pnlUserData.setLayout(new GridLayout(AccountFields.values().length * 3, 1)); // Label + TextField + Spacer

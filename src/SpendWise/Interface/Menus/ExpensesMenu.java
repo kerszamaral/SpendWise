@@ -62,8 +62,7 @@ public class ExpensesMenu extends Screen {
 
     @Override
     protected void initialize() {
-        Offsets offsets = new Offsets(50, 50, 50, 50);
-        blankPanels = Panels.createPanelWithCenter(this, offsets, ACCENT_COLOR);
+        blankPanels = Panels.createPanelWithCenter(this, ACCENT_COLOR);
 
         JPanel comboBoxPanel = (JPanel) this.getComponent(0);
         Offsets comboBoxOffsets = new Offsets(0, 0, 0, 0);
