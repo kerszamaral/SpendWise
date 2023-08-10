@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.PanelOrder;
 
-public abstract class Panels implements Colors {
+public abstract class Panels implements Colors, Sizes {
 
     public static void initializeBlankPanel(JPanel blankPanel, int width, int height, Color color) {
         blankPanel.setBackground(BACKGROUND_COLOR);
@@ -99,6 +99,15 @@ public abstract class Panels implements Colors {
         JPanel[] outerBlankPanels = initializeOffsets(mainPanel, outerOffsets, BACKGROUND_COLOR);
 
         JPanel[] innerBlankPanels = initializeOffsets(outerBlankPanels[PanelOrder.CENTRAL.ordinal()], innerOffsets,
+                innerColor);
+        return innerBlankPanels;
+    }
+
+    public static JPanel[] createPanelWithCenter(JPanel mainPanel, Color innerColor) {
+        JPanel[] outerBlankPanels = initializeOffsets(mainPanel, DEFAULT_OFFSETS, BACKGROUND_COLOR);
+
+        JPanel[] innerBlankPanels = initializeOffsets(outerBlankPanels[PanelOrder.CENTRAL.ordinal()],
+                DEFAULT_INNER_OFFSETS,
                 innerColor);
         return innerBlankPanels;
     }
