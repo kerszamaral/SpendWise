@@ -22,7 +22,6 @@ import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.Utils.Graphics.Components;
 import SpendWise.Utils.Graphics.Misc;
 import SpendWise.Utils.Graphics.Panels;
-import SpendWise.Logic.Group;
 
 public class GroupsMenu extends Screen {
     private JPanel pnlGroupManagement;
@@ -32,9 +31,6 @@ public class GroupsMenu extends Screen {
 
     public GroupsMenu(GroupManager groupManager) {
         this.groupManager = groupManager;
-        groupManager.addGroup("BUCETINHA");
-        // groupManager.addGroup("CAMARAO");
-        // groupManager.addGroup("VASCO");
         pnlGroupManagement = new JPanel();
         initialize();
     }
