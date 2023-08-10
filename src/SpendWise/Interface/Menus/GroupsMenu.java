@@ -105,20 +105,8 @@ public class GroupsMenu extends Screen {
 
             fields[field.ordinal()] = fieldType;
             pnlGroupManagement.add(fieldType);
-            //pnlCentral.add(lbl);
 
-            // JComponent fieldType = null;
-            // switch (field) {
-
-            // }
         }
-
-        /*
-         * addInputGroup("Select Group: ", groups);
-         * addInputGroup("Add Member: ");
-         * addInputGroup("Remove Member: ", members);
-         * innerPanels[PanelOrder.CENTRAL.ordinal()] = pnlGroupManagement;
-         */
 
         centerPanel.add(pnlGroupManagement, BorderLayout.CENTER);
         String[] buttonsTexts = { "Add Group", "Save" };
@@ -127,35 +115,6 @@ public class GroupsMenu extends Screen {
                 ACCENT_COLOR,
                 buttonListeners);
     }
-
-    /*
-     * private void addInputGroup(String label, String... options) {
-     * JPanel inputPanel = new JPanel();
-     * inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.X_AXIS));
-     * 
-     * JLabel lbl = new JLabel(label);
-     * lbl.setBackground(ACCENT_COLOR); // n entendi pq n ficou branco o fundo dos
-     * textos, mas isso ainda vai ser modificado entao azaar
-     * inputPanel.add(lbl);
-     * 
-     * 
-     * if (options.length > 0) {
-     * JComboBox<String> comboBox = new JComboBox<>(options);
-     * comboBox.setPreferredSize(new Dimension(20,
-     * comboBox.getPreferredSize().height));
-     * comboBox.setBackground(ACCENT_COLOR);
-     * inputPanel.add(comboBox);
-     * } else {
-     * JTextField textField = new JTextField();
-     * textField.setPreferredSize(new Dimension(20,
-     * textField.getPreferredSize().height));
-     * textField.setBackground(ACCENT_COLOR);
-     * inputPanel.add(textField);
-     * }
-     * 
-     * pnlGroupManagement.add(inputPanel);
-     * }
-     */
 
     private void createUserFields(ActionEvent e) {
         for (JComponent field : fields) {
