@@ -23,12 +23,12 @@ import SpendWise.Utils.Graphics.Alerts;
 import SpendWise.Utils.Graphics.Components;
 import SpendWise.Utils.Graphics.Panels;
 
-public class signUp extends PopUp {
+public class SignUp extends PopUp {
     private JTextField[] signUpFields;
     private UserManager userManager;
     private ActionListener singUpAction;
 
-    public signUp(Screen parent, String title, UserManager userManager, ActionListener singUpAction) {
+    public SignUp(Screen parent, String title, UserManager userManager, ActionListener singUpAction) {
         super(parent, title);
         this.userManager = userManager;
         this.singUpAction = singUpAction;

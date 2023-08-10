@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 
 import SpendWise.Interface.PopUp;
 import SpendWise.Interface.Screen;
-import SpendWise.Interface.PopUps.signUp;
+import SpendWise.Interface.PopUps.SignUp;
 import SpendWise.Logic.Managers.UserManager;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.PanelOrder;
@@ -102,7 +102,7 @@ public class LoginMenu extends Screen {
     }
 
     private void signUp(ActionEvent action) {
-        PopUp signUpWindow = new signUp(this, "Sign Up", userManager, e -> singUpSuccess(e));
+        PopUp signUpWindow = new SignUp(this, "Sign Up", userManager, e -> singUpSuccess(e));
         signUpWindow.run();
     }
 

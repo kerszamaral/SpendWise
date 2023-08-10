@@ -19,7 +19,7 @@ import SpendWise.Utils.Graphics.Alerts;
 import SpendWise.Utils.Graphics.Components;
 import SpendWise.Utils.Graphics.Panels;
 
-public class changePassword extends PopUp {
+public class ChangePassword extends PopUp {
     private User loggedUser;
     private String newPassword;
     private Runnable updateFields;
@@ -27,7 +27,7 @@ public class changePassword extends PopUp {
     JTextField fieldRepeatPassword;
     JTextField fieldOldPassword;
 
-    public changePassword(Screen parent, String title, User loggedUser, String newPassword, Runnable callback) {
+    public ChangePassword(Screen parent, String title, User loggedUser, String newPassword, Runnable callback) {
         super(parent, title);
         this.loggedUser = loggedUser;
         this.newPassword = newPassword;

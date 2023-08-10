@@ -3,6 +3,7 @@ package SpendWise.Interface;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.time.LocalDate;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -18,6 +19,7 @@ import SpendWise.Interface.Menus.GroupsMenu;
 import SpendWise.Interface.Menus.LoginMenu;
 import SpendWise.Logic.User;
 import SpendWise.Logic.Managers.GroupManager;
+import SpendWise.Logic.Bills.Fixed;
 import SpendWise.Logic.Managers.UserManager;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.Contexts;
@@ -96,6 +98,9 @@ public class MainMenu extends JFrame implements Colors, Fonts, Icons {
     }
 
     private void createMenus(User loggedUser) {
+        // TODO: Remove this later on
+        loggedUser.getExpensesManager()
+                .addExpense(new Fixed(500, false, LocalDate.now().minusMonths(3), "description"));
         screens[Contexts.ACCOUNT.ordinal()] = new AccountMenu(userManager);
         screens[Contexts.BILL.ordinal()] = new BillCreator(loggedUser.getExpensesManager());
         screens[Contexts.CHARTS.ordinal()] = new ChartsMenu();

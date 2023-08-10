@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 
 import SpendWise.Interface.PopUp;
 import SpendWise.Interface.Screen;
-import SpendWise.Interface.PopUps.changePassword;
+import SpendWise.Interface.PopUps.ChangePassword;
 import SpendWise.Logic.User;
 import SpendWise.Logic.Managers.UserManager;
 import SpendWise.Utils.Email;
@@ -130,7 +130,7 @@ public class AccountMenu extends Screen {
 
             if (!newPassword.isEmpty()) {
                 if (!loggedUser.checkPassword(newPassword)) {
-                    PopUp changePassword = new changePassword(this, "Change Password", loggedUser, newPassword,
+                    PopUp changePassword = new ChangePassword(this, "Change Password", loggedUser, newPassword,
                             this::changePassword);
                     changePassword.run();
                 }
