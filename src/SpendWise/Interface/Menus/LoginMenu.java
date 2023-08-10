@@ -4,12 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -22,6 +26,7 @@ import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.Utils.Graphics.Alerts;
 import SpendWise.Utils.Graphics.Components;
+import SpendWise.Utils.Graphics.Images;
 import SpendWise.Utils.Graphics.Panels;
 
 public class LoginMenu extends Screen {
@@ -70,6 +75,26 @@ public class LoginMenu extends Screen {
 
         btnSignUp = Components.createButton("Sign Up!", Color.BLACK, BACKGROUND_COLOR, BUTTON_SIZE);
         getBlankPanel(PanelOrder.SOUTH).add(btnSignUp);
+
+        // Logo
+        JPanel pnlLogo = (JPanel) this.getComponent(0);
+        JPanel[] logoPanels = Panels.createPanelWithCenter(pnlLogo, new Offsets(5, 0, 0, 100), BACKGROUND_COLOR);
+        pnlLogo = logoPanels[PanelOrder.CENTRAL.ordinal()];
+
+        ImageIcon logoIcon = Images.createResizeAndRecolorIcon("res/Images/logo.png", 70, 70, ACCENT_COLOR, true);
+        JLabel logo = new JLabel(logoIcon);
+        pnlLogo.add(logo);
+
+        try {
+            JLabel lblLogo = new JLabel("pendWise");
+            Font LOGO_FONT = Font.createFont(Font.TRUETYPE_FONT, new File("res/Fonts/Poppins-SemiBold.ttf"))
+                    .deriveFont(30f);
+            lblLogo.setFont(LOGO_FONT);
+            lblLogo.setForeground(ACCENT_COLOR);
+            pnlLogo.add(lblLogo);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
     }
 
     private void singUpSuccess(ActionEvent e) {
