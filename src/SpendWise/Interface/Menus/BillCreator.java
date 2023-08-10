@@ -1,4 +1,4 @@
-package SpendWise.Graphics.Menus;
+package SpendWise.Interface.Menus;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import SpendWise.Graphics.Screen;
+import SpendWise.Interface.Screen;
 import SpendWise.Logic.Bills.Expense;
 import SpendWise.Logic.Bills.Fixed;
 import SpendWise.Logic.Bills.OneTime;

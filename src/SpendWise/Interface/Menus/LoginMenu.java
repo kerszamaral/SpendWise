@@ -1,4 +1,4 @@
-package SpendWise.Graphics.Menus;
+package SpendWise.Interface.Menus;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,9 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import SpendWise.Graphics.PopUp;
-import SpendWise.Graphics.Screen;
-import SpendWise.Graphics.PopUps.signUp;
+import SpendWise.Interface.PopUp;
+import SpendWise.Interface.Screen;
+import SpendWise.Interface.PopUps.signUp;
 import SpendWise.Logic.Managers.UserManager;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.PanelOrder;

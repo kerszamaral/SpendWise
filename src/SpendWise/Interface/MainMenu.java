@@ -1,4 +1,4 @@
-package SpendWise.Graphics;
+package SpendWise.Interface;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -11,12 +11,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import SpendWise.Graphics.Menus.AccountMenu;
-import SpendWise.Graphics.Menus.BillCreator;
-import SpendWise.Graphics.Menus.ChartsMenu;
-import SpendWise.Graphics.Menus.ExpensesMenu;
-import SpendWise.Graphics.Menus.GroupsMenu;
-import SpendWise.Graphics.Menus.LoginMenu;
+import SpendWise.Interface.Menus.AccountMenu;
+import SpendWise.Interface.Menus.BillCreator;
+import SpendWise.Interface.Menus.ChartsMenu;
+import SpendWise.Interface.Menus.ExpensesMenu;
+import SpendWise.Interface.Menus.GroupsMenu;
+import SpendWise.Interface.Menus.LoginMenu;
 import SpendWise.Logic.User;
 import SpendWise.Logic.Managers.UserManager;
 import SpendWise.Utils.Offsets;

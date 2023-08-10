@@ -1,6 +1,6 @@
-package SpendWise.Graphics.PopUps;
+package SpendWise.Interface.PopUps;
 
-import SpendWise.Graphics.PopUp;
+import SpendWise.Interface.PopUp;
 
 public class valueHistory extends PopUp {
 

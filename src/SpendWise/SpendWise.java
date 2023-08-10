@@ -1,6 +1,6 @@
 package SpendWise;
 
-import SpendWise.Graphics.MainMenu;
+import SpendWise.Interface.MainMenu;
 
 public class SpendWise {
     public static void main(String[] args) {

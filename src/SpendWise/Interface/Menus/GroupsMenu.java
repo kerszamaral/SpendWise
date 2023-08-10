@@ -1,4 +1,4 @@
-package SpendWise.Graphics.Menus;
+package SpendWise.Interface.Menus;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import SpendWise.Graphics.Screen;
+import SpendWise.Interface.Screen;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.GroupFields;
 import SpendWise.Utils.Enums.PanelOrder;

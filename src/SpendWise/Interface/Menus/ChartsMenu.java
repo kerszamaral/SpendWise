@@ -1,8 +1,8 @@
-package SpendWise.Graphics.Menus;
+package SpendWise.Interface.Menus;
 
 import javax.swing.JPanel;
 
-import SpendWise.Graphics.Screen;
+import SpendWise.Interface.Screen;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.Utils.Graphics.Misc;
@@ -30,7 +30,7 @@ public class ChartsMenu extends Screen {
 
         JFXPanel fxPanel = new JFXPanel();
         Platform.runLater(() -> createPieChart(fxPanel));
-        pnlChartsMenu.add(fxPanel);   
+        pnlChartsMenu.add(fxPanel);
     }
 
     private static void createPieChart(JFXPanel fxPanel) {
@@ -41,10 +41,9 @@ public class ChartsMenu extends Screen {
 
         PieChart pieChart = new PieChart();
         pieChart.getData().addAll(slice1, slice2, slice3, slice4);
-    
+
         Scene scene = new Scene(pieChart, 300, 300);
         scene.getRoot().setStyle(BACKGROUND_COLOR);
         fxPanel.setScene(scene);
     }
 }
-

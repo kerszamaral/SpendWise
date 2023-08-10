@@ -1,4 +1,4 @@
-package SpendWise.Graphics.Menus;
+package SpendWise.Interface.Menus;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -9,9 +9,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import SpendWise.Graphics.PopUp;
-import SpendWise.Graphics.Screen;
-import SpendWise.Graphics.PopUps.changePassword;
+import SpendWise.Interface.PopUp;
+import SpendWise.Interface.Screen;
+import SpendWise.Interface.PopUps.changePassword;
 import SpendWise.Logic.User;
 import SpendWise.Logic.Managers.UserManager;
 import SpendWise.Utils.Email;

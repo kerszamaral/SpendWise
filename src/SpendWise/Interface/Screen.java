@@ -1,4 +1,4 @@
-package SpendWise.Graphics;
+package SpendWise.Interface;
 
 import javax.swing.JPanel;
 
