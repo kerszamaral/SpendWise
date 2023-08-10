@@ -21,7 +21,7 @@ import SpendWise.Utils.Graphics.Panels;
 
 public class GroupsMenu extends Screen {
     private JPanel pnlGroupManagement;
-    private String imagePath = "bin/Images/groupsImage.png";
+    private final String IMAGE_PATH = "src/Images/groupsImage.png";
     private JComponent[] fields;
 
     public GroupsMenu() {
@@ -136,7 +136,7 @@ public class GroupsMenu extends Screen {
     }
 
     private void addImage(JPanel panel) {
-        ImageIcon resizedImageIcon = resizeImage(imagePath, 100, 100);
+        ImageIcon resizedImageIcon = resizeImage(IMAGE_PATH, 100, 100);
         centralizeImage(panel, new JLabel(resizedImageIcon));
     }
 
