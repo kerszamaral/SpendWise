@@ -3,7 +3,6 @@ package SpendWise.Interface.Menus;
 import javax.swing.JPanel;
 
 import SpendWise.Interface.Screen;
-import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.Utils.Graphics.Misc;
 import SpendWise.Utils.Graphics.Panels;

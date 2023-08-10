@@ -15,7 +15,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import SpendWise.Interface.Screen;
+import SpendWise.Logic.Group;
+import SpendWise.Logic.User;
 import SpendWise.Logic.Managers.GroupManager;
+import SpendWise.Logic.Managers.UserManager;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.GroupFields;
 import SpendWise.Utils.Enums.PanelOrder;
@@ -27,10 +30,15 @@ public class GroupsMenu extends Screen {
     private JPanel pnlGroupManagement;
     private final String IMAGE_PATH = "res/Images/groupsImage.png";
     private JComponent[] fields;
+    private UserManager userManager;
+    private User loggedUser;
     private GroupManager groupManager;
+    private Group currentGroup;
 
-    public GroupsMenu(GroupManager groupManager) {
-        this.groupManager = groupManager;
+    public GroupsMenu(UserManager userManager) {
+        this.userManager = userManager;
+        this.loggedUser = userManager.getLoggedUser();
+        this.groupManager = loggedUser.getGroupManager();
         pnlGroupManagement = new JPanel();
         initialize();
     }
@@ -114,7 +122,7 @@ public class GroupsMenu extends Screen {
 
         centerPanel.add(pnlGroupManagement, BorderLayout.CENTER);
         String[] buttonsTexts = { "Add Group", "Save" };
-        ActionListener[] buttonListeners = { e -> saveButton(e), e -> addGroup(e) };
+        ActionListener[] buttonListeners = { e -> addGroup(e), e -> saveButton(e) };
         Components.initializeButtons(this.getBlankPanel(PanelOrder.SOUTH), new Offsets(30, 10, 400, 20), buttonsTexts,
                 ACCENT_COLOR,
                 buttonListeners);
@@ -150,7 +158,6 @@ public class GroupsMenu extends Screen {
      */
 
     private void createUserFields(ActionEvent e) {
-
         for (JComponent field : fields) {
             field.setVisible(true);
         }
@@ -158,12 +165,10 @@ public class GroupsMenu extends Screen {
         for (Component lbl : pnlGroupManagement.getComponents()) {       
             if(lbl instanceof JLabel){
                 lbl.setVisible(true);
-       
             }
         }
-        
     }
-
+    
     private ImageIcon resizeImage(String path, int width, int height) {
         Image originalImage = new ImageIcon(path).getImage();
         ImageIcon resizedImageIcon = new ImageIcon(originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH));
@@ -174,17 +179,24 @@ public class GroupsMenu extends Screen {
         JPanel[] imageOffsets = Panels.initializeOffsets(panel, new Offsets(90, 90, 25, 0), ACCENT_COLOR);
         imageOffsets[PanelOrder.CENTRAL.ordinal()].add(lblImage);
     }
-
+    
     private void addImage(JPanel panel) {
         ImageIcon resizedImageIcon = resizeImage(IMAGE_PATH, 100, 100);
         centralizeImage(panel, new JLabel(resizedImageIcon));
     }
 
     private void addGroup(ActionEvent e) {
-        // TODO Add group button function
     }
 
     private void saveButton(ActionEvent e) {
-        // TODO Save button function
+        @SuppressWarnings("unchecked") // This is not a problem
+        String currentGroupName = ((JComboBox<String>) fields[GroupFields.SELECT.ordinal()]).getSelectedItem().toString();
+        currentGroup = groupManager.findGroup(currentGroupName);
+
+        String username = ((JTextField) fields[GroupFields.ADD.ordinal()]).getText();
+        // TODO Validate username
+        User addedUser = userManager.getUser(username);
+        currentGroup.addUser(addedUser);
     }
+
 }

@@ -23,13 +23,21 @@ public class GroupManager {
         }
     }
 
-    public void addGroup(String groupName) {
+    public void createGroup(String groupName) {
         if (isGroupValid(groupName)) {
             return;
         }
         Group group = new Group(groupName);
         groups.add(group);
     }
+
+    public void addGroup(Group group) {
+        if (isGroupValid(group.getGroupName())) {
+            return;
+        }
+        groups.add(group);
+    }
+
     
     public double calculateExpense(String groupName) {
         if (isGroupValid(groupName)) {
@@ -101,7 +109,7 @@ public class GroupManager {
         return totalExpense / group.size();
     } */
 
-    private Group findGroup(String groupName){
+    public Group findGroup(String groupName){
         for (Group group : groups) {
             if (group.getGroupName().equals(groupName)) {
                 return group;
