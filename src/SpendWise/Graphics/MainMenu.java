@@ -76,7 +76,7 @@ public class MainMenu extends JFrame implements Colors, Fonts {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setLayout(new BorderLayout());
-        ImageIcon icon = new ImageIcon("bin/Images/logo.png");
+        ImageIcon icon = new ImageIcon("res/Images/logo.png");
         this.setIconImage(icon.getImage());
 
         this.currentContext = Contexts.LOGIN;

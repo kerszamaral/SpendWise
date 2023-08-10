@@ -23,7 +23,7 @@ public class MenuButton extends JButton {
         this.Foreground = foreground;
 
         String fileName = Contexts.getContext(name).toString().toLowerCase();
-        String imagePath = "src\\Images\\Icons\\" + fileName + ".png";
+        String imagePath = "res/Images/Icons/" + fileName + ".png";
 
         resizedIcon = Images.resizedIcon(imagePath, 30, 30).getImage();
 

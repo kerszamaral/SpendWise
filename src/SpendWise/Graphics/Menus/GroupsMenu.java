@@ -21,7 +21,7 @@ import SpendWise.Utils.Graphics.Panels;
 
 public class GroupsMenu extends Screen {
     private JPanel pnlGroupManagement;
-    private final String IMAGE_PATH = "src/Images/groupsImage.png";
+    private final String IMAGE_PATH = "res/Images/groupsImage.png";
     private JComponent[] fields;
 
     public GroupsMenu() {
