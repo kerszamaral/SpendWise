@@ -58,7 +58,7 @@ public class ExpensesMenu extends Screen {
 
     @Override
     protected void initialize() {
-        Offsets outerOffsets = new Offsets(30, 30, 100, 0);
+        Offsets outerOffsets = new Offsets(20, 20, 100, 0);
         Offsets innerOffsets = new Offsets(50, 70, 50, 50);
         blankPanels = Panels.createPanelWithCenter(this, innerOffsets, outerOffsets, ACCENT_COLOR);
 
@@ -260,7 +260,9 @@ public class ExpensesMenu extends Screen {
         }
 
         if (isEditing) {
-            applyChanges();
+            if (!applyChanges())
+                return;
+
             btnChangeExpense.setText("Edit Expense");
             expensesComboBox.setEditable(true);
             isEditing = false;
@@ -297,7 +299,7 @@ public class ExpensesMenu extends Screen {
         }
     }
 
-    private void applyChanges() {
+    private boolean applyChanges() {
         Expense originalExpense = expensesComboBox.getItemAt(expensesComboBox.getSelectedIndex());
         ExpenseType type = originalExpense.getType();
         Expense exp = null;
@@ -309,12 +311,12 @@ public class ExpensesMenu extends Screen {
         try {
             value = NumberFormat.getCurrencyInstance().parse(valueField.getText()).doubleValue();
         } catch (Exception e) {
-            return;
+            return false;
         }
         if (value <= 0) {
             Alerts.showErrorMessage(alertPanel, "Value must be greater than 0!");
             Alerts.setErrorBorder(valueField, true);
-            return;
+            return false;
         }
 
         JCheckBox essentialCheckBox = (JCheckBox) fields[BillsFields.ESSENTIAL.ordinal()];
@@ -330,7 +332,7 @@ public class ExpensesMenu extends Screen {
         if (description.isEmpty()) {
             Alerts.showErrorMessage(alertPanel, "Description cannot be empty!");
             Alerts.setErrorBorder(descriptionField, true);
-            return;
+            return false;
         }
 
         switch (type) {
@@ -355,8 +357,10 @@ public class ExpensesMenu extends Screen {
             expensesManager.addExpense(exp);
             setFieldsEditable(false);
             refresh(exp);
+            return true;
         } else {
             Alerts.showErrorMessage(alertPanel, "Expense could not be modified!");
+            return false;
         }
     }
 }
