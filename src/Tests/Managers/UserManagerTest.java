@@ -28,6 +28,7 @@ public class UserManagerTest {
     @Test
     public void testcreateUserFalse() {
         User user = new User("username", "name", "email", "password", 1000, 500);
+        userManager.createUser(user);
         assertFalse(userManager.createUser(user));
     }
 
