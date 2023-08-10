@@ -69,4 +69,11 @@ public class Fixed extends Expense {
         }
         return false;
     }
+
+    /**
+     * @return the valueHistory
+     */
+    public ArrayList<Triple<LocalDate, LocalDate, Double>> getValueHistory() {
+        return valueHistory;
+    }
 }
