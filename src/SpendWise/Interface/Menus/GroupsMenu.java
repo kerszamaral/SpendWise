@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -31,7 +32,10 @@ public class GroupsMenu extends Screen {
 
     @Override
     protected void initialize() {
-        blankPanels = Panels.createPanelWithCenter(this, new Offsets(50, 50, 50, 50), ACCENT_COLOR);
+        Offsets outerOffsets = new Offsets(DEFAULT_OFFSETS.getNorth(), 35,
+                DEFAULT_OFFSETS.getWest(), DEFAULT_OFFSETS.getEast());
+        Offsets innerOffsets = new Offsets(50, 70, 50, 50);
+        blankPanels = Panels.createPanelWithCenter(this, innerOffsets, outerOffsets, ACCENT_COLOR);
 
         JPanel centerPanel = getBlankPanel(PanelOrder.CENTRAL);
         JPanel[] innerPanels = Panels.initializeOffsets(centerPanel, new Offsets(0, 0, 0, 150), ACCENT_COLOR);
@@ -90,9 +94,11 @@ public class GroupsMenu extends Screen {
          */
 
         centerPanel.add(pnlGroupManagement, BorderLayout.CENTER);
-        Components.initializeButton(this.getBlankPanel(PanelOrder.SOUTH), new Offsets(10, 10, 400, 20), "Save",
+        String[] buttonsTexts = { "Add Group", "Save" };
+        ActionListener[] buttonListeners = { e -> saveButton(e), e -> addGroup(e) };
+        Components.initializeButtons(this.getBlankPanel(PanelOrder.SOUTH), new Offsets(30, 10, 400, 20), buttonsTexts,
                 ACCENT_COLOR,
-                this::saveButton);
+                buttonListeners);
     }
 
     /*
@@ -138,6 +144,10 @@ public class GroupsMenu extends Screen {
     private void addImage(JPanel panel) {
         ImageIcon resizedImageIcon = resizeImage(IMAGE_PATH, 100, 100);
         centralizeImage(panel, new JLabel(resizedImageIcon));
+    }
+
+    private void addGroup(ActionEvent e) {
+        // TODO Add group button function
     }
 
     private void saveButton(ActionEvent e) {
