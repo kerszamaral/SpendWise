@@ -12,6 +12,7 @@ public class UserManager {
         this.users = new Hashtable<String, User>();
         this.loggedUser = new User();
 
+        // TODO remove this
         // Just to skip all the sign in process
         createUser(new User("admin", "admin", "admin@admin.com", "admin", 0, 0));
         createUser(new User("a", "a", "admin@admin.com", "a", 0, 0));
