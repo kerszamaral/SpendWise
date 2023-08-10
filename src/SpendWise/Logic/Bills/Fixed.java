@@ -48,12 +48,19 @@ public class Fixed extends Expense {
         return 0; // No value found, dont add anything
     }
 
-    public void updateValue(double newValue) {
+    public void updateValue(double newValue, LocalDate date) {
         this.setValue(newValue);
-        LocalDate today = LocalDate.now();
         Triple<LocalDate, LocalDate, Double> lastUpdate = this.valueHistory.get(this.valueHistory.size() - 1);
-        lastUpdate.setSecond(today);
-        this.valueHistory.add(new Triple<LocalDate, LocalDate, Double>(today, LocalDate.MAX.minusDays(1), newValue));
+        lastUpdate.setSecond(date);
+        this.valueHistory.add(new Triple<LocalDate, LocalDate, Double>(date, LocalDate.MAX.minusDays(1), newValue));
+    }
+
+    public void updateValue(double newValue) {
+        this.updateValue(newValue, LocalDate.now());
+    }
+
+    public LocalDate getLastDate() {
+        return this.valueHistory.get(this.valueHistory.size() - 1).getFirst();
     }
 
     @Override
@@ -68,6 +75,24 @@ public class Fixed extends Expense {
             return super.equals(other) && this.valueHistory.equals(other.valueHistory);
         }
         return false;
+    }
+
+    @Override
+    public double getValue() {
+        return this.valueInMonth(LocalDate.now());
+    }
+
+    @Override
+    public LocalDate getDate() {
+        LocalDate today = LocalDate.now();
+        for (Triple<LocalDate, LocalDate, Double> triple : this.valueHistory) {
+            LocalDate rangeStart = triple.getFirst().minusDays(1);
+            LocalDate rangeEnd = triple.getSecond().plusDays(1);
+            if (rangeStart.isBefore(today) && rangeEnd.isAfter(today)) {
+                return triple.getFirst();
+            }
+        }
+        return super.getDate();
     }
 
     /**
