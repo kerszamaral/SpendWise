@@ -1,31 +1,40 @@
 package SpendWise.Interface.Menus;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import SpendWise.Interface.Screen;
+import SpendWise.Logic.Managers.GroupManager;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.GroupFields;
 import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.Utils.Graphics.Components;
 import SpendWise.Utils.Graphics.Misc;
 import SpendWise.Utils.Graphics.Panels;
+import SpendWise.Logic.Group;
 
 public class GroupsMenu extends Screen {
     private JPanel pnlGroupManagement;
     private final String IMAGE_PATH = "res/Images/groupsImage.png";
     private JComponent[] fields;
+    private GroupManager groupManager;
 
-    public GroupsMenu() {
+    public GroupsMenu(GroupManager groupManager) {
+        this.groupManager = groupManager;
+        groupManager.addGroup("BUCETINHA");
+        // groupManager.addGroup("CAMARAO");
+        // groupManager.addGroup("VASCO");
         pnlGroupManagement = new JPanel();
         initialize();
     }
@@ -46,25 +55,39 @@ public class GroupsMenu extends Screen {
 
         addImage(innerPanels[PanelOrder.EAST.ordinal()]);
 
-        pnlGroupManagement.setLayout(new GridLayout(3, 2));
+
+        pnlGroupManagement = innerPanels[PanelOrder.CENTRAL.ordinal()];
+        pnlGroupManagement.setLayout(new GridLayout(GroupFields.values().length*2, 2));
 
         fields = new JComponent[GroupFields.values().length];
 
         JComponent fieldType = null;
         for (GroupFields field : GroupFields.values()) {
-            // String label = field.getLabel() + ": ";
-            // JLabel lbl = new JLabel(label);
-
+            String label = field.getLabel() + ": ";
+            JLabel lbl = new JLabel(label);
+            lbl.setVisible(false);
+            pnlGroupManagement.add(lbl);
+            
             switch (field) {
                 case SELECT:
+                    lbl.setVisible(true);
+                    String[] names = new String[groupManager.getGroups().size()];
+                    for (int i = 0; i < groupManager.getGroups().size(); i++) {
+                        names[i] = groupManager.getGroups().get(i).getGroupName();
+                    }
+                    JComboBox<String> selectGroupField = new JComboBox<String>(names);
+                    selectGroupField.addActionListener(e -> createUserFields(e));
+                    fieldType = selectGroupField;                
                     break;
                 case ADD:
                     JTextField addUserField = new JTextField();
                     fieldType = addUserField;
+                    addUserField.setVisible(false);
                     break;
                 case REMOVE:
                     JTextField removeUserField = new JTextField();
                     fieldType = removeUserField;
+                    removeUserField.setVisible(false);
                     break;
             }
 
@@ -78,7 +101,7 @@ public class GroupsMenu extends Screen {
 
             fields[field.ordinal()] = fieldType;
             pnlGroupManagement.add(fieldType);
-            // pnlCentral.add(lbl);
+            //pnlCentral.add(lbl);
 
             // JComponent fieldType = null;
             // switch (field) {
@@ -129,6 +152,21 @@ public class GroupsMenu extends Screen {
      * pnlGroupManagement.add(inputPanel);
      * }
      */
+
+    private void createUserFields(ActionEvent e) {
+
+        for (JComponent field : fields) {
+            field.setVisible(true);
+        }
+
+        for (Component lbl : pnlGroupManagement.getComponents()) {       
+            if(lbl instanceof JLabel){
+                lbl.setVisible(true);
+       
+            }
+        }
+        
+    }
 
     private ImageIcon resizeImage(String path, int width, int height) {
         Image originalImage = new ImageIcon(path).getImage();

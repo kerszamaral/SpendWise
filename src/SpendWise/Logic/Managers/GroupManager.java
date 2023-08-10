@@ -2,78 +2,79 @@ package SpendWise.Logic.Managers;
 
 import java.util.ArrayList;
 
+import SpendWise.Logic.Group;
 import SpendWise.Logic.User;
 
 public class GroupManager {
-    private ArrayList<ArrayList<User>> groups;
+    private ArrayList<Group> groups;
 
     public GroupManager() {
-        this.groups = new ArrayList<ArrayList<User>>();
+        this.groups = new ArrayList<Group>();
     }
 
-    private boolean isGroupIDValid(int groupID) {
-        if (groupID < 0 || groupID >= this.groups.size()) {
+    private boolean isGroupValid(String groupName) {
+        
+        Group group = findGroup(groupName);
+        if (groups.contains(group)) {
+            return true;
+        }
+        else {
             return false;
         }
-        return true;
     }
 
-    public boolean addUser(int groupID, User user) {
-        if (!isGroupIDValid(groupID)) {
-            return false;
+    public void addGroup(String groupName) {
+        if (isGroupValid(groupName)) {
+            return;
         }
-        ArrayList<User> group = this.groups.get(groupID);
-        if (group.contains(user)) {
-            return false;
-        }
-        group.add(user);
-        return true;
+        Group group = new Group(groupName);
+        groups.add(group);
     }
-
-    public double calculateExpense(int groupID) {
-        if (!isGroupIDValid(groupID)) {
+    
+    public double calculateExpense(String groupName) {
+        if (isGroupValid(groupName)) {
             return 0;
         }
-        ArrayList<User> group = this.groups.get(groupID);
 
+        Group group = findGroup(groupName);
         double totalExpense = 0;
-        for (User user : group) {
+        for (User user : group.getUsers()) {
             totalExpense += user.getExpensesManager().calculateTotalExpense();
         }
 
         return totalExpense;
     }
 
-    public double calculateEssentialExpense(int groupID) {
-        if (!isGroupIDValid(groupID)) {
+    public double calculateEssentialExpense(String groupName) {
+        if (!isGroupValid(groupName)) {
             return 0;
         }
-        ArrayList<User> group = this.groups.get(groupID);
-
+        
+        Group group = findGroup(groupName);
         double totalExpense = 0;
-        for (User user : group) {
+        for (User user : group.getUsers()) {
             totalExpense += user.getExpensesManager().calculateEssentialExpenses();
         }
 
         return totalExpense;
     }
 
-    public double calculateNonEssentialExpense(int groupID) {
-        if (!isGroupIDValid(groupID)) {
+    public double calculateNonEssentialExpense(String groupName) {
+        if (!isGroupValid(groupName)) {
             return 0;
         }
-        ArrayList<User> group = this.groups.get(groupID);
+        Group group = this.findGroup(groupName);
 
         double totalExpense = 0;
-        for (User user : group) {
+        for (User user : group.getUsers()) {
             totalExpense += user.getExpensesManager().calculateNonEssentialExpenses();
         }
 
         return totalExpense;
     }
 
-    public double calculatePercentage(int groupID, User user) {
-        if (!isGroupIDValid(groupID)) {
+   /*  public double calculatePercentage(int groupID, User user) {
+        if (!isGroupValid(groupID)) {
             return 0;
         }
         ArrayList<User> group = this.groups.get(groupID);
@@ -84,10 +85,10 @@ public class GroupManager {
         }
 
         return user.getExpensesManager().calculateTotalExpense() / totalExpense;
-    }
+    } */
 
-    public double calculateAverage(int groupID) {
-        if (!isGroupIDValid(groupID)) {
+   /*  public double calculateAverage(int groupID) {
+        if (!isGroupValid(groupID)) {
             return 0;
         }
         ArrayList<User> group = this.groups.get(groupID);
@@ -98,5 +99,18 @@ public class GroupManager {
         }
 
         return totalExpense / group.size();
+    } */
+
+    private Group findGroup(String groupName){
+        for (Group group : groups) {
+            if (group.getGroupName().equals(groupName)) {
+                return group;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Group> getGroups() {
+        return this.groups;
     }
 }

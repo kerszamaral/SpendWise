@@ -17,6 +17,7 @@ import SpendWise.Interface.Menus.ExpensesMenu;
 import SpendWise.Interface.Menus.GroupsMenu;
 import SpendWise.Interface.Menus.LoginMenu;
 import SpendWise.Logic.User;
+import SpendWise.Logic.Managers.GroupManager;
 import SpendWise.Logic.Managers.UserManager;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.Contexts;
@@ -38,6 +39,7 @@ public class MainMenu extends JFrame implements Colors, Fonts, Icons {
     private Box centerLayout;
     private JPanel sidePanel;
     private UserManager userManager;
+    private GroupManager groupManager;
 
     public MainMenu() {
         this.initialize();
@@ -45,6 +47,7 @@ public class MainMenu extends JFrame implements Colors, Fonts, Icons {
 
     public boolean run() {
         this.userManager = new UserManager();
+        this.groupManager = new GroupManager();
         this.createLogin();
         this.logout(null);
         this.getContentPane().add(centerLayout, BorderLayout.CENTER);
@@ -96,7 +99,7 @@ public class MainMenu extends JFrame implements Colors, Fonts, Icons {
         screens[Contexts.ACCOUNT.ordinal()] = new AccountMenu(userManager);
         screens[Contexts.BILL.ordinal()] = new BillCreator(loggedUser.getExpensesManager());
         screens[Contexts.CHARTS.ordinal()] = new ChartsMenu();
-        screens[Contexts.GROUPS.ordinal()] = new GroupsMenu();
+        screens[Contexts.GROUPS.ordinal()] = new GroupsMenu(groupManager);
         screens[Contexts.EXPENSES.ordinal()] = new ExpensesMenu(loggedUser.getExpensesManager());
     }
 
