@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -24,9 +23,10 @@ import SpendWise.Utils.Enums.Contexts;
 import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.Utils.Graphics.Colors;
 import SpendWise.Utils.Graphics.Fonts;
+import SpendWise.Utils.Graphics.Icons;
 import SpendWise.Utils.Graphics.Panels;
 
-public class MainMenu extends JFrame implements Colors, Fonts {
+public class MainMenu extends JFrame implements Colors, Fonts, Icons {
     private final static String APP_NAME = "SpendWise";
     private final static int SCREEN_WIDTH = 1920 / 2;
     private final static int SCREEN_HEIGHT = 1080 / 2;
@@ -76,8 +76,7 @@ public class MainMenu extends JFrame implements Colors, Fonts {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setLayout(new BorderLayout());
-        ImageIcon icon = new ImageIcon("res/Images/logo.png");
-        this.setIconImage(icon.getImage());
+        this.setIconImage(APP_LOGO.getImage());
 
         this.currentContext = Contexts.LOGIN;
         this.centerLayout = Box.createVerticalBox();

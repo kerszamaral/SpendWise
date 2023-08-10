@@ -74,4 +74,10 @@ public abstract class Images {
         return new Color(newComponents[0], newComponents[1], newComponents[2],
                 color1Components[3]);
     }
+
+    public static ImageIcon createResizeAndRecolorIcon(String path, int width, int height, Color color,
+            boolean invert) {
+        ImageIcon initialImage = resizedIcon(path, width, height);
+        return recolorIcon(initialImage.getImage(), color, invert);
+    }
 }

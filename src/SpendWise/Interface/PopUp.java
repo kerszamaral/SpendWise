@@ -2,7 +2,6 @@ package SpendWise.Interface;
 
 import java.awt.Component;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -10,9 +9,10 @@ import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.Utils.Graphics.BlankPanels;
 import SpendWise.Utils.Graphics.Colors;
 import SpendWise.Utils.Graphics.Fonts;
+import SpendWise.Utils.Graphics.Icons;
 import SpendWise.Utils.Graphics.Sizes;
 
-public abstract class PopUp extends JFrame implements BlankPanels, Colors, Fonts, Sizes {
+public abstract class PopUp extends JFrame implements BlankPanels, Colors, Fonts, Sizes, Icons {
     private Component originalWindow;
     private String title;
     protected JPanel[] blankPanels;
@@ -32,8 +32,7 @@ public abstract class PopUp extends JFrame implements BlankPanels, Colors, Fonts
         this.getContentPane().setBackground(BACKGROUND_COLOR);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(originalWindow);
-        ImageIcon icon = new ImageIcon("bin/Images/logo.png");
-        this.setIconImage(icon.getImage());
+        this.setIconImage(APP_LOGO.getImage());
         this.setResizable(false);
     }
 
