@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 
 import javax.swing.BoxLayout;
@@ -20,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import SpendWise.Interface.Screen;
+import SpendWise.Interface.PopUps.ValueHistory;
 import SpendWise.Logic.Bills.Expense;
 import SpendWise.Logic.Bills.Fixed;
 import SpendWise.Logic.Bills.OneTime;
@@ -45,6 +45,7 @@ public class ExpensesMenu extends Screen {
     private JComponent[] fields;
     private JCheckBox oneTimeCheckBox;
     private JFormattedTextField recurringEndDateField;
+    private JButton btnValueHistory;
 
     private JPanel alertPanel;
     private JButton btnChangeExpense;
@@ -119,7 +120,7 @@ public class ExpensesMenu extends Screen {
         boolean defaultEssential = expenseSelected ? selectedExpense.isEssential() : false;
 
         LocalDate temp = expenseSelected ? selectedExpense.getDate() : LocalDate.now();
-        Date defaultDate = Date.from(temp.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+        Date defaultDate = Dates.convLocalDate(temp);
 
         String defaultDescription = expenseSelected ? selectedExpense.getDescription() : "";
 
@@ -185,8 +186,8 @@ public class ExpensesMenu extends Screen {
     }
 
     private JComponent createTypeSpecificFields(Expense exp) {
-        boolean expenseSelected = (exp == null);
-        ExpenseType type = expenseSelected ? ExpenseType.FIXED : exp.getType();
+        boolean expenseSelected = (exp != null);
+        ExpenseType type = expenseSelected ? exp.getType() : ExpenseType.FIXED;
 
         pnlTypeSpecific.removeAll();
         pnlTypeSpecific.setLayout(new BoxLayout(pnlTypeSpecific, BoxLayout.X_AXIS));
@@ -194,8 +195,14 @@ public class ExpensesMenu extends Screen {
 
         switch (type) {
             case FIXED:
-                // Has no new fields;
-                return null;
+                if (!expenseSelected)
+                    return null;
+
+                btnValueHistory = Components.createButton("Value History", ACCENT_COLOR, BACKGROUND_COLOR, null);
+                btnValueHistory.addActionListener(e -> {
+                    new ValueHistory(this, "Value History", (Fixed) exp).run();
+                });
+                return btnValueHistory;
 
             case ONETIME:
                 lbl = new JLabel("Has been paid?");
