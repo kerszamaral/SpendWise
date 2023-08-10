@@ -21,8 +21,8 @@ public abstract class Expense {
     }
 
     public String toString() {
-        return "Value: R$" + value + " || Type: " + getType().getType() + " || Description: " + description
-                + " || Date: " + date;
+        return "Value: R$" + getValue() + " || Type: " + getType().getType() + " || Description: " + description
+                + " || Date: " + getDate();
     }
 
     public ExpenseType getType() {
