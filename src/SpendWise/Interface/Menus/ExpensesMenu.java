@@ -1,6 +1,7 @@
 package SpendWise.Interface.Menus;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +9,7 @@ import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -16,10 +18,10 @@ import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import SpendWise.Interface.Screen;
-import SpendWise.Interface.PopUps.ValueHistory;
 import SpendWise.Logic.Bills.Expense;
 import SpendWise.Logic.Bills.Fixed;
 import SpendWise.Logic.Bills.OneTime;
@@ -27,6 +29,7 @@ import SpendWise.Logic.Bills.Recurring;
 import SpendWise.Logic.Managers.ExpensesManager;
 import SpendWise.Utils.Dates;
 import SpendWise.Utils.Offsets;
+import SpendWise.Utils.Triple;
 import SpendWise.Utils.Enums.BillsFields;
 import SpendWise.Utils.Enums.ExpenseType;
 import SpendWise.Utils.Enums.PanelOrder;
@@ -45,7 +48,6 @@ public class ExpensesMenu extends Screen {
     private JComponent[] fields;
     private JCheckBox oneTimeCheckBox;
     private JFormattedTextField recurringEndDateField;
-    private JButton btnValueHistory;
 
     private JPanel alertPanel;
     private JButton btnChangeExpense;
@@ -58,8 +60,8 @@ public class ExpensesMenu extends Screen {
 
     @Override
     protected void initialize() {
-        Offsets outerOffsets = new Offsets(20, 20, 100, 0);
-        Offsets innerOffsets = new Offsets(50, 70, 50, 50);
+        Offsets outerOffsets = new Offsets(20, 10, 50, 0);
+        Offsets innerOffsets = new Offsets(50, 70, 30, 30);
         blankPanels = Panels.createPanelWithCenter(this, innerOffsets, outerOffsets, ACCENT_COLOR);
 
         expensesComboBox = new JComboBox<Expense>(expensesManager.getExpenses().toArray(new Expense[0]));
@@ -94,14 +96,12 @@ public class ExpensesMenu extends Screen {
     }
 
     public void refresh(Expense exp) {
-        int index = 0;
         expensesComboBox.removeAllItems();
         expensesComboBox.setSelectedIndex(-1);
         for (Expense expense : expensesManager.getExpenses()) {
             expensesComboBox.addItem(expense);
-            if (expense.equals(exp))
-                expensesComboBox.setSelectedIndex(index);
-            index++;
+            if (expense == exp)
+                expensesComboBox.setSelectedItem(exp);
         }
         createBillFields(null);
         Alerts.clearErrorMessage(alertPanel);
@@ -187,22 +187,63 @@ public class ExpensesMenu extends Screen {
 
     private JComponent createTypeSpecificFields(Expense exp) {
         boolean expenseSelected = (exp != null);
-        ExpenseType type = expenseSelected ? exp.getType() : ExpenseType.FIXED;
+        ExpenseType type = expenseSelected ? exp.getType() : null;
 
         pnlTypeSpecific.removeAll();
         pnlTypeSpecific.setLayout(new BoxLayout(pnlTypeSpecific, BoxLayout.X_AXIS));
+        if (type == null)
+            return null;
+
         JLabel lbl;
 
         switch (type) {
             case FIXED:
-                if (!expenseSelected)
-                    return null;
+                JPanel pnlFixed = new JPanel(new FlowLayout());
+                pnlFixed.setBackground(ACCENT_COLOR);
+                Fixed expense = (Fixed) exp;
 
-                btnValueHistory = Components.createButton("Value History", ACCENT_COLOR, BACKGROUND_COLOR, null);
-                btnValueHistory.addActionListener(e -> {
-                    new ValueHistory(this, "Value History", (Fixed) exp).run();
-                });
-                return btnValueHistory;
+                Box valueHistoryBox = Box.createVerticalBox();
+                valueHistoryBox.setBackground(ACCENT_COLOR);
+                valueHistoryBox.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+                JScrollPane scrollPane = new JScrollPane(valueHistoryBox, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                        JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                scrollPane.setBackground(ACCENT_COLOR);
+                scrollPane.getViewport().setBackground(ACCENT_COLOR);
+                scrollPane.setPreferredSize(new Dimension(500, 35));
+
+                final int SpacerXSize = 50;
+                JLabel lblValueHistory = new JLabel("Value History");
+                lblValueHistory.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+                valueHistoryBox.add(lblValueHistory);
+
+                JLabel firstSpacer = new JLabel("-".repeat(SpacerXSize) + "\n");
+                firstSpacer.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+                valueHistoryBox.add(firstSpacer);
+
+                for (Triple<LocalDate, LocalDate, Double> triple : expense.getValueHistory()) {
+                    StringBuilder sb = new StringBuilder();
+                    for (Object value : triple) {
+                        boolean isLastDate = value instanceof LocalDate && LocalDate.MAX.minusDays(1).equals(value);
+                        String valueString = isLastDate ? "No End Date" : value.toString();
+                        sb.append(valueString);
+                        sb.append(" || ");
+                    }
+                    sb.delete(sb.length() - 4, sb.length());
+                    sb.append("\n");
+
+                    JLabel txt = new JLabel(sb.toString());
+                    txt.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+                    valueHistoryBox.add(txt);
+
+                    JLabel spacer = new JLabel("-".repeat(SpacerXSize) + "\n");
+                    spacer.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+                    valueHistoryBox.add(spacer);
+                }
+
+                scrollPane.setViewportView(valueHistoryBox);
+                pnlFixed.add(scrollPane);
+
+                return pnlFixed;
 
             case ONETIME:
                 lbl = new JLabel("Has been paid?");
@@ -253,25 +294,22 @@ public class ExpensesMenu extends Screen {
     private void changeExpense(ActionEvent action) {
         Alerts.clearErrorMessage(alertPanel);
 
-        Expense originalExpense = expensesComboBox.getItemAt(expensesComboBox.getSelectedIndex());
+        Expense originalExpense = (Expense) expensesComboBox.getSelectedItem();
         if (originalExpense == null) {
             Alerts.showErrorMessage(alertPanel, "No expense selected!");
             return;
         }
 
         if (isEditing) {
-            if (!applyChanges())
+            boolean success = applyChanges(originalExpense);
+            if (!success)
                 return;
-
-            btnChangeExpense.setText("Edit Expense");
-            expensesComboBox.setEditable(true);
-            isEditing = false;
-        } else {
-            setFieldsEditable(true);
-            btnChangeExpense.setText("Apply Changes");
-            expensesComboBox.setEditable(false);
-            isEditing = true;
         }
+
+        setFieldsEditable(!isEditing);
+        btnChangeExpense.setText(isEditing ? "Edit Expense" : "Apply Changes");
+        expensesComboBox.setEnabled(isEditing);
+        isEditing = !isEditing;
     }
 
     private void setFieldsEditable(boolean isEditable) {
@@ -294,13 +332,14 @@ public class ExpensesMenu extends Screen {
             case RECURRING:
                 recurringEndDateField.setEditable(isEditable);
                 break;
+            case FIXED:
+                break;
             default:
                 break;
         }
     }
 
-    private boolean applyChanges() {
-        Expense originalExpense = expensesComboBox.getItemAt(expensesComboBox.getSelectedIndex());
+    private boolean applyChanges(Expense originalExpense) {
         ExpenseType type = originalExpense.getType();
         Expense exp = null;
 
@@ -337,7 +376,18 @@ public class ExpensesMenu extends Screen {
 
         switch (type) {
             case FIXED:
-                exp = new Fixed(value, essential, date, description);
+                Fixed fixed = (Fixed) originalExpense;
+                if (!fixed.getLastDate().isEqual(date)) {
+                    if (fixed.getLastDate().isAfter(date)) {
+                        Alerts.showErrorMessage(alertPanel, "Date cannot be before last update!");
+                        Alerts.setErrorBorder(dateField, true);
+                        return false;
+                    }
+                    fixed.updateValue(value, date);
+                }
+                fixed.setEssential(essential);
+                fixed.setDescription(description);
+                exp = fixed;
                 break;
             case ONETIME:
                 boolean paid = oneTimeCheckBox.isSelected();
@@ -353,9 +403,10 @@ public class ExpensesMenu extends Screen {
 
         if (exp != null) {
             Alerts.showMessage(alertPanel, "Expense Modified successfully!", BACKGROUND_COLOR);
-            expensesManager.removeExpense(originalExpense);
-            expensesManager.addExpense(exp);
-            setFieldsEditable(false);
+            if (originalExpense != exp) {
+                expensesManager.removeExpense(originalExpense);
+                expensesManager.addExpense(exp);
+            }
             refresh(exp);
             return true;
         } else {
