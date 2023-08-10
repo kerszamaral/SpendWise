@@ -48,6 +48,8 @@ public class ExpensesMenu extends Screen {
     private JComponent[] fields;
     private JCheckBox oneTimeCheckBox;
     private JFormattedTextField recurringEndDateField;
+    private static final Dimension valueHistorySize = new Dimension(250, 25);
+    private static final Dimension comboBoxSize = new Dimension(450, 30);
 
     private JPanel alertPanel;
     private JButton btnChangeExpense;
@@ -60,28 +62,31 @@ public class ExpensesMenu extends Screen {
 
     @Override
     protected void initialize() {
-        Offsets outerOffsets = new Offsets(20, 10, 50, 0);
-        Offsets innerOffsets = new Offsets(50, 70, 30, 30);
-        blankPanels = Panels.createPanelWithCenter(this, innerOffsets, outerOffsets, ACCENT_COLOR);
+        Offsets offsets = new Offsets(50, 50, 50, 50);
+        blankPanels = Panels.createPanelWithCenter(this, offsets, ACCENT_COLOR);
+
+        JPanel comboBoxPanel = (JPanel) this.getComponent(0);
+        Offsets comboBoxOffsets = new Offsets(0, 0, 0, 0);
+        JPanel comboBoxCenter = Panels.createPanelWithCenter(comboBoxPanel, comboBoxOffsets,
+                BACKGROUND_COLOR)[PanelOrder.CENTRAL
+                        .ordinal()];
 
         expensesComboBox = new JComboBox<Expense>(expensesManager.getExpenses().toArray(new Expense[0]));
         expensesComboBox.addActionListener(e -> createBillFields(e));
-        Dimension comboBoxSize = new Dimension(450, 30);
         Misc.defineSize(expensesComboBox, comboBoxSize);
-        getBlankPanel(PanelOrder.NORTH).add(expensesComboBox);
+        comboBoxCenter.add(expensesComboBox);
 
         pnlCentral = super.getBlankPanel(PanelOrder.CENTRAL);
         createBillFields(null);
 
-        Offsets offsetsBtn = new Offsets(30, 10, 400, 20);
+        Offsets offsetsBtn = new Offsets(10, 10, 400, 20);
         ActionListener[] listeners = { e -> changeExpense(e), e -> removeExpense(e) };
         String[] btnLabels = { "Edit Expense", "Remove Expense" };
         btnChangeExpense = Components.initializeButtons(getBlankPanel(PanelOrder.SOUTH), offsetsBtn, btnLabels,
                 ACCENT_COLOR,
                 listeners)[0];
 
-        JPanel southPanel = (JPanel) getBlankPanel(PanelOrder.SOUTH).getComponent(0);
-        alertPanel = (JPanel) southPanel.getComponent(0);
+        alertPanel = getBlankPanel(PanelOrder.NORTH);
     }
 
     @Override
@@ -209,7 +214,7 @@ public class ExpensesMenu extends Screen {
                         JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                 scrollPane.setBackground(ACCENT_COLOR);
                 scrollPane.getViewport().setBackground(ACCENT_COLOR);
-                scrollPane.setPreferredSize(new Dimension(500, 35));
+                scrollPane.setPreferredSize(valueHistorySize);
 
                 final int SpacerXSize = 50;
                 JLabel lblValueHistory = new JLabel("Value History");
