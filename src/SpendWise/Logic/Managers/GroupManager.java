@@ -28,16 +28,17 @@ public class GroupManager {
             return;
         }
 
-        // Groups work in a "communist" way, so there is no leader in a group
-        // Once you're added to a group, you'll have the same rights as everyone else
         Group group = new Group(groupName);
         groups.add(group);
     }
-
+    
     public void addGroup(Group group) {
         if (isGroupValid(group.getGroupName())) {
             return;
         }
+        
+        // Groups work in a "communist" way, so there is no leader in a group
+        // Once you're added to a group, you'll have the same rights as everyone else
         groups.add(group);
     }
 

@@ -1,9 +1,9 @@
 package SpendWise.Utils.Enums;
 
 public enum GroupFields {
-    SELECT("Select Group"),
-    ADD("Add user"),
-    REMOVE("Remove user");
+    SELECT_GROUP("Select Group"),
+    SELECT_OPERATION("Select Operation"),
+    USERNAME("Username");
 
     private final String label;
 
