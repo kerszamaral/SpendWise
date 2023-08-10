@@ -1,9 +1,11 @@
 package Tests.Bills;
 
 import org.junit.jupiter.api.*;
+
+import SpendWise.Logic.Bills.Fixed;
+
 import static org.junit.Assert.*;
 import java.time.LocalDate;
-import SpendWise.Bills.Fixed;
 
 public class FixedTest {
     private Fixed fixed;

@@ -1,8 +1,8 @@
-package SpendWise.Managers;
+package SpendWise.Logic.Managers;
 
 import java.util.Hashtable;
 
-import SpendWise.User;
+import SpendWise.Logic.User;
 
 public class UserManager {
     private Hashtable<String, User> users;

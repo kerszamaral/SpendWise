@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 import SpendWise.Graphics.PopUp;
 import SpendWise.Graphics.Screen;
 import SpendWise.Graphics.PopUps.signUp;
-import SpendWise.Managers.UserManager;
+import SpendWise.Logic.Managers.UserManager;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.Utils.Graphics.Alerts;

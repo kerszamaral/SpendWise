@@ -1,4 +1,4 @@
-package SpendWise;
+package SpendWise.Graphics;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -11,15 +11,14 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import SpendWise.Graphics.MenuButton;
-import SpendWise.Graphics.Screen;
 import SpendWise.Graphics.Menus.AccountMenu;
 import SpendWise.Graphics.Menus.BillCreator;
 import SpendWise.Graphics.Menus.ChartsMenu;
 import SpendWise.Graphics.Menus.ExpensesMenu;
 import SpendWise.Graphics.Menus.GroupsMenu;
 import SpendWise.Graphics.Menus.LoginMenu;
-import SpendWise.Managers.UserManager;
+import SpendWise.Logic.User;
+import SpendWise.Logic.Managers.UserManager;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.Contexts;
 import SpendWise.Utils.Enums.PanelOrder;
@@ -90,7 +89,7 @@ public class MainMenu extends JFrame implements Colors, Fonts {
         this.repaint();
     }
 
-    private void createLogin(){
+    private void createLogin() {
         screens[Contexts.LOGIN.ordinal()] = new LoginMenu(e -> login(e), userManager);
     }
 
@@ -175,7 +174,7 @@ public class MainMenu extends JFrame implements Colors, Fonts {
         LoginMenu login = (LoginMenu) this.screens[Contexts.LOGIN.ordinal()];
 
         if (login.authorizeUser()) {
-            createMenus(userManager.getLoggedUser());         
+            createMenus(userManager.getLoggedUser());
             this.currentContext = Contexts.ACCOUNT;
             this.buttons[Contexts.ACCOUNT.ordinal()].setSelected(true);
         } else {

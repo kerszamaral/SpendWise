@@ -1,8 +1,10 @@
 package Tests;
 
 import org.junit.jupiter.api.*;
+
+import SpendWise.Logic.User;
+
 import static org.junit.Assert.*;
-import SpendWise.User;
 
 public class UserTest {
     private User user;

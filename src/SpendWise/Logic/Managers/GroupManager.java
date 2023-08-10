@@ -1,8 +1,8 @@
-package SpendWise.Managers;
+package SpendWise.Logic.Managers;
 
 import java.util.ArrayList;
 
-import SpendWise.User;
+import SpendWise.Logic.User;
 
 public class GroupManager {
     private ArrayList<ArrayList<User>> groups;

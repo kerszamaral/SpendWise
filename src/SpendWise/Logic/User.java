@@ -1,6 +1,6 @@
-package SpendWise;
+package SpendWise.Logic;
 
-import SpendWise.Managers.ExpensesManager;
+import SpendWise.Logic.Managers.ExpensesManager;
 import SpendWise.Utils.Enums.AccountFields;
 
 public class User {

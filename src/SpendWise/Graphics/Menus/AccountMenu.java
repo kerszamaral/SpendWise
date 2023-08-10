@@ -9,11 +9,11 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import SpendWise.User;
 import SpendWise.Graphics.PopUp;
 import SpendWise.Graphics.Screen;
 import SpendWise.Graphics.PopUps.changePassword;
-import SpendWise.Managers.UserManager;
+import SpendWise.Logic.User;
+import SpendWise.Logic.Managers.UserManager;
 import SpendWise.Utils.Email;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.AccountFields;

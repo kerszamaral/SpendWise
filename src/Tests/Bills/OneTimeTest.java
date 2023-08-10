@@ -1,9 +1,11 @@
 package Tests.Bills;
 
 import org.junit.jupiter.api.*;
+
+import SpendWise.Logic.Bills.OneTime;
+
 import static org.junit.Assert.*;
 import java.time.LocalDate;
-import SpendWise.Bills.OneTime;
 
 public class OneTimeTest {
     private OneTime oneTime;

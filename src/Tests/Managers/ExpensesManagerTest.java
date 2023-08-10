@@ -4,9 +4,9 @@ import org.junit.jupiter.api.*;
 import static org.junit.Assert.*;
 import java.time.LocalDate;
 
-import SpendWise.Bills.Expense;
-import SpendWise.Bills.Fixed;
-import SpendWise.Managers.ExpensesManager;
+import SpendWise.Logic.Bills.Expense;
+import SpendWise.Logic.Bills.Fixed;
+import SpendWise.Logic.Managers.ExpensesManager;
 import SpendWise.Utils.Enums.ExpenseType;
 
 public class ExpensesManagerTest {

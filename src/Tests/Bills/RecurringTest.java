@@ -1,9 +1,11 @@
 package Tests.Bills;
 
 import org.junit.jupiter.api.*;
+
+import SpendWise.Logic.Bills.Recurring;
+
 import static org.junit.Assert.*;
 import java.time.LocalDate;
-import SpendWise.Bills.Recurring;
 
 public class RecurringTest {
     private Recurring recurring;

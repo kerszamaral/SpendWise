@@ -1,4 +1,4 @@
-package SpendWise.Bills;
+package SpendWise.Logic.Bills;
 
 import java.time.LocalDate;
 

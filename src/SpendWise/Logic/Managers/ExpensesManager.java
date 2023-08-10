@@ -1,12 +1,12 @@
-package SpendWise.Managers;
+package SpendWise.Logic.Managers;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import SpendWise.Bills.Expense;
-import SpendWise.Bills.Fixed;
-import SpendWise.Bills.OneTime;
-import SpendWise.Bills.Recurring;
+import SpendWise.Logic.Bills.Expense;
+import SpendWise.Logic.Bills.Fixed;
+import SpendWise.Logic.Bills.OneTime;
+import SpendWise.Logic.Bills.Recurring;
 import SpendWise.Utils.Enums.ExpenseType;
 
 public class ExpensesManager {

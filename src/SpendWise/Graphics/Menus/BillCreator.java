@@ -14,12 +14,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import SpendWise.Bills.Expense;
-import SpendWise.Bills.Fixed;
-import SpendWise.Bills.OneTime;
-import SpendWise.Bills.Recurring;
 import SpendWise.Graphics.Screen;
-import SpendWise.Managers.ExpensesManager;
+import SpendWise.Logic.Bills.Expense;
+import SpendWise.Logic.Bills.Fixed;
+import SpendWise.Logic.Bills.OneTime;
+import SpendWise.Logic.Bills.Recurring;
+import SpendWise.Logic.Managers.ExpensesManager;
 import SpendWise.Utils.Dates;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.BillsFields;

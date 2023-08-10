@@ -2,8 +2,9 @@ package Tests.Managers;
 
 import org.junit.jupiter.api.*;
 import static org.junit.Assert.*;
-import SpendWise.Managers.UserManager;
-import SpendWise.User;
+
+import SpendWise.Logic.User;
+import SpendWise.Logic.Managers.UserManager;
 
 public class UserManagerTest {
     private UserManager userManager;

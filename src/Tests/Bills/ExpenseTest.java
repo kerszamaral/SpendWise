@@ -1,11 +1,12 @@
 package Tests.Bills;
 
 import org.junit.jupiter.api.*;
+
+import SpendWise.Logic.Bills.Expense;
+import SpendWise.Logic.Bills.OneTime;
+
 import static org.junit.Assert.*;
 import java.time.LocalDate;
-
-import SpendWise.Bills.Expense;
-import SpendWise.Bills.OneTime;
 
 public class ExpenseTest {
     private Expense expense;
