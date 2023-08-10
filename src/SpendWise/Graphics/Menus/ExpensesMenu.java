@@ -3,12 +3,14 @@ package SpendWise.Graphics.Menus;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -17,16 +19,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import SpendWise.Bills.Expense;
-import SpendWise.Bills.OneTime;
-import SpendWise.Bills.Recurring;
 import SpendWise.Graphics.Screen;
-import SpendWise.Managers.ExpensesManager;
+import SpendWise.Logic.Bills.Expense;
+import SpendWise.Logic.Bills.Fixed;
+import SpendWise.Logic.Bills.OneTime;
+import SpendWise.Logic.Bills.Recurring;
+import SpendWise.Logic.Managers.ExpensesManager;
 import SpendWise.Utils.Dates;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.BillsFields;
 import SpendWise.Utils.Enums.ExpenseType;
 import SpendWise.Utils.Enums.PanelOrder;
+import SpendWise.Utils.Graphics.Alerts;
 import SpendWise.Utils.Graphics.Components;
 import SpendWise.Utils.Graphics.Misc;
 import SpendWise.Utils.Graphics.Panels;
@@ -42,6 +46,10 @@ public class ExpensesMenu extends Screen {
     private JCheckBox oneTimeCheckBox;
     private JFormattedTextField recurringEndDateField;
 
+    private JPanel alertPanel;
+    private JButton btnChangeExpense;
+    private boolean isEditing;
+
     public ExpensesMenu(ExpensesManager expensesManager) {
         this.expensesManager = expensesManager;
         this.initialize();
@@ -49,8 +57,8 @@ public class ExpensesMenu extends Screen {
 
     @Override
     protected void initialize() {
-        Offsets outerOffsets = new Offsets(50, 50, 100, 0);
-        Offsets innerOffsets = new Offsets(50, 50, 50, 50);
+        Offsets outerOffsets = new Offsets(30, 30, 100, 0);
+        Offsets innerOffsets = new Offsets(50, 70, 50, 50);
         blankPanels = Panels.createPanelWithCenter(this, innerOffsets, outerOffsets, ACCENT_COLOR);
 
         expensesComboBox = new JComboBox<Expense>(expensesManager.getExpenses().toArray(new Expense[0]));
@@ -62,9 +70,15 @@ public class ExpensesMenu extends Screen {
         pnlCentral = super.getBlankPanel(PanelOrder.CENTRAL);
         createBillFields(null);
 
-        Offsets offsetsBtn = new Offsets(10, 10, 400, 20);
-        Components.initializeButton(getBlankPanel(PanelOrder.SOUTH), offsetsBtn, "Removed Expense", ACCENT_COLOR,
-                e -> removeExpense(e));
+        Offsets offsetsBtn = new Offsets(30, 10, 400, 20);
+        ActionListener[] listeners = { e -> changeExpense(e), e -> removeExpense(e) };
+        String[] btnLabels = { "Edit Expense", "Remove Expense" };
+        btnChangeExpense = Components.initializeButtons(getBlankPanel(PanelOrder.SOUTH), offsetsBtn, btnLabels,
+                ACCENT_COLOR,
+                listeners)[0];
+
+        JPanel southPanel = (JPanel) getBlankPanel(PanelOrder.SOUTH).getComponent(0);
+        alertPanel = (JPanel) southPanel.getComponent(0);
     }
 
     @Override
@@ -74,6 +88,22 @@ public class ExpensesMenu extends Screen {
             expensesComboBox.addItem(expense);
         }
         expensesComboBox.setSelectedIndex(-1);
+        Alerts.clearErrorMessage(alertPanel);
+        super.refresh();
+    }
+
+    public void refresh(Expense exp) {
+        int index = 0;
+        expensesComboBox.removeAllItems();
+        expensesComboBox.setSelectedIndex(-1);
+        for (Expense expense : expensesManager.getExpenses()) {
+            expensesComboBox.addItem(expense);
+            if (expense.equals(exp))
+                expensesComboBox.setSelectedIndex(index);
+            index++;
+        }
+        createBillFields(null);
+        Alerts.clearErrorMessage(alertPanel);
         super.refresh();
     }
 
@@ -137,7 +167,6 @@ public class ExpensesMenu extends Screen {
                     break;
             }
 
-            fieldType.setEnabled(true);
             fieldType.setBackground(ACCENT_COLOR);
 
             fields[field.ordinal()] = fieldType;
@@ -212,5 +241,115 @@ public class ExpensesMenu extends Screen {
         expensesComboBox.removeItem(selectedExpense);
         expensesComboBox.setSelectedIndex(-1);
         createBillFields(null);
+    }
+
+    private void changeExpense(ActionEvent action) {
+        Alerts.clearErrorMessage(alertPanel);
+
+        Expense originalExpense = expensesComboBox.getItemAt(expensesComboBox.getSelectedIndex());
+        if (originalExpense == null) {
+            Alerts.showErrorMessage(alertPanel, "No expense selected!");
+            return;
+        }
+
+        if (isEditing) {
+            applyChanges();
+            btnChangeExpense.setText("Edit Expense");
+            expensesComboBox.setEditable(true);
+            isEditing = false;
+        } else {
+            setFieldsEditable(true);
+            btnChangeExpense.setText("Apply Changes");
+            expensesComboBox.setEditable(false);
+            isEditing = true;
+        }
+    }
+
+    private void setFieldsEditable(boolean isEditable) {
+        for (BillsFields field : BillsFields.values()) {
+            if (field == BillsFields.TYPE)
+                continue;
+
+            if (field == BillsFields.ESSENTIAL) {
+                fields[field.ordinal()].setEnabled(isEditable);
+                continue;
+            }
+
+            ((JTextField) fields[field.ordinal()]).setEditable(isEditable);
+        }
+        ExpenseType type = ((Expense) expensesComboBox.getSelectedItem()).getType();
+        switch (type) {
+            case ONETIME:
+                oneTimeCheckBox.setEnabled(isEditable);
+                break;
+            case RECURRING:
+                recurringEndDateField.setEditable(isEditable);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void applyChanges() {
+        Expense originalExpense = expensesComboBox.getItemAt(expensesComboBox.getSelectedIndex());
+        ExpenseType type = originalExpense.getType();
+        Expense exp = null;
+
+        JFormattedTextField valueField = (JFormattedTextField) fields[BillsFields.VALUE.ordinal()];
+        Alerts.setErrorBorder(valueField, false);
+
+        double value = 0;
+        try {
+            value = NumberFormat.getCurrencyInstance().parse(valueField.getText()).doubleValue();
+        } catch (Exception e) {
+            return;
+        }
+        if (value <= 0) {
+            Alerts.showErrorMessage(alertPanel, "Value must be greater than 0!");
+            Alerts.setErrorBorder(valueField, true);
+            return;
+        }
+
+        JCheckBox essentialCheckBox = (JCheckBox) fields[BillsFields.ESSENTIAL.ordinal()];
+        boolean essential = essentialCheckBox.isSelected();
+
+        JFormattedTextField dateField = (JFormattedTextField) fields[BillsFields.DATE.ordinal()];
+        LocalDate date = Dates.convDate(Dates.convString(dateField.getText()));
+
+        JTextField descriptionField = (JTextField) fields[BillsFields.DESCRIPTION.ordinal()];
+        Alerts.setErrorBorder(descriptionField, false);
+
+        String description = descriptionField.getText();
+        if (description.isEmpty()) {
+            Alerts.showErrorMessage(alertPanel, "Description cannot be empty!");
+            Alerts.setErrorBorder(descriptionField, true);
+            return;
+        }
+
+        switch (type) {
+            case FIXED:
+                exp = new Fixed(value, essential, date, description);
+                break;
+            case ONETIME:
+                boolean paid = oneTimeCheckBox.isSelected();
+                exp = new OneTime(value, essential, date, description, paid);
+                break;
+            case RECURRING:
+                LocalDate endDate = Dates.convDate(Dates.convString(recurringEndDateField.getText()));
+                exp = new Recurring(value, essential, date, description, endDate);
+                break;
+            default:
+                break;
+        }
+
+        if (exp != null) {
+            Alerts.showMessage(alertPanel, "Expense Modified successfully!", BACKGROUND_COLOR);
+            expensesManager.removeExpense(originalExpense);
+            expensesManager.addExpense(exp);
+            setFieldsEditable(false);
+            refresh(exp);
+        } else {
+            Alerts.showErrorMessage(alertPanel, "Expense could not be modified!");
+        }
     }
 }
