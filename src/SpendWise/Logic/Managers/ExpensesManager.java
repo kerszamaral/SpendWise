@@ -1,5 +1,6 @@
 package SpendWise.Logic.Managers;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -9,7 +10,7 @@ import SpendWise.Logic.Bills.OneTime;
 import SpendWise.Logic.Bills.Recurring;
 import SpendWise.Utils.Enums.ExpenseType;
 
-public class ExpensesManager {
+public class ExpensesManager implements Serializable {
     private ArrayList<Expense> expenses;
 
     public ExpensesManager() {

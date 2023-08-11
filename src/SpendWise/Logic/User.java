@@ -1,10 +1,12 @@
 package SpendWise.Logic;
 
+import java.io.Serializable;
+
 import SpendWise.Logic.Managers.ExpensesManager;
 import SpendWise.Logic.Managers.GroupManager;
 import SpendWise.Utils.Enums.AccountFields;
 
-public class User {
+public class User implements Serializable {
     // Atributos
     private String username;
     private String name;

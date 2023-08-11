@@ -1,9 +1,10 @@
 package SpendWise.Logic;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Group {
+public class Group implements Serializable {
 
     private ArrayList<User> users;
     private String groupName;

@@ -1,8 +1,9 @@
 package SpendWise.Utils;
 
+import java.io.Serializable;
 import java.util.Iterator;
 
-public class Triple<T1, T2, T3> implements Iterable<Object> {
+public class Triple<T1, T2, T3> implements Iterable<Object>, Serializable {
     private T1 first;
     private T2 second;
     private T3 third;

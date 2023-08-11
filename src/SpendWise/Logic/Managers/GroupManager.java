@@ -1,11 +1,12 @@
 package SpendWise.Logic.Managers;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import SpendWise.Logic.Group;
 import SpendWise.Logic.User;
 
-public class GroupManager {
+public class GroupManager implements Serializable {
     private ArrayList<Group> groups;
 
     public GroupManager() {

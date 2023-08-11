@@ -1,10 +1,11 @@
 package SpendWise.Logic.Bills;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import SpendWise.Utils.Enums.ExpenseType;
 
-public abstract class Expense {
+public abstract class Expense implements Serializable {
     private double value;
 
     private boolean isEssential;

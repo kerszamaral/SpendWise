@@ -1,22 +1,17 @@
 package SpendWise.Logic.Managers;
 
+import java.io.Serializable;
 import java.util.Hashtable;
 
 import SpendWise.Logic.User;
 
-public class UserManager {
+public class UserManager implements Serializable {
     private Hashtable<String, User> users;
     private User loggedUser;
 
     public UserManager() {
         this.users = new Hashtable<String, User>();
         this.loggedUser = new User();
-
-        // TODO remove this
-        // Just to skip all the sign in process
-        createUser(new User("admin", "admin", "admin@admin.com", "admin", 0, 0));
-        createUser(new User("a", "a", "admin@admin.com", "a", 0, 0));
-        getUser("a").getGroupManager().createGroup("test");
     }
 
     public boolean changeUsername(String username, String newUsername) {
@@ -48,6 +43,10 @@ public class UserManager {
 
     public User getLoggedUser() {
         return this.loggedUser;
+    }
+
+    public void clearLoggedUser() {
+        this.loggedUser = new User();
     }
 
     public boolean createUser(User user) {
