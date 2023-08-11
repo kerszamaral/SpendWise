@@ -93,7 +93,7 @@ public class LoginMenu extends Screen {
             lblLogo.setForeground(ACCENT_COLOR);
             pnlLogo.add(lblLogo);
         } catch (Exception e) {
-            // TODO: handle exception
+            System.out.println("Error loading font.");
         }
     }
 
