@@ -108,6 +108,8 @@ public class AccountMenu extends Screen {
             if (!Email.isEmailValid(txtEmail)) {
                 Alerts.showErrorMessage(super.getBlankPanel(PanelOrder.NORTH), "Please enter a valid email");
                 nextState = true;
+            } else {
+                Alerts.setErrorBorder(txtEmail, false);
             }
         }
 

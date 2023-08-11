@@ -6,6 +6,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.border.Border;
 
 public abstract class Alerts {
@@ -19,7 +20,7 @@ public abstract class Alerts {
         if (isError) {
             setBorder(field, Color.RED);
         } else {
-            setBorder(field, Color.BLACK);
+            field.setBorder(UIManager.getLookAndFeel().getDefaults().getBorder("TextField.border"));
         }
     }
 
