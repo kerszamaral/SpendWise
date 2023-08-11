@@ -2,7 +2,7 @@ package SpendWise.Interface.PopUps;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
@@ -20,7 +20,6 @@ import SpendWise.Utils.Graphics.Panels;
 
 public class CreateGroup extends PopUp {
     private User loggedUser;
-
     private JTextField groupNameField;
     private Runnable refreshGroups;
 
@@ -28,21 +27,22 @@ public class CreateGroup extends PopUp {
         super(parent, title);
         this.loggedUser = loggedUser;
         this.refreshGroups = refresheGroups;
+        this.setSize((int)(POPUP_WIDTH*0.75), (int) POPUP_HEIGHT - 200);
     }
     
     @Override
     public void run() {
-        Offsets offsets = new Offsets(50, 0, 100, 100);
+        Offsets offsets = new Offsets(50, 0, 50, 50);
         blankPanels = Panels.initializeOffsets((JPanel) this.getContentPane(), offsets);
 
         // Creating the sign up panel and it's fields
-        JPanel editPanel = new JPanel(new GridLayout(1, 1));
+        JPanel editPanel = new JPanel(new FlowLayout());
         editPanel.setBackground(BACKGROUND_COLOR);
 
-        groupNameField = (JTextField) Components.addTextFieldCenter(editPanel, "Repeat New Password:", "",
+        groupNameField = (JTextField) Components.addTextFieldCenter(editPanel, "Group's name:", "",
                 15, false, true);
 
-        editPanel.add(new JPanel());
+        //editPanel.add(new JPanel());
 
         this.add(editPanel, BorderLayout.CENTER);
 
@@ -50,7 +50,7 @@ public class CreateGroup extends PopUp {
         JPanel pnlSouth = new JPanel(new BorderLayout());
         pnlSouth.setBackground(BACKGROUND_COLOR);
 
-        Offsets southOffsets = new Offsets(0, 0, 0, 0);
+        Offsets southOffsets = new Offsets(0, 20, 120,120);
         Panels.initializeOffsets(pnlSouth, southOffsets);
 
         JButton btnCreate = Components.createButton("Create Group", Color.BLACK, BACKGROUND_COLOR, null);
@@ -67,6 +67,11 @@ public class CreateGroup extends PopUp {
         String groupName = groupNameField.getText();
         if (groupName.isEmpty()) {
             Alerts.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Group name cannot be empty");
+            Alerts.setErrorBorder(groupNameField, true);
+            return;
+        }
+        if(loggedUser.getGroupManager().findGroup(groupName) != null) {
+            Alerts.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Group name already exists");
             Alerts.setErrorBorder(groupNameField, true);
             return;
         }

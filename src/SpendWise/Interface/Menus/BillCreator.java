@@ -50,10 +50,6 @@ public class BillCreator extends Screen {
     protected void initialize() {
         blankPanels = Panels.createPanelWithCenter(this, ACCENT_COLOR);
 
-        JLabel billTitle = new JLabel("CREATE A NEW BILL");
-        billTitle.setFont(STD_FONT_BOLD);
-        getBlankPanel(PanelOrder.NORTH).add(billTitle);
-
         JPanel pnlCentral = super.getBlankPanel(PanelOrder.CENTRAL);
         pnlCentral.setLayout(new GridLayout(BillsFields.values().length * 2 + 1, 1));
 

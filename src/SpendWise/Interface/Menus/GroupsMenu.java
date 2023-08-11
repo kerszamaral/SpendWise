@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -34,6 +35,8 @@ public class GroupsMenu extends Screen {
     private JComboBox<User> userBox;
     private JComboBox<GroupActions> operationBox;
     private JComboBox<Group> groupBox;
+    private JLabel lblOperation;
+    private JLabel lblUsername;
     private UserManager userManager;
     private User loggedUser;
     private GroupManager groupManager;
@@ -76,20 +79,22 @@ public class GroupsMenu extends Screen {
                     groupBox = new JComboBox<Group>(groups);
                     groupBox.setSelectedIndex(-1);
                     groupBox.addActionListener(e -> showFields(e));
-                    fieldType = groupBox;         
+                    fieldType = groupBox;
                     break;
-                case SELECT_OPERATION:
+                    case SELECT_OPERATION:
                     operationBox = new JComboBox<GroupActions>(GroupActions.values());
                     operationBox.setVisible(false);
                     operationBox.setSelectedIndex(-1);
                     operationBox.addActionListener(e -> updateUsernameField(e));
                     fieldType = operationBox;
+                    lblOperation = lbl;
                     break;
                 case USERNAME:
                     userBox = new JComboBox<User>();
                     userBox.setSelectedIndex(-1);
                     userBox.setVisible(false);
                     fieldType = userBox;
+                    lblUsername = lbl;
                     break;
             }
 
@@ -165,21 +170,31 @@ public class GroupsMenu extends Screen {
     }
 
     private void addGroup(ActionEvent e) {
-        CreateGroup createGroup = new CreateGroup(this, "Create Group", loggedUser, () -> temp());
+        CreateGroup createGroup = new CreateGroup(this, "Create Group", loggedUser, () -> refreshGroupField());
         createGroup.run();
     }
 
-    private void temp() {
-
+    private void refreshGroupField() {
+        Group[] groups = groupManager.getGroups().toArray(new Group[0]);
+        groupBox.removeAllItems();
+        groupBox.setModel(new DefaultComboBoxModel<Group>(groups));
+        groupBox.setSelectedIndex(-1);
+        if(groupBox.getItemCount() == 0){
+            operationBox.setVisible(false);
+            userBox.setVisible(false); 
+            lblOperation.setVisible(false);
+            lblUsername.setVisible(false); 
+        }
     }
 
     private void deleteGroup(ActionEvent e) {
         Group givenGroup = (Group) groupBox.getSelectedItem();
         if (givenGroup == null)
             return;
-
+            
         groupManager.removeGroup(givenGroup);
         groupBox.setSelectedIndex(-1);
+        refreshGroupField();
     }
 
     private void saveButton(ActionEvent e) {
