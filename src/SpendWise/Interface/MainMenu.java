@@ -3,7 +3,8 @@ package SpendWise.Interface;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.time.LocalDate;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -18,8 +19,8 @@ import SpendWise.Interface.Menus.ExpensesMenu;
 import SpendWise.Interface.Menus.GroupsMenu;
 import SpendWise.Interface.Menus.LoginMenu;
 import SpendWise.Logic.User;
-import SpendWise.Logic.Bills.Fixed;
 import SpendWise.Logic.Managers.UserManager;
+import SpendWise.Utils.Database;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.Contexts;
 import SpendWise.Utils.Enums.PanelOrder;
@@ -46,7 +47,7 @@ public class MainMenu extends JFrame implements Colors, Fonts, Icons {
     }
 
     public boolean run() {
-        this.userManager = new UserManager();
+        this.userManager = Database.loadUserManager();
         this.createLogin();
         this.logout(null);
         this.getContentPane().add(centerLayout, BorderLayout.CENTER);
@@ -77,6 +78,14 @@ public class MainMenu extends JFrame implements Colors, Fonts, Icons {
         this.setResizable(false);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        this.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                Database.saveUserManager(userManager);
+                System.exit(0);
+            }
+        });
+
         this.getContentPane().setLayout(new BorderLayout());
         this.setIconImage(APP_LOGO.getImage());
 
@@ -95,9 +104,6 @@ public class MainMenu extends JFrame implements Colors, Fonts, Icons {
     }
 
     private void createMenus(User loggedUser) {
-        // TODO: Remove this later on
-        loggedUser.getExpensesManager()
-                .addExpense(new Fixed(500, false, LocalDate.now().minusMonths(3), "description"));
         screens[Contexts.ACCOUNT.ordinal()] = new AccountMenu(userManager);
         screens[Contexts.BILL.ordinal()] = new BillCreator(loggedUser.getExpensesManager());
         screens[Contexts.CHARTS.ordinal()] = new ChartsMenu();
