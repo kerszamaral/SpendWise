@@ -134,4 +134,11 @@ public class LoginMenu extends Screen {
             return false;
         }
     }
+
+    @Override
+    public void refresh() {
+        txtLogin.setText("");
+        txtPassword.setText("");
+        super.refresh();
+    }
 }
