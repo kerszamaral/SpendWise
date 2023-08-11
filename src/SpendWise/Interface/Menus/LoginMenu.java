@@ -60,11 +60,13 @@ public class LoginMenu extends Screen {
 
         // Username Fields
         txtLogin = Components.addTextFieldCenter(pnlLogin, "Username", "", TEXT_WIDTH, false, true);
+        txtLogin.addActionListener(e -> btnLogin.doClick());
         pnlLogin.add(Box.createRigidArea(new Dimension(0, 20)));
 
         // Password Fields
         txtPassword = (JPasswordField) Components.addTextFieldCenter(pnlLogin, "Password", "", TEXT_WIDTH, true,
                 true);
+        txtPassword.addActionListener(e -> btnLogin.doClick());
         pnlLogin.add(Box.createRigidArea(new Dimension(0, 50)));
 
         // Buttons

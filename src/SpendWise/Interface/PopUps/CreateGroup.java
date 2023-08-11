@@ -41,20 +41,19 @@ public class CreateGroup extends PopUp {
 
         groupNameField = (JTextField) Components.addTextFieldCenter(editPanel, "Group's name:", "",
                 15, false, true);
-
-        //editPanel.add(new JPanel());
-
-        this.add(editPanel, BorderLayout.CENTER);
-
-        // Creating the south panel
+                
+                this.add(editPanel, BorderLayout.CENTER);
+                
+                // Creating the south panel
         JPanel pnlSouth = new JPanel(new BorderLayout());
         pnlSouth.setBackground(BACKGROUND_COLOR);
 
         Offsets southOffsets = new Offsets(0, 20, 120,120);
         Panels.initializeOffsets(pnlSouth, southOffsets);
-
+        
         JButton btnCreate = Components.createButton("Create Group", Color.BLACK, BACKGROUND_COLOR, null);
         btnCreate.addActionListener(e -> createGroup(e));
+        groupNameField.addActionListener(e -> btnCreate.doClick());
 
         pnlSouth.add(btnCreate, BorderLayout.CENTER);
 

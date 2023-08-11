@@ -45,9 +45,11 @@ public class ChangePassword extends PopUp {
 
         fieldRepeatPassword = (JPasswordField) Components.addTextFieldCenter(editPanel, "Repeat New Password:", "",
                 15, true, true);
+        fieldRepeatPassword.addActionListener(e -> updatePassword(e));
 
         fieldOldPassword = (JPasswordField) Components.addTextFieldCenter(editPanel, "Old Password:", "", 15, true,
                 true);
+        fieldOldPassword.addActionListener(e -> updatePassword(e));
 
         this.add(editPanel, BorderLayout.CENTER);
 

@@ -52,6 +52,7 @@ public class SignUp extends PopUp {
 
             signUpFields[label.ordinal()] = Components.addTextFieldCenter(signUpPanel, label.getLabelName(),
                     "", TEXT_WIDTH, isPassword, true);
+            signUpFields[label.ordinal()].addActionListener(e -> this.createUser(e));
         }
 
         this.add(signUpPanel, BorderLayout.CENTER);
