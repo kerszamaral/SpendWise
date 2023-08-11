@@ -1,7 +1,6 @@
 package SpendWise.Interface.Menus;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -78,7 +77,7 @@ public class GroupsMenu extends Screen {
                     Group[] groups = groupManager.getGroups().toArray(new Group[0]);
                     groupBox = new JComboBox<Group>(groups);
                     groupBox.setSelectedIndex(-1);
-                    groupBox.addActionListener(e -> showFields(e));
+                    groupBox.addActionListener(e -> showOptionsField(e));
                     fieldType = groupBox;
                     break;
                     case SELECT_OPERATION:
@@ -119,16 +118,13 @@ public class GroupsMenu extends Screen {
                 buttonListeners);
     }
 
-    private void showFields(ActionEvent e) {
-        for (JComponent field : fields) {
-            field.setVisible(true);
-        }
+    private void showOptionsField(ActionEvent e) {
+        // Make operation fields visible, but keep username fields invisible
+        lblOperation.setVisible(true);
+        operationBox.setVisible(true);
 
-        for (Component lbl : pnlGroupManagement.getComponents()) {       
-            if(lbl instanceof JLabel){
-                lbl.setVisible(true);
-            }
-        }
+        userBox.setVisible(false);
+        lblUsername.setVisible(false);
         
         updateGroupName();
     }
@@ -149,6 +145,9 @@ public class GroupsMenu extends Screen {
 
     private void updateUsernameField(ActionEvent e) {
         GroupActions operation = (GroupActions) operationBox.getSelectedItem();
+        
+        userBox.setVisible(true);
+        lblUsername.setVisible(true);
         
         this.userBox.removeAllItems();
         
@@ -179,12 +178,12 @@ public class GroupsMenu extends Screen {
         groupBox.removeAllItems();
         groupBox.setModel(new DefaultComboBoxModel<Group>(groups));
         groupBox.setSelectedIndex(-1);
-        if(groupBox.getItemCount() == 0){
+        //if(groupBox.getItemCount() == 0){
             operationBox.setVisible(false);
             userBox.setVisible(false); 
             lblOperation.setVisible(false);
             lblUsername.setVisible(false); 
-        }
+        //}
     }
 
     private void deleteGroup(ActionEvent e) {
