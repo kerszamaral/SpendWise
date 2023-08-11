@@ -21,6 +21,7 @@ public class Group implements Serializable {
 
     public void removeUser(User user) {
         users.remove(user);
+        user.getGroupManager().removeGroup(this);
     }
 
     public ArrayList<User> getUsers() {
@@ -31,6 +32,9 @@ public class Group implements Serializable {
         return groupName;
     }
 
-
+    @Override
+    public String toString() {
+        return groupName;
+    }
     
 }

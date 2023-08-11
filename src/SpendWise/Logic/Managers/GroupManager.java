@@ -37,12 +37,19 @@ public class GroupManager implements Serializable {
         if (isGroupValid(group.getGroupName())) {
             return;
         }
-        
+
         // Groups work in a "communist" way, so there is no leader in a group
         // Once you're added to a group, you'll have the same rights as everyone else
         groups.add(group);
     }
 
+    public void removeGroup(Group group) {
+        if (!isGroupValid(group.getGroupName())) {
+            return;
+        }
+        
+        groups.remove(group);
+    }
     
     public double calculateExpense(String groupName) {
         if (isGroupValid(groupName)) {

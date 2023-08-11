@@ -3,7 +3,6 @@ package SpendWise.Interface.Menus;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -12,8 +11,6 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JToggleButton;
 
 import SpendWise.Interface.Screen;
 import SpendWise.Logic.Group;
@@ -21,9 +18,11 @@ import SpendWise.Logic.User;
 import SpendWise.Logic.Managers.GroupManager;
 import SpendWise.Logic.Managers.UserManager;
 import SpendWise.Utils.Offsets;
+import SpendWise.Utils.Enums.GroupActions;
 import SpendWise.Utils.Enums.GroupFields;
 import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.Utils.Graphics.Components;
+import SpendWise.Utils.Graphics.Images;
 import SpendWise.Utils.Graphics.Misc;
 import SpendWise.Utils.Graphics.Panels;
 
@@ -31,6 +30,9 @@ public class GroupsMenu extends Screen {
     private JPanel pnlGroupManagement;
     private final String IMAGE_PATH = "res/Images/groupsImage.png";
     private JComponent[] fields;
+    private JComboBox<User> userBox;
+    private JComboBox<GroupActions> operationBox;
+    private JComboBox<Group> groupBox;
     private UserManager userManager;
     private User loggedUser;
     private GroupManager groupManager;
@@ -46,17 +48,10 @@ public class GroupsMenu extends Screen {
 
     @Override
     protected void initialize() {
-        Offsets outerOffsets = new Offsets(DEFAULT_OFFSETS.getNorth(), 35,
-                DEFAULT_OFFSETS.getWest(), DEFAULT_OFFSETS.getEast());
-        Offsets innerOffsets = new Offsets(50, 70, 50, 50);
-        blankPanels = Panels.createPanelWithCenter(this, innerOffsets, outerOffsets, ACCENT_COLOR);
+        blankPanels = Panels.createPanelWithCenter(this, ACCENT_COLOR);
 
         JPanel centerPanel = getBlankPanel(PanelOrder.CENTRAL);
         JPanel[] innerPanels = Panels.initializeOffsets(centerPanel, new Offsets(0, 0, 0, 150), ACCENT_COLOR);
-
-        JLabel groupTitle = new JLabel("MANAGE GROUPS");
-        groupTitle.setFont(STD_FONT_BOLD);
-        getBlankPanel(PanelOrder.NORTH).add(groupTitle);
 
         addImage(innerPanels[PanelOrder.EAST.ordinal()]);
 
@@ -76,24 +71,24 @@ public class GroupsMenu extends Screen {
             switch (field) {
                 case SELECT_GROUP:
                     lbl.setVisible(true);
-                    String[] names = new String[groupManager.getGroups().size()];
-                    for (int i = 0; i < groupManager.getGroups().size(); i++) {
-                        names[i] = groupManager.getGroups().get(i).getGroupName();
-                    }
-                    JComboBox<String> selectGroupField = new JComboBox<String>(names);
-                    selectGroupField.addActionListener(e -> showSelectField(e));
-                    fieldType = selectGroupField;                
+                    Group[] groups = groupManager.getGroups().toArray(new Group[0]);
+                    groupBox = new JComboBox<Group>(groups);
+                    groupBox.setSelectedIndex(-1);
+                    groupBox.addActionListener(e -> showFields(e));
+                    fieldType = groupBox;         
                     break;
                 case SELECT_OPERATION:
-                    JToggleButton selectOperation = new JToggleButton();
-                    selectOperation.addActionListener(e -> showUsernameField(e));
-                    selectOperation.setVisible(false);
-                    fieldType = selectOperation;
+                    operationBox = new JComboBox<GroupActions>(GroupActions.values());
+                    operationBox.setVisible(false);
+                    operationBox.setSelectedIndex(-1);
+                    operationBox.addActionListener(e -> updateUsernameField(e));
+                    fieldType = operationBox;
                     break;
                 case USERNAME:
-                    JTextField removeUserField = new JTextField();
-                    removeUserField.setVisible(false);
-                    fieldType = removeUserField;
+                    userBox = new JComboBox<User>();
+                    userBox.setSelectedIndex(-1);
+                    userBox.setVisible(false);
+                    fieldType = userBox;
                     break;
             }
 
@@ -111,26 +106,14 @@ public class GroupsMenu extends Screen {
         }
 
         centerPanel.add(pnlGroupManagement, BorderLayout.CENTER);
-        String[] buttonsTexts = { "Add Group", "Save" };
-        ActionListener[] buttonListeners = { e -> addGroup(e), e -> saveButton(e) };
-        Components.initializeButtons(this.getBlankPanel(PanelOrder.SOUTH), new Offsets(30, 10, 400, 20), buttonsTexts,
+        String[] buttonsTexts = { "Add Group","Save", "Delete Group" };
+        ActionListener[] buttonListeners = { e -> addGroup(e), e -> saveButton(e), e -> deleteGroup(e)};
+        Components.initializeButtons(this.getBlankPanel(PanelOrder.SOUTH), new Offsets(10, 10, 400, 20), buttonsTexts,
                 ACCENT_COLOR,
                 buttonListeners);
     }
 
-    // private void createUserFields(ActionEvent e) {
-    //     for (JComponent field : fields) {
-    //         field.setVisible(true);
-    //     }
-
-    //     for (Component lbl : pnlGroupManagement.getComponents()) {       
-    //         if(lbl instanceof JLabel){
-    //             lbl.setVisible(true);
-    //         }
-    //     }
-    // }
-
-    private void showSelectField(ActionEvent e) {
+    private void showFields(ActionEvent e) {
         for (JComponent field : fields) {
             field.setVisible(true);
         }
@@ -140,16 +123,12 @@ public class GroupsMenu extends Screen {
                 lbl.setVisible(true);
             }
         }
+        
+        updateGroupName();
     }
 
-    private void showUsernameField(ActionEvent e) {
-        
-    }
-    
-    private ImageIcon resizeImage(String path, int width, int height) {
-        Image originalImage = new ImageIcon(path).getImage();
-        ImageIcon resizedImageIcon = new ImageIcon(originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH));
-        return resizedImageIcon;
+    private void updateGroupName(){
+        currentGroup = (Group) groupBox.getSelectedItem();
     }
 
     private void centralizeImage(JPanel panel, JLabel lblImage) {
@@ -158,22 +137,61 @@ public class GroupsMenu extends Screen {
     }
     
     private void addImage(JPanel panel) {
-        ImageIcon resizedImageIcon = resizeImage(IMAGE_PATH, 100, 100);
+        ImageIcon resizedImageIcon = Images.resizedIcon(IMAGE_PATH, 100, 100);
         centralizeImage(panel, new JLabel(resizedImageIcon));
     }
 
+    private void updateUsernameField(ActionEvent e) {
+        GroupActions operation = (GroupActions) operationBox.getSelectedItem();
+        
+        this.userBox.removeAllItems();
+        
+        if (operation == GroupActions.ADD) {
+            for (User user : userManager.getUsers().values()) {
+                if (user.getGroupManager().findGroup(currentGroup.getGroupName()) != null)
+                    continue;
+
+                this.userBox.addItem(user);
+            }
+        }
+        else {
+            for(User user : currentGroup.getUsers()){
+                if(user != loggedUser)
+                    this.userBox.addItem(user);
+            }    
+        }
+        this.userBox.setSelectedIndex(-1);
+    }
+
     private void addGroup(ActionEvent e) {
+
+    }
+
+    private void deleteGroup(ActionEvent e) {
+        Group givenGroup = (Group) groupBox.getSelectedItem();
+        if (givenGroup == null)
+            return;
+
+        groupManager.removeGroup(givenGroup);
+        groupBox.setSelectedIndex(-1);
     }
 
     private void saveButton(ActionEvent e) {
-        @SuppressWarnings("unchecked") // This is not a problem
-        String currentGroupName = ((JComboBox<String>) fields[GroupFields.SELECT_GROUP.ordinal()]).getSelectedItem().toString();
-        currentGroup = groupManager.findGroup(currentGroupName);
+        User givenUser = (User) userBox.getSelectedItem();     
+        if (givenUser == null)
+            return;
 
-        String username = ((JTextField) fields[GroupFields.USERNAME.ordinal()]).getText();
-        // TODO Validate username
-        User addedUser = userManager.getUser(username);
-        currentGroup.addUser(addedUser);
+        GroupActions operation = (GroupActions) operationBox.getSelectedItem();
+
+        if (operation == GroupActions.DELETE) {
+            currentGroup.removeUser(givenUser);
+        }
+        else {
+            currentGroup.addUser(givenUser);
+        }
+
+        operationBox.setSelectedIndex(-1);
+        userBox.setSelectedIndex(-1);
     }
 
 }

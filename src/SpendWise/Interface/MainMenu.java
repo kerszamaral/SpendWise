@@ -55,6 +55,8 @@ public class MainMenu extends JFrame implements Colors, Fonts, Icons {
         this.getContentPane().add(sidePanel, BorderLayout.EAST);
         this.refresh();
 
+        userManager.getUser("a").getGroupManager().createGroup("TEST");
+
         return true;
     }
 

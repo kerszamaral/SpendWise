@@ -152,4 +152,8 @@ public class User implements Serializable {
     public GroupManager getGroupManager() {
         return groupManager;
     }
+
+    public String toString() {
+        return this.username;
+    }
 }
