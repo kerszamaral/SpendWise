@@ -54,13 +54,13 @@ public class AccountMenu extends Screen {
         this.updateAccountFields();
 
         Offsets offsetsBtn = new Offsets(10, 10, 400, 20);
-        final String[] btnNames = { "Delete Account", "Edit Account" };
-        final ActionListener[] btnActions = { e -> deleteAccount(), e -> edit(e) };
+        final String[] btnNames = { "Edit Account", "Delete Account" };
+        final ActionListener[] btnActions = { e -> edit(e), e -> deleteAccount() };
         JButton[] bnts = Components.initializeButtons(this.getBlankPanel(PanelOrder.SOUTH), offsetsBtn,
                 btnNames,
                 ACCENT_COLOR,
                 btnActions);
-        btnEditAccount = bnts[1];
+        btnEditAccount = bnts[0];
     }
 
     private void updateAccountFields() {
