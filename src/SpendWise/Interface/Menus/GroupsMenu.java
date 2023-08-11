@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import SpendWise.Interface.Screen;
+import SpendWise.Interface.PopUps.CreateGroup;
 import SpendWise.Logic.Group;
 import SpendWise.Logic.User;
 import SpendWise.Logic.Managers.GroupManager;
@@ -164,6 +165,11 @@ public class GroupsMenu extends Screen {
     }
 
     private void addGroup(ActionEvent e) {
+        CreateGroup createGroup = new CreateGroup(this, "Create Group", loggedUser, () -> temp());
+        createGroup.run();
+    }
+
+    private void temp() {
 
     }
 
