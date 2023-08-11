@@ -2,6 +2,7 @@ package SpendWise.Interface.Menus;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -30,11 +31,13 @@ public class AccountMenu extends Screen {
     private JButton btnEditAccount;
     private boolean isEditing = false;
     private JTextField[] txtFields;
+    private Runnable logout;
 
-    public AccountMenu(UserManager userManager) {
+    public AccountMenu(UserManager userManager, Runnable logout) {
         this.userManager = userManager;
         this.loggedUser = userManager.getLoggedUser();
         pnlUserData = new JPanel();
+        this.logout = logout;
         this.initialize();
     }
 
@@ -51,10 +54,13 @@ public class AccountMenu extends Screen {
         this.updateAccountFields();
 
         Offsets offsetsBtn = new Offsets(10, 10, 400, 20);
-        btnEditAccount = Components.initializeButton(this.getBlankPanel(PanelOrder.SOUTH), offsetsBtn,
-                "Edit Account",
+        final String[] btnNames = { "Delete Account", "Edit Account" };
+        final ActionListener[] btnActions = { e -> deleteAccount(), e -> edit(e) };
+        JButton[] bnts = Components.initializeButtons(this.getBlankPanel(PanelOrder.SOUTH), offsetsBtn,
+                btnNames,
                 ACCENT_COLOR,
-                e -> edit(e));
+                btnActions);
+        btnEditAccount = bnts[1];
     }
 
     private void updateAccountFields() {
@@ -145,6 +151,12 @@ public class AccountMenu extends Screen {
         }
 
         isEditing = nextState;
+    }
+
+    private void deleteAccount() {
+        userManager.removeUser(loggedUser);
+        userManager.clearLoggedUser();
+        this.logout.run();
     }
 
     private void changePassword() {
