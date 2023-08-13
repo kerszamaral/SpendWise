@@ -19,6 +19,7 @@ import SpendWise.Interface.Menus.ExpensesMenu;
 import SpendWise.Interface.Menus.GroupsMenu;
 import SpendWise.Interface.Menus.LoginMenu;
 import SpendWise.Logic.User;
+import SpendWise.Logic.Managers.ExpensesManager;
 import SpendWise.Logic.Managers.UserManager;
 import SpendWise.Utils.Database;
 import SpendWise.Utils.Offsets;
@@ -43,22 +44,6 @@ public class MainMenu extends JFrame implements Colors, Fonts, Icons {
     private UserManager userManager;
 
     public MainMenu() {
-        this.initialize();
-    }
-
-    public boolean run() {
-        this.userManager = Database.loadUserManager();
-        this.createLogin();
-        this.logout(null);
-        this.getContentPane().add(centerLayout, BorderLayout.CENTER);
-        this.createButtons();
-        this.getContentPane().add(sidePanel, BorderLayout.EAST);
-        this.refresh();
-
-        return true;
-    }
-
-    private void initialize() {
         screens = new Screen[Contexts.values().length];
         this.setTitle(APP_NAME);
         this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -94,6 +79,18 @@ public class MainMenu extends JFrame implements Colors, Fonts, Icons {
         this.sidePanel = new JPanel();
     }
 
+    public boolean run() {
+        this.userManager = Database.loadUserManager();
+        this.createLogin();
+        this.logout(null);
+        this.getContentPane().add(centerLayout, BorderLayout.CENTER);
+        this.createButtons();
+        this.getContentPane().add(sidePanel, BorderLayout.EAST);
+        this.refresh();
+
+        return true;
+    }
+
     private void refresh() {
         this.revalidate();
         this.repaint();
@@ -103,12 +100,14 @@ public class MainMenu extends JFrame implements Colors, Fonts, Icons {
         screens[Contexts.LOGIN.ordinal()] = new LoginMenu(e -> login(e), userManager);
     }
 
-    private void createMenus(User loggedUser) {
+    private void createMenus() {
+        User loggedUser = userManager.getLoggedUser();
+        ExpensesManager expensesManager = loggedUser.getExpensesManager();
         screens[Contexts.ACCOUNT.ordinal()] = new AccountMenu(userManager, () -> logout(null));
-        screens[Contexts.BILL.ordinal()] = new BillCreator(loggedUser.getExpensesManager());
-        screens[Contexts.CHARTS.ordinal()] = new ChartsMenu();
+        screens[Contexts.BILL.ordinal()] = new BillCreator(expensesManager);
+        screens[Contexts.ANALYSIS.ordinal()] = new ChartsMenu();
         screens[Contexts.GROUPS.ordinal()] = new GroupsMenu(userManager);
-        screens[Contexts.EXPENSES.ordinal()] = new ExpensesMenu(loggedUser.getExpensesManager());
+        screens[Contexts.EXPENSES.ordinal()] = new ExpensesMenu(expensesManager);
     }
 
     private void createButtons() {
@@ -127,7 +126,7 @@ public class MainMenu extends JFrame implements Colors, Fonts, Icons {
                 continue;
 
             Dimension buttonSize = new Dimension(BUTTON_MAX_WIDTH, 50);
-            buttons[ctx.ordinal()] = new MenuButton(ctx.getContextName(), ACCENT_COLOR,
+            buttons[ctx.ordinal()] = new MenuButton(ctx.getName(), ACCENT_COLOR,
                     BACKGROUND_COLOR, buttonSize);
             buttons[ctx.ordinal()].addActionListener(e -> updateContext(e));
 
@@ -136,7 +135,7 @@ public class MainMenu extends JFrame implements Colors, Fonts, Icons {
         }
 
         // Easier manipulation of the logout button
-        buttons[Contexts.LOGIN.ordinal()] = new JButton(Contexts.LOGIN.getContextName());
+        buttons[Contexts.LOGIN.ordinal()] = new JButton(Contexts.LOGIN.getName());
         JButton logoutButton = buttons[Contexts.LOGIN.ordinal()];
 
         logoutButton.setBackground(ACCENT_COLOR);
@@ -184,7 +183,7 @@ public class MainMenu extends JFrame implements Colors, Fonts, Icons {
         LoginMenu login = (LoginMenu) this.screens[Contexts.LOGIN.ordinal()];
 
         if (login.authorizeUser()) {
-            createMenus(userManager.getLoggedUser());
+            createMenus();
             this.currentContext = Contexts.ACCOUNT;
             this.buttons[Contexts.ACCOUNT.ordinal()].setSelected(true);
         } else {
