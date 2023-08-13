@@ -2,16 +2,17 @@ package SpendWise.Logic;
 
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Group implements Serializable {
 
-    private ArrayList<User> users;
+    private Set<User> users;
     private String groupName;
 
     public Group(String groupName) {
         this.groupName = groupName;
-        users = new ArrayList<User>();
+        users = new HashSet<User>();
     }
 
     public void addUser(User user) {
@@ -24,7 +25,7 @@ public class Group implements Serializable {
         user.getGroupManager().removeGroup(this);
     }
 
-    public ArrayList<User> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
@@ -36,5 +37,18 @@ public class Group implements Serializable {
     public String toString() {
         return groupName;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Group)) {
+            return false;
+        }
+        Group group = (Group) obj;
+        return this.groupName.equals(group.getGroupName());
+    }
     
+    @Override
+    public int hashCode() {
+        return this.groupName.hashCode();
+    }
 }
