@@ -1,7 +1,6 @@
 package SpendWise.Interface.Menus;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -72,10 +71,12 @@ public class LoginMenu extends Screen {
         // Buttons
         final Dimension BUTTON_SIZE = new Dimension(95, 30);
 
-        btnLogin = Components.createButton("Login", Color.WHITE, Color.BLACK, BUTTON_SIZE);
+        btnLogin = Components.createButton("Login", BTN_BG_LIGHT_COLOR,
+                BTN_TXT_LIGHT_COLOR, BUTTON_SIZE);
         getBlankPanel(PanelOrder.SOUTH).add(btnLogin);
 
-        btnSignUp = Components.createButton("Sign Up!", Color.BLACK, BACKGROUND_COLOR, BUTTON_SIZE);
+        btnSignUp = Components.createButton("Sign Up!", BTN_BG_DARK_COLOR,
+                BTN_TXT_SECOND_COLOR, BUTTON_SIZE);
         getBlankPanel(PanelOrder.SOUTH).add(btnSignUp);
 
         // Logo
@@ -83,13 +84,14 @@ public class LoginMenu extends Screen {
         JPanel[] logoPanels = Panels.createPanelWithCenter(pnlLogo, new Offsets(5, 0, 0, 100), BACKGROUND_COLOR);
         pnlLogo = logoPanels[PanelOrder.CENTRAL.ordinal()];
 
-        ImageIcon logoIcon = Images.createResizeAndRecolorIcon("res/Images/logo.png", 70, 70, ACCENT_COLOR, true);
+        ImageIcon logoIcon = Images.createResizeAndRecolorIcon(IMAGES_PATH + "logo" + IMAGES_EXT, 70, 70, ACCENT_COLOR,
+                true);
         JLabel logo = new JLabel(logoIcon);
         pnlLogo.add(logo);
 
         try {
             JLabel lblLogo = new JLabel("pendWise");
-            Font LOGO_FONT = Font.createFont(Font.TRUETYPE_FONT, new File("res/Fonts/Poppins-SemiBold.ttf"))
+            Font LOGO_FONT = Font.createFont(Font.TRUETYPE_FONT, new File(FONTS_PATH + "Poppins-SemiBold.ttf"))
                     .deriveFont(30f);
             lblLogo.setFont(LOGO_FONT);
             lblLogo.setForeground(ACCENT_COLOR);
@@ -101,6 +103,8 @@ public class LoginMenu extends Screen {
 
     private void singUpSuccess(ActionEvent e) {
         Alerts.showMessage(getBlankPanel(PanelOrder.NORTH), "Sign up successful!", BACKGROUND_COLOR);
+        Alerts.clearBorder(txtLogin);
+        Alerts.clearBorder(txtPassword);
     }
 
     private void signUp(ActionEvent action) {
@@ -111,28 +115,29 @@ public class LoginMenu extends Screen {
     public boolean authorizeUser() {
         String username = txtLogin.getText();
         String password = new String(txtPassword.getPassword());
-        Alerts.setErrorBorder(txtLogin, false);
-        Alerts.setErrorBorder(txtPassword, false);
-        Alerts.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "");
+        JPanel pnlError = getBlankPanel(PanelOrder.NORTH);
+        Alerts.clearBorder(txtLogin);
+        Alerts.clearBorder(txtPassword);
+        Alerts.clearMessage(pnlError);
 
         if (username.equals("")) {
-            Alerts.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Please enter a username.");
-            Alerts.setErrorBorder(txtLogin, true);
+            Alerts.errorMessage(pnlError, "Please enter a username.");
+            Alerts.errorBorder(txtLogin);
             return false;
         }
 
         if (password.equals("")) {
-            Alerts.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Please enter a password.");
-            Alerts.setErrorBorder(txtPassword, true);
+            Alerts.errorMessage(pnlError, "Please enter a password.");
+            Alerts.errorBorder(txtPassword);
             return false;
         }
 
         if (userManager.validateLogin(username, password)) {
             return true;
         } else {
-            Alerts.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Invalid username or password.");
-            Alerts.setErrorBorder(txtLogin, true);
-            Alerts.setErrorBorder(txtPassword, true);
+            Alerts.errorMessage(pnlError, "Invalid username or password.");
+            Alerts.errorBorder(txtLogin);
+            Alerts.errorBorder(txtPassword);
             return false;
         }
     }

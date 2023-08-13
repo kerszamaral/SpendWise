@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 
 import SpendWise.Interface.Screen;
 import SpendWise.Utils.Enums.PanelOrder;
-import SpendWise.Utils.Graphics.Misc;
+import SpendWise.Utils.Graphics.Images;
 import SpendWise.Utils.Graphics.Panels;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -14,7 +14,7 @@ import javafx.scene.chart.PieChart;
 public class ChartsMenu extends Screen {
     // TODO implement ChartsMenu
     private JPanel pnlChartsMenu;
-    private static final String BACKGROUND_COLOR = "-fx-background-color: " + Misc.getColorHex(ACCENT_COLOR)
+    private static final String BACKGROUND_COLOR = "-fx-background-color: " + Images.getColorHex(ACCENT_COLOR)
             + ";";
 
     public ChartsMenu() {

@@ -1,7 +1,6 @@
 package SpendWise.Interface.PopUps;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 
@@ -58,7 +57,8 @@ public class ChangePassword extends PopUp {
         Offsets southOffsets = new Offsets(5, 20, 200, 200);
         Panels.initializeOffsets(pnlSouth, southOffsets);
 
-        JButton btnApplyChanges = Components.createButton("Change Password", Color.BLACK, BACKGROUND_COLOR, null,
+        JButton btnApplyChanges = Components.createButton("Change Password", BTN_BG_DARK_COLOR,
+                BTN_TXT_SECOND_COLOR, null,
                 e -> updatePassword(e));
         pnlSouth.add(btnApplyChanges, BorderLayout.CENTER);
 
@@ -68,17 +68,18 @@ public class ChangePassword extends PopUp {
     }
 
     private void updatePassword(ActionEvent e) {
-        Alerts.clearErrorMessage(getBlankPanel(PanelOrder.NORTH));
+        JPanel alertPanel = getBlankPanel(PanelOrder.NORTH);
+        Alerts.clearMessage(alertPanel);
 
         String oldPassword = fieldOldPassword.getText();
-        Alerts.setErrorBorder(fieldOldPassword, false);
+        Alerts.clearBorder(fieldOldPassword);
 
         String repeatNewPassword = fieldRepeatPassword.getText();
-        Alerts.setErrorBorder(fieldRepeatPassword, false);
+        Alerts.clearBorder(fieldRepeatPassword);
 
         if (!newPassword.equals(repeatNewPassword)) {
-            Alerts.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "New Passwords do not match!");
-            Alerts.setErrorBorder(fieldOldPassword, true);
+            Alerts.errorMessage(alertPanel, "New Passwords do not match!");
+            Alerts.errorBorder(fieldOldPassword);
             return;
         }
 
@@ -86,8 +87,8 @@ public class ChangePassword extends PopUp {
             this.dispose();
             this.updateFields.run();
         } else {
-            Alerts.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Old Password Incorrect!");
-            Alerts.setErrorBorder(fieldOldPassword, true);
+            Alerts.errorMessage(alertPanel, "Old Password Incorrect!");
+            Alerts.errorBorder(fieldOldPassword);
         }
     }
 }

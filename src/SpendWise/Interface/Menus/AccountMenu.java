@@ -21,7 +21,6 @@ import SpendWise.Utils.Enums.AccountFields;
 import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.Utils.Graphics.Alerts;
 import SpendWise.Utils.Graphics.Components;
-import SpendWise.Utils.Graphics.Misc;
 import SpendWise.Utils.Graphics.Panels;
 
 public class AccountMenu extends Screen {
@@ -71,8 +70,8 @@ public class AccountMenu extends Screen {
         final int verticalGap = 10;
 
         for (AccountFields field : AccountFields.values()) {
-            String label = field.getValue() + ": ";
-            Boolean isPassword = field.getValue().toLowerCase().contains("password");
+            String label = field.getName() + ": ";
+            Boolean isPassword = field.getName().toLowerCase().contains("password");
             String userValue = loggedUser.getField(field);
 
             txtFields[field.ordinal()] = Components.addTextField(pnlUserData, label, userValue, textFieldSize,
@@ -82,34 +81,51 @@ public class AccountMenu extends Screen {
             pnlUserData.add(Box.createVerticalStrut(verticalGap));
         }
 
-        Misc.refresh(pnlUserData);
+        Components.refresh(pnlUserData);
     }
 
     private void edit(ActionEvent e) {
         boolean nextState = !isEditing;
 
+        JPanel alertPanel = super.getBlankPanel(PanelOrder.NORTH);
         JTextField txtName = txtFields[AccountFields.NAME.ordinal()];
         JTextField txtUsername = txtFields[AccountFields.USERNAME.ordinal()];
         JTextField txtEmail = txtFields[AccountFields.EMAIL.ordinal()];
         JPasswordField txtPassword = (JPasswordField) txtFields[AccountFields.PASSWORD.ordinal()];
 
-        Alerts.clearErrorMessage(super.getBlankPanel(PanelOrder.NORTH));
+        Alerts.clearMessage(alertPanel);
         if (!nextState) {
+            boolean alerting = false;
             for (JTextField txtField : txtFields) {
-                Alerts.setErrorBorder(txtField, false);
+                Alerts.clearBorder(txtField);
                 if (txtField.getText().isEmpty() && !(txtField instanceof JPasswordField)) {
-                    Alerts.setErrorBorder(txtField, true);
-                    Alerts.showErrorMessage(super.getBlankPanel(PanelOrder.NORTH),
+                    Alerts.clearBorder(txtField);
+                    Alerts.errorMessage(alertPanel,
                             "Please fill all Non Password fields");
+                    alerting = true;
                     nextState = true;
                 }
             }
 
-            if (!Email.isEmailValid(txtEmail)) {
-                Alerts.showErrorMessage(super.getBlankPanel(PanelOrder.NORTH), "Please enter a valid email");
+            boolean differentUsername = !txtUsername.getText().equals(loggedUser.getUsername());
+            boolean usernameAvailable = userManager.checkUsernameAvailability(txtUsername.getText());
+            if (differentUsername && !usernameAvailable) {
+                if (!alerting) {
+                    Alerts.errorMessage(alertPanel, "Username already taken");
+                }
+                Alerts.errorBorder(txtUsername);
                 nextState = true;
             } else {
-                Alerts.setErrorBorder(txtEmail, false);
+                Alerts.clearBorder(txtUsername);
+            }
+
+            if (!Email.isEmailValid(txtEmail)) {
+                if (!alerting) {
+                    Alerts.errorMessage(alertPanel, "Please enter a valid email");
+                }
+                nextState = true;
+            } else {
+                Alerts.clearBorder(txtEmail);
             }
         }
 
@@ -163,7 +179,7 @@ public class AccountMenu extends Screen {
 
     private void changePassword() {
         this.updateAccountFields();
-        Alerts.clearErrorMessage(getBlankPanel(PanelOrder.NORTH));
+        Alerts.clearMessage(getBlankPanel(PanelOrder.NORTH));
         Alerts.showMessage(getBlankPanel(PanelOrder.NORTH), "Password changed successfully!",
                 BACKGROUND_COLOR);
     }

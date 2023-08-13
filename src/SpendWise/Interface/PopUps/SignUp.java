@@ -1,7 +1,6 @@
 package SpendWise.Interface.PopUps;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -48,9 +47,9 @@ public class SignUp extends PopUp {
 
         signUpFields = new JTextField[SignUpLabels.values().length];
         for (SignUpLabels label : SignUpLabels.values()) {
-            boolean isPassword = label.getLabelName().toLowerCase().contains("password");
-
-            signUpFields[label.ordinal()] = Components.addTextFieldCenter(signUpPanel, label.getLabelName(),
+            boolean isPassword = label.getName().toLowerCase().contains("password");
+            String labelText = label.getName() + ": ";
+            signUpFields[label.ordinal()] = Components.addTextFieldCenter(signUpPanel, labelText,
                     "", TEXT_WIDTH, isPassword, true);
             signUpFields[label.ordinal()].addActionListener(e -> this.createUser(e));
         }
@@ -65,7 +64,8 @@ public class SignUp extends PopUp {
         Panels.initializeOffsets(pnlSouth, southOffsets);
 
         // Creating the create account button
-        JButton btnCreateAccount = Components.createButton("Create Account", Color.BLACK, BACKGROUND_COLOR, null,
+        JButton btnCreateAccount = Components.createButton("Create Account", BTN_BG_DARK_COLOR,
+                BTN_TXT_SECOND_COLOR, null,
                 e -> this.createUser(e));
         pnlSouth.add(btnCreateAccount, BorderLayout.CENTER);
 
@@ -75,20 +75,21 @@ public class SignUp extends PopUp {
     }
 
     private void createUser(ActionEvent e) {
-        Alerts.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "");
+        JPanel alertPanel = getBlankPanel(PanelOrder.NORTH);
+        Alerts.clearMessage(alertPanel);
 
         if (this.singUpFieldsEmpty()) {
-            Alerts.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "One or more fields are empty!");
+            Alerts.errorMessage(alertPanel, "One or more fields are empty!");
             return;
         }
 
         if (!Email.isEmailValid(signUpFields[SignUpLabels.EMAIL.ordinal()])) {
-            Alerts.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Invalid e-mail!");
+            Alerts.errorMessage(alertPanel, "Invalid e-mail!");
             return;
         }
 
         if (!this.isPasswordTheSame()) {
-            Alerts.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Passwords do not match!");
+            Alerts.errorMessage(alertPanel, "Passwords do not match!");
             return;
         }
 
@@ -100,13 +101,13 @@ public class SignUp extends PopUp {
 
         User user = new User(username, name, email, password, 0, 0);
 
-        Alerts.setErrorBorder(txtUsername, false);
+        Alerts.clearBorder(txtUsername);
         if (userManager.createUser(user)) {
             this.dispose();
             singUpAction.actionPerformed(e);
         } else {
-            Alerts.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Username already taken!");
-            Alerts.setErrorBorder(txtUsername, true);
+            Alerts.errorMessage(alertPanel, "Username already taken!");
+            Alerts.errorBorder(txtUsername);
         }
 
     }
@@ -114,10 +115,10 @@ public class SignUp extends PopUp {
     private boolean singUpFieldsEmpty() {
         boolean isAnyFieldEmpty = false;
         for (JTextField field : signUpFields) {
-            Alerts.setErrorBorder(field, false);
+            Alerts.clearBorder(field);
             if (field.getText().isEmpty()) {
                 isAnyFieldEmpty = true;
-                Alerts.setErrorBorder(field, true);
+                Alerts.errorBorder(field);
             }
         }
         return isAnyFieldEmpty;
@@ -127,16 +128,16 @@ public class SignUp extends PopUp {
         JPasswordField passwordField = (JPasswordField) signUpFields[SignUpLabels.PASSWORD.ordinal()];
         JPasswordField repeatPasswordField = (JPasswordField) signUpFields[SignUpLabels.REPEAT_PASSWORD.ordinal()];
 
-        Alerts.setErrorBorder(passwordField, false);
-        Alerts.setErrorBorder(repeatPasswordField, false);
+        Alerts.clearBorder(passwordField);
+        Alerts.clearBorder(repeatPasswordField);
 
         String password = new String(passwordField.getPassword());
         String repeatPassword = new String(repeatPasswordField.getPassword());
         if (password.equals(repeatPassword)) {
             return true;
         } else {
-            Alerts.setErrorBorder(passwordField, true);
-            Alerts.setErrorBorder(repeatPasswordField, true);
+            Alerts.errorBorder(passwordField);
+            Alerts.errorBorder(repeatPasswordField);
             return false;
         }
     }

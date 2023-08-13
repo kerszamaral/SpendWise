@@ -35,7 +35,6 @@ import SpendWise.Utils.Enums.ExpenseType;
 import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.Utils.Graphics.Alerts;
 import SpendWise.Utils.Graphics.Components;
-import SpendWise.Utils.Graphics.Misc;
 import SpendWise.Utils.Graphics.Panels;
 
 public class ExpensesMenu extends Screen {
@@ -72,7 +71,7 @@ public class ExpensesMenu extends Screen {
 
         expensesComboBox = new JComboBox<Expense>(expensesManager.getExpenses().toArray(new Expense[0]));
         expensesComboBox.addActionListener(e -> createBillFields(e));
-        Misc.defineSize(expensesComboBox, comboBoxSize);
+        Components.defineSize(expensesComboBox, comboBoxSize);
         comboBoxCenter.add(expensesComboBox);
 
         pnlCentral = super.getBlankPanel(PanelOrder.CENTRAL);
@@ -95,7 +94,7 @@ public class ExpensesMenu extends Screen {
             expensesComboBox.addItem(expense);
         }
         expensesComboBox.setSelectedIndex(-1);
-        Alerts.clearErrorMessage(alertPanel);
+        Alerts.clearMessage(alertPanel);
         super.refresh();
     }
 
@@ -108,7 +107,7 @@ public class ExpensesMenu extends Screen {
                 expensesComboBox.setSelectedItem(exp);
         }
         createBillFields(null);
-        Alerts.clearErrorMessage(alertPanel);
+        Alerts.clearMessage(alertPanel);
         super.refresh();
     }
 
@@ -134,7 +133,7 @@ public class ExpensesMenu extends Screen {
             if (field == BillsFields.TYPE)
                 continue;
 
-            String label = field.getLabel() + ": ";
+            String label = field.getName() + ": ";
             JLabel lbl = new JLabel(label);
             pnlCentral.add(lbl);
 
@@ -271,7 +270,7 @@ public class ExpensesMenu extends Screen {
 
                 recurringEndDateField.setValue(dateEnd);
 
-                Misc.defineSize(recurringEndDateField, DEFAULT_FIELD_SIZE);
+                Components.defineSize(recurringEndDateField, DEFAULT_FIELD_SIZE);
 
                 recurringEndDateField.setEnabled(true);
                 recurringEndDateField.setBackground(ACCENT_COLOR);
@@ -296,11 +295,11 @@ public class ExpensesMenu extends Screen {
     }
 
     private void changeExpense(ActionEvent action) {
-        Alerts.clearErrorMessage(alertPanel);
+        Alerts.clearMessage(alertPanel);
 
         Expense originalExpense = (Expense) expensesComboBox.getSelectedItem();
         if (originalExpense == null) {
-            Alerts.showErrorMessage(alertPanel, "No expense selected!");
+            Alerts.errorMessage(alertPanel, "No expense selected!");
             return;
         }
 
@@ -348,7 +347,7 @@ public class ExpensesMenu extends Screen {
         Expense exp = null;
 
         JFormattedTextField valueField = (JFormattedTextField) fields[BillsFields.VALUE.ordinal()];
-        Alerts.setErrorBorder(valueField, false);
+        Alerts.clearBorder(valueField);
 
         double value = 0;
         try {
@@ -357,8 +356,8 @@ public class ExpensesMenu extends Screen {
             return false;
         }
         if (value <= 0) {
-            Alerts.showErrorMessage(alertPanel, "Value must be greater than 0!");
-            Alerts.setErrorBorder(valueField, true);
+            Alerts.errorMessage(alertPanel, "Value must be greater than 0!");
+            Alerts.errorBorder(valueField);
             return false;
         }
 
@@ -369,12 +368,12 @@ public class ExpensesMenu extends Screen {
         LocalDate date = Dates.convDate(Dates.convString(dateField.getText()));
 
         JTextField descriptionField = (JTextField) fields[BillsFields.DESCRIPTION.ordinal()];
-        Alerts.setErrorBorder(descriptionField, false);
+        Alerts.clearBorder(descriptionField);
 
         String description = descriptionField.getText();
         if (description.isEmpty()) {
-            Alerts.showErrorMessage(alertPanel, "Description cannot be empty!");
-            Alerts.setErrorBorder(descriptionField, true);
+            Alerts.errorMessage(alertPanel, "Description cannot be empty!");
+            Alerts.errorBorder(descriptionField);
             return false;
         }
 
@@ -383,8 +382,8 @@ public class ExpensesMenu extends Screen {
                 Fixed fixed = (Fixed) originalExpense;
                 if (!fixed.getLastDate().isEqual(date)) {
                     if (fixed.getLastDate().isAfter(date)) {
-                        Alerts.showErrorMessage(alertPanel, "Date cannot be before last update!");
-                        Alerts.setErrorBorder(dateField, true);
+                        Alerts.errorMessage(alertPanel, "Date cannot be before last update!");
+                        Alerts.errorBorder(dateField);
                         return false;
                     }
                     fixed.updateValue(value, date);
@@ -414,7 +413,7 @@ public class ExpensesMenu extends Screen {
             refresh(exp);
             return true;
         } else {
-            Alerts.showErrorMessage(alertPanel, "Expense could not be modified!");
+            Alerts.errorMessage(alertPanel, "Expense could not be modified!");
             return false;
         }
     }

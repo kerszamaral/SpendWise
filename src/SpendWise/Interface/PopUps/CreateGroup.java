@@ -1,7 +1,6 @@
 package SpendWise.Interface.PopUps;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 
@@ -51,7 +50,8 @@ public class CreateGroup extends PopUp {
         Offsets southOffsets = new Offsets(0, 20, 120,120);
         Panels.initializeOffsets(pnlSouth, southOffsets);
         
-        JButton btnCreate = Components.createButton("Create Group", Color.BLACK, BACKGROUND_COLOR, null);
+        JButton btnCreate = Components.createButton("Create Group", BTN_BG_DARK_COLOR,
+                BTN_TXT_SECOND_COLOR, null);
         btnCreate.addActionListener(e -> createGroup(e));
         groupNameField.addActionListener(e -> btnCreate.doClick());
 
@@ -63,15 +63,16 @@ public class CreateGroup extends PopUp {
     }
 
     private void createGroup(ActionEvent e) {
+        JPanel alertPanel = getBlankPanel(PanelOrder.NORTH);
         String groupName = groupNameField.getText();
         if (groupName.isEmpty()) {
-            Alerts.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Group name cannot be empty");
-            Alerts.setErrorBorder(groupNameField, true);
+            Alerts.errorMessage(alertPanel, "Group name cannot be empty");
+            Alerts.errorBorder(groupNameField);
             return;
         }
         if(loggedUser.getGroupManager().findGroup(groupName) != null) {
-            Alerts.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Group name already exists");
-            Alerts.setErrorBorder(groupNameField, true);
+            Alerts.errorMessage(alertPanel, "Group name already exists");
+            Alerts.errorBorder(groupNameField);
             return;
         }
 
