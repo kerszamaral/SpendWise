@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import SpendWise.Logic.Group;
-import SpendWise.Logic.User;
 
 public class GroupManager implements Serializable {
     private Set<Group> groups;
@@ -27,13 +26,14 @@ public class GroupManager implements Serializable {
         }
     }
 
-    public void createGroup(String groupName) {
+    public Group createGroup(String groupName) {
         if (isGroupValid(groupName)) {
-            return;
+            return null;
         }
 
         Group group = new Group(groupName);
         groups.add(group);
+        return group;
     }
     
     public void addGroup(Group group) {
@@ -53,76 +53,6 @@ public class GroupManager implements Serializable {
         
         groups.remove(group);
     }
-    
-    public double calculateExpense(String groupName) {
-        if (isGroupValid(groupName)) {
-            return 0;
-        }
-
-        Group group = findGroup(groupName);
-        double totalExpense = 0;
-        for (User user : group.getUsers()) {
-            totalExpense += user.getExpensesManager().calculateTotalExpense();
-        }
-
-        return totalExpense;
-    }
-
-    public double calculateEssentialExpense(String groupName) {
-        if (!isGroupValid(groupName)) {
-            return 0;
-        }
-        
-        Group group = findGroup(groupName);
-        double totalExpense = 0;
-        for (User user : group.getUsers()) {
-            totalExpense += user.getExpensesManager().calculateEssentialExpenses();
-        }
-
-        return totalExpense;
-    }
-
-    public double calculateNonEssentialExpense(String groupName) {
-        if (!isGroupValid(groupName)) {
-            return 0;
-        }
-        Group group = this.findGroup(groupName);
-
-        double totalExpense = 0;
-        for (User user : group.getUsers()) {
-            totalExpense += user.getExpensesManager().calculateNonEssentialExpenses();
-        }
-
-        return totalExpense;
-    }
-
-   /*  public double calculatePercentage(int groupID, User user) {
-        if (!isGroupValid(groupID)) {
-            return 0;
-        }
-        ArrayList<User> group = this.groups.get(groupID);
-
-        double totalExpense = 0;
-        for (User u : group) {
-            totalExpense += u.getExpensesManager().calculateTotalExpense();
-        }
-
-        return user.getExpensesManager().calculateTotalExpense() / totalExpense;
-    } */
-
-   /*  public double calculateAverage(int groupID) {
-        if (!isGroupValid(groupID)) {
-            return 0;
-        }
-        ArrayList<User> group = this.groups.get(groupID);
-
-        double totalExpense = 0;
-        for (User user : group) {
-            totalExpense += user.getExpensesManager().calculateTotalExpense();
-        }
-
-        return totalExpense / group.size();
-    } */
 
     public Group findGroup(String groupName){
         for (Group group : groups) {
