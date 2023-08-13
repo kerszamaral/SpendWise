@@ -7,11 +7,12 @@ import java.awt.Image;
 
 import javax.swing.JButton;
 
+import SpendWise.Utils.Paths;
 import SpendWise.Utils.Enums.Contexts;
+import SpendWise.Utils.Graphics.Components;
 import SpendWise.Utils.Graphics.Images;
-import SpendWise.Utils.Graphics.Misc;
 
-public class MenuButton extends JButton {
+public class MenuButton extends JButton implements Paths {
     private String name;
     private Color Background;
     private Color Foreground;
@@ -23,11 +24,11 @@ public class MenuButton extends JButton {
         this.Foreground = foreground;
 
         String fileName = Contexts.getContext(name).toString().toLowerCase();
-        String imagePath = "res/Images/Icons/" + fileName + ".png";
+        String imagePath = ICONS_PATH + fileName + IMAGES_EXT;
 
         resizedIcon = Images.resizedIcon(imagePath, 30, 30).getImage();
 
-        Misc.defineSize(this, size);
+        Components.defineSize(this, size);
 
         this.initialize();
     }
