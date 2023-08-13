@@ -5,13 +5,18 @@ public enum ExpenseType {
     ONETIME("One-time"),
     RECURRING("Recurring");
 
-    private final String type;
+    private final String name;
 
-    ExpenseType(String type) {
-        this.type = type;
+    ExpenseType(String name) {
+        this.name = name;
     }
 
-    public String getType() {
-        return type;
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

@@ -7,13 +7,18 @@ public enum BillsFields {
     DESCRIPTION("Description"),
     TYPE("Type");
 
-    private final String label;
+    private final String name;
 
-    private BillsFields(String label) {
-        this.label = label;
+    private BillsFields(String name) {
+        this.name = name;
     }
 
-    public String getLabel() {
-        return label;
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

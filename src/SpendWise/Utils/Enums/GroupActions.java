@@ -4,17 +4,18 @@ public enum GroupActions {
     ADD("Add User"),
     DELETE("Delete User");
 
-    private final String type;
+    private final String name;
 
-    GroupActions(String type) {
-        this.type = type;
+    GroupActions(String name) {
+        this.name = name;
     }
 
-    public String getType() {
-        return type;
+    public String getName() {
+        return name;
     }
 
+    @Override
     public String toString() {
-        return this.type;
+        return this.name;
     }
 }

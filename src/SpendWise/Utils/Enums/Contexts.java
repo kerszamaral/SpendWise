@@ -3,24 +3,29 @@ package SpendWise.Utils.Enums;
 public enum Contexts {
     ACCOUNT("Account"),
     BILL("Add Expense"),
-    CHARTS("Analysis"),
+    ANALYSIS("Analysis"),
     GROUPS("Groups"),
     EXPENSES("Expenses"),
     LOGIN("Logout");
 
-    private final String contextName;
+    private final String name;
 
-    Contexts(String contextName) {
-        this.contextName = contextName;
+    Contexts(String name) {
+        this.name = name;
     }
 
-    public String getContextName() {
-        return contextName;
+    public String getName() {
+        return name;
     }
 
-    public static Contexts getContext(String contextName) {
+    @Override
+    public String toString() {
+        return this.name;
+    }
+
+    public static Contexts getContext(String name) {
         for (Contexts context : Contexts.values()) {
-            if (context.getContextName().equals(contextName)) {
+            if (context.getName().equals(name)) {
                 return context;
             }
         }

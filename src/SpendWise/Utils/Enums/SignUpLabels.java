@@ -1,19 +1,24 @@
 package SpendWise.Utils.Enums;
 
 public enum SignUpLabels {
-    NAME("Name: "),
-    USERNAME("Username: "),
-    EMAIL("E-mail: "),
-    PASSWORD("Password: "),
-    REPEAT_PASSWORD("Repeat Password: ");
+    NAME("Name"),
+    USERNAME("Username"),
+    EMAIL("E-mail"),
+    PASSWORD("Password"),
+    REPEAT_PASSWORD("Repeat Password");
 
-    private final String labelName;
+    private final String name;
 
-    SignUpLabels(String labelName) {
-        this.labelName = labelName;
+    SignUpLabels(String name) {
+        this.name = name;
     }
 
-    public String getLabelName() {
-        return labelName;
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

@@ -5,13 +5,18 @@ public enum GroupFields {
     SELECT_OPERATION("Select Operation"),
     USERNAME("Username");
 
-    private final String label;
+    private final String name;
 
-    private GroupFields(String label) {
-        this.label = label;
+    private GroupFields(String name) {
+        this.name = name;
     }
 
-    public String getLabel() {
-        return label;
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

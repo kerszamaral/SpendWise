@@ -6,14 +6,18 @@ public enum AccountFields {
     EMAIL("E-mail"),
     PASSWORD("Password");
 
-    private String value;
+    private String name;
 
-    AccountFields(String value) {
-        this.value = value;
+    AccountFields(String name) {
+        this.name = name;
     }
 
-    public String getValue() {
-        return value;
+    public String getName() {
+        return name;
     }
 
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }
