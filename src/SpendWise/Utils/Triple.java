@@ -38,6 +38,7 @@ public class Triple<T1, T2, T3> implements Iterable<Object>, Serializable {
         return third;
     }
 
+    @Override
     public String toString() {
         return first.toString() + " || " + second.toString() + " || " + third.toString();
     }
