@@ -3,6 +3,7 @@ package SpendWise.Logic.Bills;
 import java.util.ArrayList;
 import java.time.LocalDate;
 
+import SpendWise.Utils.Dates;
 import SpendWise.Utils.Triple;
 
 public class Fixed extends Expense {
@@ -37,11 +38,15 @@ public class Fixed extends Expense {
         return sum;
     }
 
+    public boolean isDateInBetween(LocalDate date, LocalDate startDate, LocalDate endDate) {
+        LocalDate rangeStart = Dates.monthStart(startDate);
+        LocalDate rangeEnd = Dates.monthEnd(endDate);
+        return date.isAfter(rangeStart) && date.isBefore(rangeEnd);
+    }
+
     public double valueInMonth(LocalDate date) {
         for (Triple<LocalDate, LocalDate, Double> triple : this.valueHistory) {
-            LocalDate rangeStart = triple.getFirst().minusDays(1);
-            LocalDate rangeEnd = triple.getSecond().plusDays(1);
-            if (rangeStart.isBefore(date) && rangeEnd.isAfter(date)) {
+            if (isDateInBetween(date, triple.getFirst(), triple.getSecond())) {
                 return triple.getThird();
             }
         }
@@ -80,6 +85,11 @@ public class Fixed extends Expense {
     @Override
     public double getValue() {
         return this.valueInMonth(LocalDate.now());
+    }
+
+    @Override
+    public double getValue(LocalDate date) {
+        return this.valueInMonth(date);
     }
 
     @Override
