@@ -21,9 +21,10 @@ public abstract class Expense implements Serializable {
         this.description = description;
     }
 
+    @Override
     public String toString() {
-        return "Value: R$" + getValue() + " || Type: " + getType().getType() + " || Description: " + description
-                + " || Date: " + getDate();
+        return "Value: R$" + this.getValue() + " || Type: " + this.getType().getName() + " || Description: "
+                + this.getDescription() + " || Date: " + this.getDate();
     }
 
     public ExpenseType getType() {
