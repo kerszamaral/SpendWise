@@ -3,9 +3,9 @@ package SpendWise.Utils.Enums;
 public enum Contexts {
     ACCOUNT("Account"),
     BILL("Add Expense"),
-    ANALYSIS("Analysis"),
-    GROUPS("Groups"),
     EXPENSES("Expenses"),
+    GROUPS("Groups"),
+    ANALYSIS("Analysis"),
     LOGIN("Logout");
 
     private final String name;
