@@ -14,7 +14,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import SpendWise.Utils.Offsets;
-import javafx.util.Pair;
+import SpendWise.Utils.Pair;
 
 public abstract class Components implements Colors, Fonts {
 
