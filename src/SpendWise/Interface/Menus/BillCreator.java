@@ -27,14 +27,13 @@ import SpendWise.Utils.Enums.ExpenseType;
 import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.Utils.Graphics.Alerts;
 import SpendWise.Utils.Graphics.Components;
-import SpendWise.Utils.Graphics.Misc;
 import SpendWise.Utils.Graphics.Panels;
 
 public class BillCreator extends Screen {
     private ExpensesManager expensesManager;
 
     private JComponent[] fields;
-    private JComboBox<String> typeSelector;
+    private JComboBox<ExpenseType> typeSelector;
 
     JPanel pnlTypeSpecific;
 
@@ -56,7 +55,7 @@ public class BillCreator extends Screen {
         fields = new JComponent[BillsFields.values().length];
 
         for (BillsFields field : BillsFields.values()) {
-            String label = field.getLabel() + ": ";
+            String label = field.getName() + ": ";
             JLabel lbl = new JLabel(label);
             pnlCentral.add(lbl);
 
@@ -86,11 +85,7 @@ public class BillCreator extends Screen {
                     break;
 
                 case TYPE:
-                    String[] types = new String[ExpenseType.values().length];
-                    for (ExpenseType type : ExpenseType.values()) {
-                        types[type.ordinal()] = type.getType();
-                    }
-                    typeSelector = new JComboBox<String>(types);
+                    typeSelector = new JComboBox<ExpenseType>(ExpenseType.values());
                     typeSelector.addActionListener(e -> createTypeSpecificFields(e));
                     fieldType = typeSelector;
                     break;
@@ -100,7 +95,7 @@ public class BillCreator extends Screen {
                     break;
             }
 
-            Misc.defineSize(fieldType, DEFAULT_FIELD_SIZE);
+            Components.defineSize(fieldType, DEFAULT_FIELD_SIZE);
 
             fieldType.setEnabled(true);
             fieldType.setBackground(ACCENT_COLOR);
@@ -149,7 +144,7 @@ public class BillCreator extends Screen {
                 recurringEndDateField = new JFormattedTextField(Dates.dateFormatter);
                 recurringEndDateField.setValue(new java.util.Date());
 
-                Misc.defineSize(recurringEndDateField, DEFAULT_FIELD_SIZE);
+                Components.defineSize(recurringEndDateField, DEFAULT_FIELD_SIZE);
 
                 recurringEndDateField.setEnabled(true);
                 recurringEndDateField.setBackground(ACCENT_COLOR);
@@ -194,12 +189,13 @@ public class BillCreator extends Screen {
     }
 
     private void submit(ActionEvent action) {
-        Alerts.clearErrorMessage(getBlankPanel(PanelOrder.NORTH));
-        ExpenseType type = ExpenseType.values()[typeSelector.getSelectedIndex()];
+        JPanel alertPanel = getBlankPanel(PanelOrder.NORTH);
+        Alerts.clearMessage(alertPanel);
+        ExpenseType type = (ExpenseType) typeSelector.getSelectedItem();
         Expense exp = null;
 
         JFormattedTextField valueField = (JFormattedTextField) fields[BillsFields.VALUE.ordinal()];
-        Alerts.setErrorBorder(valueField, false);
+        Alerts.clearBorder(valueField);
 
         double value = 0;
         try {
@@ -208,8 +204,8 @@ public class BillCreator extends Screen {
             return;
         }
         if (value <= 0) {
-            Alerts.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Value must be greater than 0!");
-            Alerts.setErrorBorder(valueField, true);
+            Alerts.errorMessage(alertPanel, "Value must be greater than 0!");
+            Alerts.errorBorder(valueField);
             return;
         }
 
@@ -220,12 +216,12 @@ public class BillCreator extends Screen {
         LocalDate date = Dates.convDate(Dates.convString(dateField.getText()));
 
         JTextField descriptionField = (JTextField) fields[BillsFields.DESCRIPTION.ordinal()];
-        Alerts.setErrorBorder(descriptionField, false);
+        Alerts.clearBorder(descriptionField);
 
         String description = descriptionField.getText();
         if (description.isEmpty()) {
-            Alerts.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Description cannot be empty!");
-            Alerts.setErrorBorder(descriptionField, true);
+            Alerts.errorMessage(alertPanel, "Description cannot be empty!");
+            Alerts.errorBorder(descriptionField);
             return;
         }
 
@@ -247,10 +243,10 @@ public class BillCreator extends Screen {
 
         cleanFields();
         if (exp != null) {
-            Alerts.showMessage(getBlankPanel(PanelOrder.NORTH), "Expense added successfully!", BACKGROUND_COLOR);
+            Alerts.showMessage(alertPanel, "Expense added successfully!", BACKGROUND_COLOR);
             expensesManager.addExpense(exp);
         } else {
-            Alerts.showErrorMessage(getBlankPanel(PanelOrder.NORTH), "Expense could not be added!");
+            Alerts.errorMessage(alertPanel, "Expense could not be added!");
         }
 
     }
