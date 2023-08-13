@@ -1,6 +1,7 @@
 package SpendWise.Logic;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import SpendWise.Logic.Managers.ExpensesManager;
 import SpendWise.Logic.Managers.GroupManager;
@@ -16,7 +17,7 @@ public class User implements Serializable {
     private double monthlyLimit;
     
     private GroupManager groupManager;
-    protected ExpensesManager expensesManager;
+    private ExpensesManager expensesManager;
     
     /**
      * @return the expensesManager
@@ -153,7 +154,26 @@ public class User implements Serializable {
         return groupManager;
     }
 
+    @Override
     public String toString() {
         return this.username;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof User)) {
+            return false;
+        }
+
+        User user = (User) obj;
+        boolean sameUsername = this.username.equals(user.getUsername());
+        boolean samePassword = this.password.equals(user.password);
+
+        return sameUsername && samePassword;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.username, this.password);
     }
 }
