@@ -2,7 +2,8 @@ package SpendWise.Logic.Managers;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import SpendWise.Logic.Bills.Expense;
 import SpendWise.Logic.Bills.Fixed;
@@ -11,10 +12,10 @@ import SpendWise.Logic.Bills.Recurring;
 import SpendWise.Utils.Enums.ExpenseType;
 
 public class ExpensesManager implements Serializable {
-    private ArrayList<Expense> expenses;
+    private Set<Expense> expenses;
 
     public ExpensesManager() {
-        this.expenses = new ArrayList<Expense>();
+        this.expenses = new HashSet<Expense>();
     }
 
     public boolean addExpense(Expense exp) {
@@ -103,7 +104,7 @@ public class ExpensesManager implements Serializable {
         return totalNonEssentialExpenses;
     }
 
-    public ArrayList<Expense> getExpenses() {
+    public Set<Expense> getExpenses() {
         return expenses;
     }
 }

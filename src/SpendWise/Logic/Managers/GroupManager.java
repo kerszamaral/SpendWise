@@ -1,22 +1,25 @@
 package SpendWise.Logic.Managers;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import SpendWise.Logic.Group;
 import SpendWise.Logic.User;
 
 public class GroupManager implements Serializable {
-    private ArrayList<Group> groups;
+    private Set<Group> groups;
 
     public GroupManager() {
-        this.groups = new ArrayList<Group>();
+        this.groups = new HashSet<Group>();
     }
 
     private boolean isGroupValid(String groupName) {
         
         Group group = findGroup(groupName);
-        if (groups.contains(group)) {
+        if (group == null) {
+            return false;
+        } else if (groups.contains(group)) {
             return true;
         }
         else {
@@ -130,7 +133,7 @@ public class GroupManager implements Serializable {
         return null;
     }
 
-    public ArrayList<Group> getGroups() {
+    public Set<Group> getGroups() {
         return this.groups;
     }
 }
