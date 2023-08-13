@@ -25,6 +25,10 @@ public class UserManager implements Serializable {
         return true;
     }
 
+    public boolean checkUsernameAvailability(String username) {
+        return !this.users.containsKey(username);
+    }
+
     public void removeUser(User user) {
         this.users.remove(user.getUsername());
     }
