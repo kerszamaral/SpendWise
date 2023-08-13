@@ -3,10 +3,8 @@ package SpendWise.Interface.Menus;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -89,16 +87,10 @@ public class LoginMenu extends Screen {
         JLabel logo = new JLabel(logoIcon);
         pnlLogo.add(logo);
 
-        try {
-            JLabel lblLogo = new JLabel("pendWise");
-            Font LOGO_FONT = Font.createFont(Font.TRUETYPE_FONT, new File(FONTS_PATH + "Poppins-SemiBold.ttf"))
-                    .deriveFont(30f);
-            lblLogo.setFont(LOGO_FONT);
-            lblLogo.setForeground(ACCENT_COLOR);
-            pnlLogo.add(lblLogo);
-        } catch (Exception e) {
-            System.out.println("Error loading font.");
-        }
+        JLabel lblLogo = new JLabel("pendWise");
+        lblLogo.setFont(LOGO_FONT);
+        lblLogo.setForeground(ACCENT_COLOR);
+        pnlLogo.add(lblLogo);
     }
 
     private void singUpSuccess(ActionEvent e) {

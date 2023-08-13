@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 
 public abstract class Images {
-
     public static ImageIcon resizedIcon(ImageIcon icon, int width, int height) {
         Image image = icon.getImage();
         Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
@@ -15,7 +14,7 @@ public abstract class Images {
     }
 
     public static ImageIcon resizedIcon(String path, int width, int height) {
-        ImageIcon initialImage = new ImageIcon(path);
+        ImageIcon initialImage = ResourceLoader.resourceToImage(path);
         return resizedIcon(initialImage, width, height);
     }
 
