@@ -291,6 +291,12 @@ public class ExpensesMenu extends Screen {
         expensesManager.removeExpense(selectedExpense);
         expensesComboBox.removeItem(selectedExpense);
         expensesComboBox.setSelectedIndex(-1);
+
+        isEditing = false;
+        setFieldsEditable(false);
+        btnChangeExpense.setText("Edit Expense");
+        expensesComboBox.setEnabled(true);
+
         createBillFields(null);
     }
 
