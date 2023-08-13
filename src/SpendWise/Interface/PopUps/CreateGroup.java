@@ -10,6 +10,7 @@ import javax.swing.JTextField;
 
 import SpendWise.Interface.PopUp;
 import SpendWise.Interface.Screen;
+import SpendWise.Logic.Group;
 import SpendWise.Logic.User;
 import SpendWise.Utils.Offsets;
 import SpendWise.Utils.Enums.PanelOrder;
@@ -76,7 +77,8 @@ public class CreateGroup extends PopUp {
             return;
         }
 
-        loggedUser.getGroupManager().createGroup(groupName);
+        Group group = loggedUser.getGroupManager().createGroup(groupName);
+        group.addUser(loggedUser);
         this.dispose();
         refreshGroups.run();
     }
