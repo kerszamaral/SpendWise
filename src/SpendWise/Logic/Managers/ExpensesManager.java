@@ -9,6 +9,7 @@ import SpendWise.Logic.Bills.Expense;
 import SpendWise.Logic.Bills.Fixed;
 import SpendWise.Logic.Bills.OneTime;
 import SpendWise.Logic.Bills.Recurring;
+import SpendWise.Utils.Dates;
 import SpendWise.Utils.Enums.ExpenseType;
 
 public class ExpensesManager implements Serializable {
@@ -23,88 +24,87 @@ public class ExpensesManager implements Serializable {
         return true;
     }
 
-    public boolean createFixedExpense(double value, boolean isEssential, LocalDate date, String description) {
-        Expense exp = new Fixed(value, isEssential, date, description);
-        expenses.add(exp);
-        return true;
-    }
-
-    public boolean createOneTimeExpense(double value, boolean isEssential, LocalDate date, String description,
-            boolean isPaid) {
-        Expense exp = new OneTime(value, isEssential, date, description, isPaid);
-        expenses.add(exp);
-        return true;
-    }
-
-    public boolean createRecurringExpense(double value, boolean isEssential, LocalDate date, String description,
-            LocalDate endDate) {
-        Expense exp = new Recurring(value, isEssential, date, description, endDate);
-        expenses.add(exp);
-        return true;
-    }
-
-    public boolean createExpense(double value, boolean isEssential, LocalDate date, String description,
-            ExpenseType type,
-            boolean isPaid,
-            LocalDate endDate) {
-        Expense exp;
-        switch (type) {
-            case FIXED:
-                exp = new Fixed(value, isEssential, date, description);
-                expenses.add(exp);
-                return true;
-
-            case ONETIME:
-                exp = new OneTime(value, isEssential, date, description, isPaid);
-                expenses.add(exp);
-                return true;
-
-            case RECURRING:
-                if (endDate == null) {
-                    return false;
-                }
-                exp = new Recurring(value, isEssential, date, description, endDate);
-                expenses.add(exp);
-                return true;
-
-            default:
-                return false;
-        }
-    }
-
     public void removeExpense(Expense exp) {
         expenses.remove(exp);
     }
 
-    public double calculateTotalExpense() {
-        double totalExpenses = 0;
+    public Set<Expense> getExpenses() {
+        return expenses;
+    }
+
+    public Set<Expense> getMonthExpenses(LocalDate date) {
+        Set<Expense> monthExpenses = new HashSet<Expense>();
         for (Expense exp : expenses) {
-            totalExpenses += exp.calculatePayment();
+            switch (exp.getType()) {
+                case FIXED: {
+                    Fixed fixed = (Fixed) exp;
+                    LocalDate startOfMonth = Dates.monthStart(fixed.getDate());
+                    boolean isAfterStart = date.isAfter(startOfMonth);
+                    if (isAfterStart) {
+                        monthExpenses.add(fixed);
+                    }
+                    break;
+                }
+                case ONETIME: {
+                    OneTime oneTime = (OneTime) exp;
+                    if (oneTime.getDate().getMonth() == date.getMonth()) {
+                        monthExpenses.add(oneTime);
+                    }
+                    break;
+                }
+                case RECURRING: {
+                    Recurring recurring = (Recurring) exp;
+                    LocalDate startOfMonth = Dates.monthStart(recurring.getDate());
+                    LocalDate endOfMonth = Dates.monthEnd(recurring.getDate());
+                    boolean isAfterStart = date.isAfter(startOfMonth);
+                    boolean isBeforeEnd = date.isBefore(endOfMonth);
+                    if (isAfterStart && isBeforeEnd) {
+                        monthExpenses.add(recurring);
+                    }
+                    break;
+                }
+            }
+        }
+        return monthExpenses;
+    }
+
+    private double getExpenseValue(Expense exp) {
+        if (exp instanceof Fixed) {
+            Fixed fixed = (Fixed) exp;
+            return fixed.getValue();
+        } else {
+            return exp.getValue();
+        }
+    }
+
+    public double calculateMonthExpenses(LocalDate date) {
+        Set<Expense> monthExpenses = getMonthExpenses(date);
+        double totalExpenses = 0;
+        for (Expense exp : monthExpenses) {
+            totalExpenses += getExpenseValue(exp);
         }
         return totalExpenses;
     }
 
-    public double calculateEssentialExpenses() {
-        double totalEssentialExpenses = 0;
-        for (Expense exp : expenses) {
-            if (exp.isEssential()) {
-                totalEssentialExpenses += exp.calculatePayment();
+    public double calculateMonthExpenses(LocalDate date, ExpenseType type) {
+        Set<Expense> monthExpenses = getMonthExpenses(date);
+        double totalExpenses = 0;
+        for (Expense exp : monthExpenses) {
+            if (exp.getType() == type) {
+                totalExpenses += getExpenseValue(exp);
             }
         }
-        return totalEssentialExpenses;
+        return totalExpenses;
     }
 
-    public double calculateNonEssentialExpenses() {
-        double totalNonEssentialExpenses = 0;
-        for (Expense exp : expenses) {
-            if (!exp.isEssential()) {
-                totalNonEssentialExpenses += exp.calculatePayment();
+    public double calculateMonthExpenses(LocalDate date, boolean essential) {
+        Set<Expense> monthExpenses = getMonthExpenses(date);
+        double totalExpenses = 0;
+        for (Expense exp : monthExpenses) {
+            if (exp.isEssential() == essential) {
+                totalExpenses += getExpenseValue(exp);
             }
         }
-        return totalNonEssentialExpenses;
-    }
-
-    public Set<Expense> getExpenses() {
-        return expenses;
+        return totalExpenses;
     }
 }
