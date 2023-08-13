@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 
 import SpendWise.Interface.Menus.AccountMenu;
 import SpendWise.Interface.Menus.BillCreator;
-import SpendWise.Interface.Menus.ChartsMenu;
+import SpendWise.Interface.Menus.AnalysisMenu;
 import SpendWise.Interface.Menus.ExpensesMenu;
 import SpendWise.Interface.Menus.GroupsMenu;
 import SpendWise.Interface.Menus.LoginMenu;
@@ -105,7 +105,7 @@ public class MainMenu extends JFrame implements Colors, Fonts, Icons {
         ExpensesManager expensesManager = loggedUser.getExpensesManager();
         screens[Contexts.ACCOUNT.ordinal()] = new AccountMenu(userManager, () -> logout(null));
         screens[Contexts.BILL.ordinal()] = new BillCreator(expensesManager);
-        screens[Contexts.ANALYSIS.ordinal()] = new ChartsMenu();
+        screens[Contexts.ANALYSIS.ordinal()] = new AnalysisMenu();
         screens[Contexts.GROUPS.ordinal()] = new GroupsMenu(userManager);
         screens[Contexts.EXPENSES.ordinal()] = new ExpensesMenu(expensesManager);
     }

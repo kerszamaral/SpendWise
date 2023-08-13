@@ -11,13 +11,13 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 
-public class ChartsMenu extends Screen {
-    // TODO implement ChartsMenu
+public class AnalysisMenu extends Screen {
+    // TODO implement AnalysisMenu
     private JPanel pnlChartsMenu;
     private static final String BACKGROUND_COLOR = "-fx-background-color: " + Images.getColorHex(ACCENT_COLOR)
             + ";";
 
-    public ChartsMenu() {
+    public AnalysisMenu() {
         initialize();
     }
 
