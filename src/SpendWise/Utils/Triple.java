@@ -50,7 +50,7 @@ public class Triple<T1, T2, T3> implements Iterable<Object>, Serializable {
 
             @Override
             public boolean hasNext() {
-                return index < 3;
+                return index < getSize();
             }
 
             @Override
