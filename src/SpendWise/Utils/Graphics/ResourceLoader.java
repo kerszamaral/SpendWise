@@ -3,7 +3,7 @@ package SpendWise.Utils.Graphics;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.io.File;
+import java.io.InputStream;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
@@ -22,7 +22,8 @@ public abstract class ResourceLoader implements Paths {
     public static Font resourceToFont(String Path) {
         URL place = ResourceLoader.class.getResource(Path);
         try {
-            return Font.createFont(Font.TRUETYPE_FONT, new File(place.toURI()));
+            InputStream is = place.openStream();
+            return Font.createFont(Font.TRUETYPE_FONT, is);
         } catch (Exception e) {
             System.out.println("Error loading font.");
         }
