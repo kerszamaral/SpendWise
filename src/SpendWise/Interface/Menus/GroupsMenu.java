@@ -24,7 +24,6 @@ import SpendWise.Utils.Enums.GroupFields;
 import SpendWise.Utils.Enums.PanelOrder;
 import SpendWise.Utils.Graphics.Components;
 import SpendWise.Utils.Graphics.Images;
-import SpendWise.Utils.Graphics.Misc;
 import SpendWise.Utils.Graphics.Panels;
 
 public class GroupsMenu extends Screen {
@@ -66,7 +65,7 @@ public class GroupsMenu extends Screen {
 
         JComponent fieldType = null;
         for (GroupFields field : GroupFields.values()) {
-            String label = field.getLabel() + ": ";
+            String label = field.getName() + ": ";
             JLabel lbl = new JLabel(label);
             lbl.setVisible(false);
             pnlGroupManagement.add(lbl);
@@ -100,7 +99,7 @@ public class GroupsMenu extends Screen {
             if (fieldType == null)
                 continue;
 
-            Misc.defineSize(fieldType, DEFAULT_FIELD_SIZE);
+            Components.defineSize(fieldType, DEFAULT_FIELD_SIZE);
 
             fieldType.setEnabled(true);
             fieldType.setBackground(ACCENT_COLOR);
