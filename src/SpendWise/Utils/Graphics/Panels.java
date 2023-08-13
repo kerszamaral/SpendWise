@@ -104,7 +104,7 @@ public abstract class Panels implements Colors, Sizes {
     }
 
     public static JPanel[] createPanelWithCenter(JPanel mainPanel, Color innerColor) {
-        JPanel[] outerBlankPanels = initializeOffsets(mainPanel, DEFAULT_OFFSETS, BACKGROUND_COLOR);
+        JPanel[] outerBlankPanels = initializeOffsets(mainPanel, DEFAULT_OUTER_OFFSETS, BACKGROUND_COLOR);
 
         JPanel[] innerBlankPanels = initializeOffsets(outerBlankPanels[PanelOrder.CENTRAL.ordinal()],
                 DEFAULT_INNER_OFFSETS,
