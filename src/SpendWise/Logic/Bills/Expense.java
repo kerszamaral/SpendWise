@@ -56,6 +56,10 @@ public abstract class Expense implements Serializable {
         return value;
     }
 
+    public double getValue(LocalDate date) {
+        return value;
+    }
+
     /**
      * @param value the value to set
      */
