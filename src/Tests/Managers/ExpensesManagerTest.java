@@ -56,7 +56,7 @@ public class ExpensesManagerTest {
     @Test
     public void testRemoveExpense() {
         expensesManager.createExpense(100, true, LocalDate.now(), "test", ExpenseType.ONETIME, false, null);
-        expensesManager.removeExpense(expensesManager.getExpenses().get(0));
+        expensesManager.removeExpense(expensesManager.getExpenses().iterator().next());
         assertEquals(0, expensesManager.getExpenses().size());
     }
 
