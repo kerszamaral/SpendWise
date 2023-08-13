@@ -40,6 +40,7 @@ public abstract class PopUp extends JFrame implements BlankPanels, Colors, Fonts
      * @param panel the panel to get
      * @return the blankPanels
      */
+    @Override
     public JPanel getBlankPanel(PanelOrder panel) {
         return blankPanels[panel.ordinal()];
     }
