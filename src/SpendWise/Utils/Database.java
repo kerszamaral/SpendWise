@@ -8,8 +8,8 @@ import java.io.ObjectOutputStream;
 
 import SpendWise.Logic.Managers.UserManager;
 
-public class Database extends WindowAdapter {
-    private static String filename = "spendwise.db";
+public class Database extends WindowAdapter implements Paths {
+    private static String filename = DATABASE_PATH + "spendwise.db";
 
     public static UserManager loadUserManager() {
         try {
