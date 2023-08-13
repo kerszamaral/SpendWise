@@ -80,4 +80,8 @@ public abstract class Images {
         ImageIcon initialImage = resizedIcon(path, width, height);
         return recolorIcon(initialImage.getImage(), color, invert);
     }
+
+    public static String getColorHex(Color color) {
+        return "#" + Integer.toHexString(color.getRGB()).substring(2);
+    }
 }

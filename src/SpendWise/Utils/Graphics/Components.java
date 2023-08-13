@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -27,7 +28,7 @@ public abstract class Components implements Colors, Fonts {
         textField.setBackground(ACCENT_COLOR);
 
         Dimension size = new Dimension(width, 30);
-        Misc.defineSize(textField, size);
+        Components.defineSize(textField, size);
 
         return new Pair<JLabel, JTextField>(lbl, textField);
     }
@@ -72,7 +73,7 @@ public abstract class Components implements Colors, Fonts {
         button.setFont(STD_FONT_BOLD);
         button.addActionListener(actionListener);
 
-        Misc.defineSize(button, size);
+        Components.defineSize(button, size);
 
         return button;
     }
@@ -84,7 +85,7 @@ public abstract class Components implements Colors, Fonts {
         button.setForeground(foreground);
         button.setFont(STD_FONT_BOLD);
 
-        Misc.defineSize(button, size);
+        Components.defineSize(button, size);
 
         return button;
     }
@@ -96,7 +97,8 @@ public abstract class Components implements Colors, Fonts {
         Panels.initializeOffsets(panel, offsets, color);
 
         // Creates the button itself and adds it to the east panel
-        JButton btnEdit = createButton(text, Color.BLACK, BACKGROUND_COLOR, null, actionListener);
+        JButton btnEdit = createButton(text, BUTTON_BACKGROUND_DARK_COLOR, BUTTON_TEXT_GREEN_COLOR, null,
+                actionListener);
         panel.add(btnEdit, BorderLayout.EAST);
 
         // And, finnaly, add the south panel to the screen
@@ -118,7 +120,8 @@ public abstract class Components implements Colors, Fonts {
         JButton[] buttons = new JButton[texts.length];
         final String[] LayoutPlace = { BorderLayout.WEST, BorderLayout.EAST, BorderLayout.CENTER};
         for (int i = 0; i < texts.length; i++) {
-            buttons[i] = createButton(texts[i], Color.BLACK, BACKGROUND_COLOR, null, actionListeners[i]);
+            buttons[i] = createButton(texts[i], BUTTON_BACKGROUND_DARK_COLOR, BUTTON_TEXT_GREEN_COLOR, null,
+                    actionListeners[i]);
             panel.add(buttons[i], LayoutPlace[i % LayoutPlace.length]);
         }
 
@@ -126,6 +129,17 @@ public abstract class Components implements Colors, Fonts {
         mainPanel.add(panel, BorderLayout.SOUTH);
 
         return buttons;
+    }
+
+    public static void defineSize(JComponent component, Dimension size) {
+        component.setMinimumSize(size);
+        component.setPreferredSize(size);
+        component.setMaximumSize(size);
+    }
+
+    public static void refresh(JComponent component) {
+        component.revalidate();
+        component.repaint();
     }
 
 }
