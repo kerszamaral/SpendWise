@@ -105,7 +105,7 @@ public class MainMenu extends JFrame implements Colors, Fonts, Icons {
         ExpensesManager expensesManager = loggedUser.getExpensesManager();
         screens[Contexts.ACCOUNT.ordinal()] = new AccountMenu(userManager, () -> logout(null));
         screens[Contexts.BILL.ordinal()] = new BillCreator(expensesManager);
-        screens[Contexts.ANALYSIS.ordinal()] = new AnalysisMenu();
+        screens[Contexts.ANALYSIS.ordinal()] = new AnalysisMenu(loggedUser);
         screens[Contexts.GROUPS.ordinal()] = new GroupsMenu(userManager);
         screens[Contexts.EXPENSES.ordinal()] = new ExpensesMenu(expensesManager);
     }
