@@ -97,7 +97,7 @@ public abstract class Components implements Colors, Fonts {
         Panels.initializeOffsets(panel, offsets, color);
 
         // Creates the button itself and adds it to the east panel
-        JButton btnEdit = createButton(text, BUTTON_BACKGROUND_DARK_COLOR, BUTTON_TEXT_GREEN_COLOR, null,
+        JButton btnEdit = createButton(text, BTN_BG_DARK_COLOR, BTN_TXT_SECOND_COLOR, null,
                 actionListener);
         panel.add(btnEdit, BorderLayout.EAST);
 
@@ -120,7 +120,7 @@ public abstract class Components implements Colors, Fonts {
         JButton[] buttons = new JButton[texts.length];
         final String[] LayoutPlace = { BorderLayout.WEST, BorderLayout.EAST, BorderLayout.CENTER};
         for (int i = 0; i < texts.length; i++) {
-            buttons[i] = createButton(texts[i], BUTTON_BACKGROUND_DARK_COLOR, BUTTON_TEXT_GREEN_COLOR, null,
+            buttons[i] = createButton(texts[i], BTN_BG_DARK_COLOR, BTN_TXT_SECOND_COLOR, null,
                     actionListeners[i]);
             panel.add(buttons[i], LayoutPlace[i % LayoutPlace.length]);
         }

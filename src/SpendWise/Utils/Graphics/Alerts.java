@@ -9,19 +9,19 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 
-public abstract class Alerts {
+public abstract class Alerts implements Colors {
 
     public static void setBorder(JTextField field, Color color) {
         Border border = BorderFactory.createLineBorder(color);
         field.setBorder(border);
     }
 
-    public static void setErrorBorder(JTextField field, Boolean isError) {
-        if (isError) {
-            setBorder(field, Color.RED);
-        } else {
-            field.setBorder(UIManager.getLookAndFeel().getDefaults().getBorder("TextField.border"));
-        }
+    public static void clearBorder(JTextField field) {
+        field.setBorder(UIManager.getLookAndFeel().getDefaults().getBorder("TextField.border"));
+    }
+
+    public static void errorBorder(JTextField field) {
+        setBorder(field, ERROR_COLOR);
     }
 
     public static void showMessage(JPanel panel, String msg, Color color) {
@@ -33,12 +33,12 @@ public abstract class Alerts {
         panel.repaint();
     }
 
-    public static void showErrorMessage(JPanel panel, String error) {
-        showMessage(panel, error, Color.RED);
+    public static void errorMessage(JPanel panel, String error) {
+        showMessage(panel, error, ERROR_COLOR);
     }
 
-    public static void clearErrorMessage(JPanel panel) {
-        showMessage(panel, "", Color.BLACK);
+    public static void clearMessage(JPanel panel) {
+        showMessage(panel, "", TEXT_COLOR);
     }
 
 }
