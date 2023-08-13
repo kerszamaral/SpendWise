@@ -33,6 +33,7 @@ public class Database extends WindowAdapter implements Paths {
             FileOutputStream file = new FileOutputStream(filename);
             ObjectOutputStream out = new ObjectOutputStream(file);
 
+            userManager.clearLoggedUser();
             out.writeObject(userManager);
 
             out.close();
