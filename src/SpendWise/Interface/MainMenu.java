@@ -36,6 +36,7 @@ public class MainMenu extends JFrame implements Colors, Fonts, Icons {
     private final static int SCREEN_HEIGHT = 1080 / 2;
     private final static int BUTTON_MAX_WIDTH = 160;
     private final static int BUTTON_SPACING = 25;
+    private final static Contexts DEFAULT_CONTEXT = Contexts.ACCOUNT;
     private Contexts currentContext;
     private Screen[] screens;
     private JButton[] buttons;
@@ -184,8 +185,8 @@ public class MainMenu extends JFrame implements Colors, Fonts, Icons {
 
         if (login.authorizeUser()) {
             createMenus();
-            this.currentContext = Contexts.ACCOUNT;
-            this.buttons[Contexts.ACCOUNT.ordinal()].setSelected(true);
+            this.currentContext = DEFAULT_CONTEXT;
+            this.buttons[DEFAULT_CONTEXT.ordinal()].setSelected(true);
         } else {
             this.currentContext = Contexts.LOGIN;
         }
