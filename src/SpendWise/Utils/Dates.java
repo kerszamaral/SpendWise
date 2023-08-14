@@ -6,9 +6,9 @@ import java.time.ZoneId;
 import java.util.Date;
 
 public abstract class Dates {
-    public static final SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
-    public static final SimpleDateFormat monthYearFormatter = new SimpleDateFormat("MM/yyyy");
-    public static final SimpleDateFormat yearFormatter = new SimpleDateFormat("yyyy");
+    public static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("dd/MM/yyyy");
+    public static final SimpleDateFormat MONTH_AND_YEAR_FORMATTER = new SimpleDateFormat("MM/yyyy");
+    public static final SimpleDateFormat YEAR_FORMATTER = new SimpleDateFormat("yyyy");
 
     public static Date convLocalDate(LocalDate localDate) {
         return Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
@@ -20,7 +20,7 @@ public abstract class Dates {
 
     public static Date convString(String date) {
         try {
-            return dateFormatter.parse(date);
+            return DATE_FORMATTER.parse(date);
         } catch (Exception e) {
             return Date.from(LocalDate.now().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
         }

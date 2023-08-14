@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
 import SpendWise.Utils.Paths;
 
 public abstract class ResourceLoader implements Paths {
-    public static final Toolkit toolkit = Toolkit.getDefaultToolkit();
+    private static final Toolkit toolkit = Toolkit.getDefaultToolkit();
 
     public static ImageIcon resourceToImage(String path) {
         URL place = ResourceLoader.class.getResource(path);

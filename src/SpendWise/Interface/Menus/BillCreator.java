@@ -74,7 +74,7 @@ public class BillCreator extends Screen {
                     break;
 
                 case DATE:
-                    JFormattedTextField dateField = new JFormattedTextField(Dates.dateFormatter);
+                    JFormattedTextField dateField = new JFormattedTextField(Dates.DATE_FORMATTER);
                     dateField.setValue(new java.util.Date());
                     fieldType = dateField;
                     break;
@@ -141,7 +141,7 @@ public class BillCreator extends Screen {
                 lbl.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
                 pnlTypeSpecific.add(lbl);
 
-                recurringEndDateField = new JFormattedTextField(Dates.dateFormatter);
+                recurringEndDateField = new JFormattedTextField(Dates.DATE_FORMATTER);
                 recurringEndDateField.setValue(new java.util.Date());
 
                 Components.defineSize(recurringEndDateField, DEFAULT_FIELD_SIZE);

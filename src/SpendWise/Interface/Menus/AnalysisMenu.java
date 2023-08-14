@@ -95,7 +95,7 @@ public class AnalysisMenu extends Screen {
         JPanel userChangePanel = super.getBlankPanel(PanelOrder.NORTH);
         userChangePanel.removeAll();
 
-        JFormattedTextField dateField = new JFormattedTextField(Dates.monthYearFormatter);
+        JFormattedTextField dateField = new JFormattedTextField(Dates.MONTH_AND_YEAR_FORMATTER);
         Date defaultDate = Dates.convLocalDate(LocalDate.now());
         dateField.setValue(defaultDate);
         dateField.setHorizontalAlignment(JFormattedTextField.CENTER);
@@ -156,7 +156,7 @@ public class AnalysisMenu extends Screen {
         JPanel yearChangePanel = super.getBlankPanel(PanelOrder.NORTH);
         yearChangePanel.removeAll();
 
-        JFormattedTextField dateField = new JFormattedTextField(Dates.yearFormatter);
+        JFormattedTextField dateField = new JFormattedTextField(Dates.YEAR_FORMATTER);
         Date defaultDate = Dates.convLocalDate(LocalDate.now());
         dateField.addActionListener(e -> createYearChart(Dates.convDate((Date) dateField.getValue())));
         dateField.setValue(defaultDate);
@@ -211,7 +211,7 @@ public class AnalysisMenu extends Screen {
         ExpensesManager expManager = user.getExpensesManager();
         Set<Expense> monthExpenses = expManager.getMonthExpenses(date);
 
-        String chartTitle = user.getName() + " in " + Dates.monthYearFormatter.format(Dates.convLocalDate(date));
+        String chartTitle = user.getName() + " in " + Dates.MONTH_AND_YEAR_FORMATTER.format(Dates.convLocalDate(date));
         PieChart pieChart = buildPieChart(chartTitle);
 
         double total = 0;
@@ -292,7 +292,7 @@ public class AnalysisMenu extends Screen {
     private void createYearChart(LocalDate date) {
         ExpensesManager expManager = user.getExpensesManager();
 
-        PieChart pieChart = buildPieChart(Dates.yearFormatter.format(Dates.convLocalDate(date)));
+        PieChart pieChart = buildPieChart(Dates.YEAR_FORMATTER.format(Dates.convLocalDate(date)));
 
         double total = 0;
 

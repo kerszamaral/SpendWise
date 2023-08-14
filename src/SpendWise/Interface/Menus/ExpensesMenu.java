@@ -155,7 +155,7 @@ public class ExpensesMenu extends Screen {
                     break;
 
                 case DATE:
-                    JFormattedTextField dateField = new JFormattedTextField(Dates.dateFormatter);
+                    JFormattedTextField dateField = new JFormattedTextField(Dates.DATE_FORMATTER);
                     dateField.setValue(defaultDate);
                     dateField.setEditable(false);
                     fieldType = dateField;
@@ -264,7 +264,7 @@ public class ExpensesMenu extends Screen {
                 lbl.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
                 pnlTypeSpecific.add(lbl);
 
-                recurringEndDateField = new JFormattedTextField(Dates.dateFormatter);
+                recurringEndDateField = new JFormattedTextField(Dates.DATE_FORMATTER);
 
                 Date dateEnd = Dates.convLocalDate(((Recurring) exp).getEndDate());
 
