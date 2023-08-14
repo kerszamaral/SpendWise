@@ -68,4 +68,24 @@ public class UserTest {
         assertTrue(user.checkPassword("newPassword"));
     }
 
+    @Test
+    public void testPasswordSize() {
+        assertEquals(8, user.getPasswordSize());
+    }
+
+    @Test
+    public void testEquals() {
+        User user = new User("username", "name", "email", "password", 1000, 100);
+        assertTrue(user.equals(this.user));
+        user = new User("newUsername", "name", "email", "password", 1000, 100);
+        assertFalse(user.equals(this.user));
+    }
+
+    @Test
+    public void testHashCode() {
+        User user = new User("username", "name", "email", "password", 1000, 100);
+        assertEquals(user.hashCode(), this.user.hashCode());
+        user = new User("newUsername", "name", "email", "password", 1000, 100);
+        assertNotEquals(user.hashCode(), this.user.hashCode());
+    }
 }

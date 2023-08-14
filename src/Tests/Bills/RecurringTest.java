@@ -22,51 +22,51 @@ public class RecurringTest {
     }
 
     @Test
-    public void testgetEndDate() {
+    public void testGetEndDate() {
         assertEquals(LocalDate.now().plusMonths(2), recurring.getEndDate());
     }
 
     @Test
-    public void testsetEndDate() {
+    public void testSetEndDate() {
         recurring.setEndDate(LocalDate.now().plusMonths(3));
         assertEquals(LocalDate.now().plusMonths(3), recurring.getEndDate());
     }
 
     @Test
-    public void testtotalValue() {
+    public void testTotalValue() {
         assertEquals(1000, recurring.totalValue(), 0.001);
     }
 
     @Test
-    public void testcalculatePayment() {
+    public void testCalculatePayment() {
         assertEquals(500, recurring.calculatePayment(), 0.001);
     }
 
     @Test
-    public void testcalculatePaymentZero() {
+    public void testCalculatePaymentZero() {
         recurring.setEndDate(LocalDate.now().minusMonths(1));
         assertEquals(0, recurring.calculatePayment(), 0.001);
     }
 
     @Test
-    public void testtotalValueZero() {
+    public void testTotalValueZero() {
         recurring.setEndDate(LocalDate.now().minusMonths(1));
         assertEquals(0, recurring.totalValue(), 0.001);
     }
 
     @Test
-    public void testtotalPayed() {
+    public void testTotalPayed() {
         assertEquals(1500, recurring.totalPayed(), 0.001);
     }
 
     @Test
-    public void testtotalPayedZero() {
+    public void testTotalPayedZero() {
         recurring.setEndDate(LocalDate.now().minusMonths(3));
         assertEquals(0, recurring.totalPayed(), 0.001);
     }
 
     @Test
-    public void testtotalCost() {
+    public void testTotalCost() {
         assertEquals(2500, recurring.totalCost(), 0.001);
     }
 }

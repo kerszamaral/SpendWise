@@ -20,27 +20,27 @@ public class UserManagerTest {
     }
 
     @Test
-    public void testcreateUser() {
+    public void testCreateUser() {
         User user = new User("username", "name", "email", "password", 1000, 500);
         assertTrue(userManager.createUser(user));
     }
 
     @Test
-    public void testcreateUserFalse() {
+    public void testCreateUserFalse() {
         User user = new User("username", "name", "email", "password", 1000, 500);
         userManager.createUser(user);
         assertFalse(userManager.createUser(user));
     }
 
     @Test
-    public void testvalidateLogin() {
+    public void testValidateLogin() {
         User user = new User("username", "name", "email", "password", 1000, 500);
         userManager.createUser(user);
         assertTrue(userManager.validateLogin("username", "password"));
     }
 
     @Test
-    public void testvalidateLoginFalse() {
+    public void testValidateLoginFalse() {
         User user = new User("username", "name", "email", "password", 1000, 500);
         userManager.createUser(user);
         assertFalse(userManager.validateLogin("username", "password1"));

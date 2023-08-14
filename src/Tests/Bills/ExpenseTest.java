@@ -4,6 +4,7 @@ import org.junit.jupiter.api.*;
 
 import SpendWise.Logic.Bills.Expense;
 import SpendWise.Logic.Bills.OneTime;
+import SpendWise.Utils.Enums.ExpenseType;
 
 import static org.junit.Assert.*;
 import java.time.LocalDate;
@@ -22,8 +23,26 @@ public class ExpenseTest {
     }
 
     @Test
+    public void testGetType() {
+        assertEquals(ExpenseType.ONETIME, expense.getType());
+    }
+
+    @Test
+    public void testEquals() {
+        Expense expense = new OneTime(500, false, LocalDate.now(), "description", false);
+        assertTrue(expense.equals(this.expense));
+        expense = new OneTime(500, false, LocalDate.now(), "new description", false);
+        assertFalse(expense.equals(this.expense));
+    }
+
+    @Test
     public void testGetValue() {
         assertEquals(500, expense.getValue(), 0.001);
+    }
+
+    @Test
+    public void testGetValueDate() {
+        assertEquals(500, expense.getValue(LocalDate.now()), 0.001);
     }
 
     @Test
