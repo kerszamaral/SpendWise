@@ -2,6 +2,7 @@ package SpendWise.Interface.Menus;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.Date;
@@ -74,9 +75,6 @@ public class AnalysisMenu extends Screen {
             case GROUP:
                 createGroupScreen();
                 break;
-            case MONTH:
-                createMonthlyScreen();
-                break;
             case YEAR:
                 createYearlyScreen();
                 break;
@@ -97,34 +95,47 @@ public class AnalysisMenu extends Screen {
         JPanel userChangePanel = super.getBlankPanel(PanelOrder.NORTH);
         userChangePanel.removeAll();
 
+        JFormattedTextField dateField = new JFormattedTextField(Dates.monthYearFormatter);
+        Date defaultDate = Dates.convLocalDate(LocalDate.now());
+        dateField.setValue(defaultDate);
+        dateField.setHorizontalAlignment(JFormattedTextField.CENTER);
+        Components.defineSize(dateField, new Dimension(100, 25));
+        userChangePanel.add(dateField);
+
         JCheckBox chkFixed = new JCheckBox("Fixed");
         chkFixed.setSelected(true);
+        chkFixed.setBackground(ACCENT_COLOR);
         userChangePanel.add(chkFixed);
 
         JCheckBox chkRecurring = new JCheckBox("Recurring");
         chkRecurring.setSelected(true);
+        chkRecurring.setBackground(ACCENT_COLOR);
         userChangePanel.add(chkRecurring);
 
         JCheckBox chkOneTime = new JCheckBox("One Time");
-
         chkOneTime.setSelected(true);
+        chkOneTime.setBackground(ACCENT_COLOR);
         userChangePanel.add(chkOneTime);
 
         JComboBox<AnalysisUserChoice> cmbEssential = new JComboBox<AnalysisUserChoice>(
                 AnalysisUserChoice.values());
         userChangePanel.add(cmbEssential);
 
-        chkFixed.addActionListener(e -> createUserChart(chkFixed.isSelected(), chkRecurring.isSelected(),
-                chkOneTime.isSelected(), (AnalysisUserChoice) cmbEssential.getSelectedItem()));
-        chkRecurring.addActionListener(e -> createUserChart(chkFixed.isSelected(), chkRecurring.isSelected(),
-                chkOneTime.isSelected(), (AnalysisUserChoice) cmbEssential.getSelectedItem()));
-        chkOneTime.addActionListener(e -> createUserChart(chkFixed.isSelected(), chkRecurring.isSelected(),
-                chkOneTime.isSelected(), (AnalysisUserChoice) cmbEssential.getSelectedItem()));
-        cmbEssential.addActionListener(e -> createUserChart(chkFixed.isSelected(), chkRecurring.isSelected(),
-                chkOneTime.isSelected(), (AnalysisUserChoice) cmbEssential.getSelectedItem()));
 
-        createUserChart(chkFixed.isSelected(), chkRecurring.isSelected(), chkOneTime.isSelected(),
-                (AnalysisUserChoice) cmbEssential.getSelectedItem());
+        ActionListener action = e -> {
+            createUserChart(Dates.convDate((Date) dateField.getValue()), chkFixed.isSelected(),
+                    chkRecurring.isSelected(), chkOneTime.isSelected(),
+                    (AnalysisUserChoice) cmbEssential.getSelectedItem());
+        };
+
+        dateField.addActionListener(action);
+        chkFixed.addActionListener(action);
+        chkRecurring.addActionListener(action);
+        chkOneTime.addActionListener(action);
+        cmbEssential.addActionListener(action);
+
+        action.actionPerformed(null);
+
         Components.refresh(userChangePanel);
     }
 
@@ -139,20 +150,6 @@ public class AnalysisMenu extends Screen {
 
         createGroupChart((Group) cmbGroups.getSelectedItem());
         Components.refresh(groupChangePanel);
-    }
-
-    private void createMonthlyScreen() {
-        JPanel monthChangePanel = super.getBlankPanel(PanelOrder.NORTH);
-        monthChangePanel.removeAll();
-
-        JFormattedTextField dateField = new JFormattedTextField(Dates.monthYearFormatter);
-        Date defaultDate = Dates.convLocalDate(LocalDate.now());
-        dateField.setValue(defaultDate);
-        dateField.addActionListener(e -> createMonthChart(Dates.convDate((Date) dateField.getValue())));
-        monthChangePanel.add(dateField);
-
-        createMonthChart(Dates.convDate((Date) dateField.getValue()));
-        Components.refresh(monthChangePanel);
     }
 
     private void createYearlyScreen() {
@@ -208,11 +205,14 @@ public class AnalysisMenu extends Screen {
         panel.add(lblTotal);
     }
 
-    private void createUserChart(boolean fixed, boolean recurring, boolean oneTime, AnalysisUserChoice choice) {
+    private void createUserChart(LocalDate date, boolean fixed, boolean recurring, boolean oneTime,
+            AnalysisUserChoice choice) {
+        date = Dates.monthStart(date).plusDays(1);
         ExpensesManager expManager = user.getExpensesManager();
-        Set<Expense> monthExpenses = expManager.getMonthExpenses(LocalDate.now());
+        Set<Expense> monthExpenses = expManager.getMonthExpenses(date);
 
-        PieChart pieChart = buildPieChart(user.getName());
+        String chartTitle = user.getName() + " in " + Dates.monthYearFormatter.format(Dates.convLocalDate(date));
+        PieChart pieChart = buildPieChart(chartTitle);
 
         double total = 0;
         for (Expense exp : monthExpenses) {
@@ -223,7 +223,7 @@ public class AnalysisMenu extends Screen {
             }
 
             ExpenseType type = exp.getType();
-            double value = exp.getValue(LocalDate.now());
+            double value = exp.getValue(date);
             String description = makeLabel(exp, value);
 
             switch (type) {
@@ -289,27 +289,6 @@ public class AnalysisMenu extends Screen {
         showTotal(infoPanel, total);
     }
 
-    private void createMonthChart(LocalDate date) {
-        ExpensesManager expManager = user.getExpensesManager();
-        Set<Expense> monthExpenses = expManager.getMonthExpenses(date);
-
-        PieChart pieChart = buildPieChart(Dates.monthYearFormatter.format(Dates.convLocalDate(date)));
-
-        double total = 0;
-        for (Expense exp : monthExpenses) {
-            double value = exp.getValue(date);
-            String description = makeLabel(exp, value);
-
-            total += value;
-            pieChart.addSeries(description, value);
-        }
-
-        javax.swing.SwingUtilities.invokeLater(() -> addPieChart(pnlChartsMenu, pieChart));
-
-        JPanel infoPanel = super.getBlankPanel(PanelOrder.SOUTH);
-        showTotal(infoPanel, total);
-    }
-
     private void createYearChart(LocalDate date) {
         ExpensesManager expManager = user.getExpensesManager();
 
@@ -336,9 +315,6 @@ public class AnalysisMenu extends Screen {
 
             total += monthTotal;
         }
-
-        // pieChart.getStyler().setLegendVisible(false);
-        // pieChart.getStyler().setLabelType(LabelType.NameAndPercentage);
 
         javax.swing.SwingUtilities.invokeLater(() -> addPieChart(pnlChartsMenu, pieChart));
 

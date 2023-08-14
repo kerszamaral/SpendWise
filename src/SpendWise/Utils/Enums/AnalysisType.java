@@ -3,7 +3,6 @@ package SpendWise.Utils.Enums;
 public enum AnalysisType {
     USER("User"),
     GROUP("Group"),
-    MONTH("Monthly"),
     YEAR("Yearly");
 
     private final String name;
