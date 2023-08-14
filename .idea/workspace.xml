@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="359abcb3-7fe5-4c4e-bd88-325e247831c5" name="Changes" comment="Removed mainMenu test">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spendwise.db" beforeDir="false" afterPath="$PROJECT_DIR$/spendwise.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tcpfinal.iml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,7 +24,7 @@
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: -1
+  &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="2TlhmrkUwqOeUvOQJPVKLZ6nbfk" />
   <component name="ProjectViewState">
@@ -34,12 +38,12 @@
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/kersz/Documents/ufrgs/Semestre_4/tcpfinal/lib/xchart-3.8.5.jar",
+    "last_opened_file_path": "C:/Users/kersz/Documents/ufrgs/Semestre_4/SpendWise/lib/xchart-3.8.5.jar",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Project",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "reference.settings.ide.settings.uml",
@@ -49,14 +53,14 @@
   <component name="RunManager" selected="Application.SpendWise.SpendWise">
     <configuration name="SpendWise" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="SpendWise" />
-      <module name="tcpfinal" />
+      <module name="SpendWise" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration name="SpendWise.SpendWise" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="SpendWise.SpendWise" />
-      <module name="tcpfinal" />
+      <module name="SpendWise" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="SpendWise.*" />
@@ -93,6 +97,8 @@
       <workItem from="1691966497243" duration="317000" />
       <workItem from="1691966845971" duration="79000" />
       <workItem from="1691966949829" duration="101000" />
+      <workItem from="1691980315876" duration="347000" />
+      <workItem from="1691980763692" duration="1379000" />
     </task>
     <task id="LOCAL-00001" summary="Removed mainMenu test">
       <option name="closed" value="true" />
