@@ -27,6 +27,9 @@ public class GroupManager implements Serializable {
     }
 
     public Group createGroup(String groupName) {
+        if (groupName == null) {
+            return null;
+        }
         if (isGroupValid(groupName)) {
             return null;
         }
@@ -37,6 +40,9 @@ public class GroupManager implements Serializable {
     }
     
     public void addGroup(Group group) {
+        if (group == null) {
+            return;
+        }
         if (isGroupValid(group.getGroupName())) {
             return;
         }
@@ -47,6 +53,9 @@ public class GroupManager implements Serializable {
     }
 
     public void removeGroup(Group group) {
+        if (group == null) {
+            return;
+        }
         if (!isGroupValid(group.getGroupName())) {
             return;
         }
