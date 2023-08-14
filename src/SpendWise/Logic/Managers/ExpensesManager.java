@@ -20,12 +20,11 @@ public class ExpensesManager implements Serializable {
     }
 
     public boolean addExpense(Expense exp) {
-        expenses.add(exp);
-        return true;
+        return expenses.add(exp);
     }
 
-    public void removeExpense(Expense exp) {
-        expenses.remove(exp);
+    public boolean removeExpense(Expense exp) {
+        return expenses.remove(exp);
     }
 
     public Set<Expense> getExpenses() {
